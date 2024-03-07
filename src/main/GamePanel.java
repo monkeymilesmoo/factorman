@@ -2,6 +2,7 @@ package src.main;
 
 import javax.swing.JPanel;
 
+import src.background.BackgroundManager;
 import src.entity.Player;
 
 import java.awt.Color;
@@ -16,16 +17,16 @@ public class GamePanel extends JPanel implements Runnable{
 	public int zoom = 1; //not sure what to make this zoom to make it look okay but i'll try this
 
 	public int tileSize = originalTileSize * zoom; //96x96 tiles
-	final int maxScreenCol = 40;
-	final int maxScreenRow = 24;
-	final int screenWidth = originalTileSize * maxScreenCol; 
-	final int screenHeight = originalTileSize * maxScreenRow;
+	public final int maxScreenCol = 40;
+	public final int maxScreenRow = 24;
+	public final int screenWidth = originalTileSize * maxScreenCol; 
+	public final int screenHeight = originalTileSize * maxScreenRow;
 
 
 	//FPS
 	int FPS = 60;
 
-
+	BackgroundManager backgroundM = new BackgroundManager(this);
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
 	Player player = new Player(this, keyH);
@@ -98,6 +99,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 		Graphics2D g2 = (Graphics2D)g;
 		
+		backgroundM.draw(g2);
 		player.draw(g2);
 
 		g2.dispose();
