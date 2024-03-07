@@ -56,6 +56,8 @@ public class GamePanel extends JPanel implements Runnable{
 		double delta = 0;
 		long lastTime = System.nanoTime();
 		long currentTime;
+		int timer = 0;
+		int drawCount = 0;
 
 
 		while(gameThread != null){
@@ -64,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable{
 			currentTime = System.nanoTime();
 
 			delta += (currentTime - lastTime) / drawInterval;
-
+			timer += (currentTime - lastTime);
 			lastTime = currentTime;
 
 			if (delta >= 1){
@@ -72,7 +74,14 @@ public class GamePanel extends JPanel implements Runnable{
 				update();	//STEP ONE: Update information like character pos
 				repaint();	//STEP TWO: Calls paintComponent to draw screen
 				delta--;
+				drawCount++;
 
+			}
+
+			if(timer >= 1000000000) {
+				System.out.println("FPS: " + drawCount);
+				timer = 0;
+				drawCount = 0;
 			}
 
 
