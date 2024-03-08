@@ -61,7 +61,7 @@ public class Player extends entity{
 		//MAYBE INEFFICIENT CHANGE LATER
 		//
 		// 
-		
+
 	
 		mining = keyH.testable ? true : false;
 		if(keyH.testable){
@@ -129,25 +129,26 @@ public class Player extends entity{
 			selectedImage = miningImage;
 			textureWidth = 196;
 			textureHeight = 194;
-			totalFramesInAnimation = 12;
+			totalFramesInAnimation = 26;
+			animationTick += 2;
 
 		}else if (moving){
 			selectedImage = runningImage;
 			textureWidth = 88;
 			textureHeight = 132;
-			totalFramesInAnimation = 21;
+			totalFramesInAnimation = 22;
 
 		}else {
 			selectedImage = idleImage;
 			textureWidth = 92;
 			textureHeight = 116;
-			totalFramesInAnimation = 21;
+			totalFramesInAnimation = 22;
 		}
 		animationTick++;
-		if (animationTick > 4 || moving || mining) {
+		if (animationTick > 4 || moving) {
 			animationTick = 0;
 			selectedCol++;
-		if (selectedCol > totalFramesInAnimation){
+		if (selectedCol >= totalFramesInAnimation){
 			selectedCol = 0;
 		}
 		
