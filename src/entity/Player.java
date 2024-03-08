@@ -165,7 +165,7 @@ public class Player extends entity{
 			totalFramesInAnimation = 22;
 		}
 		animationTick++;
-		if (animationTick > 4 || moving) {
+		if (animationTick > 4 || moving || mining) {
 			animationTick = 0;
 			selectedCol++;
 		if (selectedCol >= totalFramesInAnimation){
