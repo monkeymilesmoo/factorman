@@ -35,8 +35,8 @@ public class BackgroundManager {
 		try{
 			
 			terrain[0] = new Terrain();
-			terrain[0].image = ImageIO.read(getClass().getResourceAsStream("/res/background/terrain/sand-1.png"));
-			terrain[0].width = 128;
+			terrain[0].image = ImageIO.read(getClass().getResourceAsStream("/res/background/terrain/dirt-1.png"));
+			terrain[0].width = 64;
 
 		}catch(IOException e){
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class BackgroundManager {
 			
 			drawNum++;
 			this.terrainSeed.setSeed(drawNum);
-			g2.drawImage(terrain[0].image.getSubimage(1 * terrainSeed.nextInt(1000), 160, terrain[0].width, terrain[0].width), x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+			g2.drawImage(terrain[0].image.getSubimage(1 * terrainSeed.nextInt(1000), 160, terrain[0].width, terrain[0].width), x, y, terrain[0].width, terrain[0].width, null);
 			
 
 			// g2.drawImage(background[0].image.getSubimage(0, 0, background[0].width, background[0].width), x, y, gp.tileSize, gp.tileSize, null);
@@ -65,13 +65,13 @@ public class BackgroundManager {
 
 
 			col++;
-			x += gp.tileSize * 2;
+			x += terrain[0].width;
 
 			if(col == gp.maxScreenCol){
 				col = 0;
 				x = 0;
 				row++;
-				y += gp.tileSize * 2;
+				y += terrain[0].width;
 			}
 
 
