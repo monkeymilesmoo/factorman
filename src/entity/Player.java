@@ -61,6 +61,8 @@ public class Player extends entity{
 		//MAYBE INEFFICIENT CHANGE LATER
 		//
 		// 
+		
+	
 		mining = keyH.testable ? true : false;
 		if(keyH.testable){
 			selectedImage = miningImage;

@@ -6,6 +6,7 @@ public class Background {
 	
 	public BufferedImage image;
 	public boolean collision = false;
+	public int width = 64;
 
 
 

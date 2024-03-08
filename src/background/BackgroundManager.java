@@ -30,7 +30,7 @@ public class BackgroundManager {
 		try{
 			
 			background[0] = new Background();
-			background[0].image = ImageIO.read(getClass().getResourceAsStream("/res/background/32x32_guide.png"));
+			background[0].image = ImageIO.read(getClass().getResourceAsStream("/res/background/hr-stone-path-1.png"));
 
 		}catch(IOException e){
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public class BackgroundManager {
 
 		while (col < gp.maxScreenCol && row < gp.maxScreenRow){
 
-			g2.drawImage(background[0].image, x, y, gp.tileSize, gp.tileSize, null);
+			g2.drawImage(background[0].image.getSubimage(0, 0, background[0].width, background[0].width), x, y, gp.tileSize, gp.tileSize, null);
 			
 			col++;
 			x += gp.tileSize;
