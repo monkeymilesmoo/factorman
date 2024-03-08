@@ -13,14 +13,16 @@ import java.awt.Graphics2D;
 public class GamePanel extends JPanel implements Runnable{
 
 	//Screen Settings
-	final int originalTileSize = 32; //32x32 tiles
+	final int originalTileSize = 64; //64x64 tiles
 	public int zoom = 1; //not sure what to make this zoom to make it look okay but i'll try this
 
 	public int tileSize = originalTileSize * zoom; //96x96 tiles
-	public int maxScreenCol = 40;
-	public int maxScreenRow = 24;
+	public int maxScreenCol = 20;
+	public int maxScreenRow = 20;
 	public int screenWidth = originalTileSize * maxScreenCol; 
 	public int screenHeight = originalTileSize * maxScreenRow;
+
+	public int chunkSize = 15;
 
 
 	//FPS
@@ -99,17 +101,18 @@ public class GamePanel extends JPanel implements Runnable{
 		// System.out.println(keyH.upPressed);
 
 		player.update();
-
-		try{
-		// System.out.println(resizeL.newSize.width);
-		screenWidth = resizeL.newSize.width;
-		screenHeight = resizeL.newSize.height;
-		maxScreenCol = screenWidth/originalTileSize;
-		maxScreenRow = screenHeight/originalTileSize;
-		}catch(Exception e){
-			e.printStackTrace();
+		if(resizeL.resized){
+			try{
+				// System.out.println(resizeL.newSize.width);
+				screenWidth = resizeL.newSize.width;
+				screenHeight = resizeL.newSize.height;
+				maxScreenCol = (screenWidth/originalTileSize) + 1;
+				maxScreenRow = (screenHeight/originalTileSize) + 1;
+				resizeL.resized = false;
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
-
 	
 	}
 
