@@ -7,11 +7,13 @@ public class ResizeListener implements ComponentListener{
 
 
 	public Dimension newSize;
+	public boolean resized = false;
 
 	@Override
 	public void componentResized(ComponentEvent e) {
 		
 		newSize = e.getComponent().getBounds().getSize();
+		resized = true;
 	}
 
 	@Override
