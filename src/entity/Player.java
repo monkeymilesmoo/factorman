@@ -30,23 +30,35 @@ public class Player extends entity{
 		speed = 8;
 		x = 400;
 		y = 400;
-		textureWidth = 92;
-		textureHeight = 116;
+		entityTextureWidth = 92;
+		entityTextureHeight = 116;
+		shadowTextureWidth = 164;
+		shadowTextureHeight = 78;
 		direction = 4;
 		selectedCol = 0;
-		selectedImage = idleImage;
+		selectedEntityImage = idleImage;
+		selectedShadowImage = idleShadowImage;
 		moving = false;
-		totalFramesInAnimation = 21;
+		totalFramesInAnimation = 22;
 
 	}
 
 	public void getPlayerImages() {
 
 		try {
+			//Player images
 			idleImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_idle.png"));
 			runningImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_running.png"));
 			miningImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_mining_tool-1.png"));
 
+			//Shadow images
+			idleShadowImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_idle_shadow.png"));
+			runningShadowImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_running_shadow.png"));
+			miningShadowImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_mining_tool_shadow.png"));
+
+
+
+			
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -65,7 +77,7 @@ public class Player extends entity{
 	
 		mining = keyH.testable ? true : false;
 		if(keyH.testable){
-			selectedImage = miningImage;
+			selectedEntityImage = miningImage;
 		}
 		moving = (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) ? true : false;
 
@@ -126,22 +138,30 @@ public class Player extends entity{
 
 	public void nextAnimationFrame(){
 		if(mining){
-			selectedImage = miningImage;
-			textureWidth = 196;
-			textureHeight = 194;
+			selectedEntityImage = miningImage;
+			selectedShadowImage = miningShadowImage;
+			entityTextureWidth = 196;
+			entityTextureHeight = 194;
+			shadowTextureWidth = 292;
+			shadowTextureHeight = 142;
 			totalFramesInAnimation = 26;
-			animationTick += 2;
 
 		}else if (moving){
-			selectedImage = runningImage;
-			textureWidth = 88;
-			textureHeight = 132;
+			selectedEntityImage = runningImage;
+			selectedShadowImage = runningShadowImage;
+			entityTextureWidth = 88;
+			entityTextureHeight = 132;
+			shadowTextureWidth = 190;
+			shadowTextureHeight = 68;
 			totalFramesInAnimation = 22;
 
 		}else {
-			selectedImage = idleImage;
-			textureWidth = 92;
-			textureHeight = 116;
+			selectedEntityImage = idleImage;
+			selectedShadowImage = idleShadowImage;
+			entityTextureWidth = 92;
+			entityTextureHeight = 116;
+			shadowTextureWidth = 164;
+			shadowTextureHeight = 78;
 			totalFramesInAnimation = 22;
 		}
 		animationTick++;
@@ -161,11 +181,14 @@ public class Player extends entity{
 
 
 
-		BufferedImage image = selectedImage.getSubimage((selectedCol * textureWidth), (direction * textureHeight), textureWidth, textureHeight);
-	
 
-		g2.drawImage(image, x, y, textureWidth, textureHeight, null);
-	
+		BufferedImage playerImage = selectedEntityImage.getSubimage((selectedCol * entityTextureWidth), (direction * entityTextureHeight), entityTextureWidth, entityTextureHeight);
+		BufferedImage shadowImage = selectedShadowImage.getSubimage((selectedCol * shadowTextureWidth), (direction * shadowTextureHeight), shadowTextureWidth, shadowTextureHeight);
+
+
+		g2.drawImage(shadowImage, x + 20, y + 65, shadowTextureWidth, shadowTextureHeight, null);
+		g2.drawImage(playerImage, x, y, entityTextureWidth, entityTextureHeight, null);
+
 	
 	
 	
