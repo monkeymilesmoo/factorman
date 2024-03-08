@@ -17,10 +17,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public int zoom = 1; //not sure what to make this zoom to make it look okay but i'll try this
 
 	public int tileSize = originalTileSize * zoom; //96x96 tiles
-	public final int maxScreenCol = 40;
-	public final int maxScreenRow = 24;
-	public final int screenWidth = originalTileSize * maxScreenCol; 
-	public final int screenHeight = originalTileSize * maxScreenRow;
+	public int maxScreenCol = 40;
+	public int maxScreenRow = 24;
+	public int screenWidth = originalTileSize * maxScreenCol; 
+	public int screenHeight = originalTileSize * maxScreenRow;
 
 
 	//FPS
@@ -28,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	BackgroundManager backgroundM = new BackgroundManager(this);
 	KeyHandler keyH = new KeyHandler();
+	ResizeListener resizeL = new ResizeListener();
 	Thread gameThread;
 	Player player = new Player(this, keyH);
 
@@ -38,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
+		this.addComponentListener(resizeL);
 		this.setFocusable(true);
 
 	}
@@ -73,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable{
 				
 				update();	//STEP ONE: Update information like character pos
 				repaint();	//STEP TWO: Calls paintComponent to draw screen
+				
 				delta--;
 				drawCount++;
 
@@ -97,7 +100,17 @@ public class GamePanel extends JPanel implements Runnable{
 
 		player.update();
 
-		
+		try{
+		// System.out.println(resizeL.newSize.width);
+		screenWidth = resizeL.newSize.width;
+		screenHeight = resizeL.newSize.height;
+		maxScreenCol = screenWidth/originalTileSize;
+		maxScreenRow = screenHeight/originalTileSize;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	
 	}
 
 

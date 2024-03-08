@@ -12,7 +12,7 @@ public class Main {
 
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(false);
+		// window.setResizable(false);
 		window.setTitle("test");
 		window.add(gp);
 		window.pack();
