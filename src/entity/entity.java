@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class entity {
 
-	public int x, y;
+	public int worldX, worldY;
 	public int speed;
 	public int entityTextureWidth, entityTextureHeight;
 	public int shadowTextureWidth, shadowTextureHeight;

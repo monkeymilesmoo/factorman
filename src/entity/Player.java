@@ -15,6 +15,11 @@ public class Player extends entity{
 	GamePanel gp;
 	KeyHandler keyH;
 
+	public int screenX;
+	public int screenY;
+	public int shadowX;
+	public int shadowY;
+
 
 	public Player(GamePanel gp, KeyHandler keyH){
 		
@@ -28,8 +33,8 @@ public class Player extends entity{
 	public void setDefaultValues() {
 
 		speed = 8;
-		x = 400;
-		y = 400;
+		worldX = 400;
+		worldY = 400;
 		entityTextureWidth = 92;
 		entityTextureHeight = 116;
 		shadowTextureWidth = 164;
@@ -85,41 +90,41 @@ public class Player extends entity{
 		if(!mining){
 			if (keyH.upPressed){
 				if(keyH.rightPressed){
-					y -= speed;
-					x += speed;
+					worldY -= speed;
+					worldX += speed;
 					direction = 1;
 				}
 				else if(keyH.leftPressed){
-					y -= speed;
-					x -= speed;
+					worldY -= speed;
+					worldX -= speed;
 					direction = 7;
 				}
 				else{
-					y -= speed;
+					worldY -= speed;
 					direction = 0;
 				}
 
 			}else if (keyH.downPressed){
 				if(keyH.rightPressed){
-					y += speed;
-					x += speed;
+					worldY += speed;
+					worldX += speed;
 					direction = 3;
 				}
 				else if(keyH.leftPressed){
-					y += speed;
-					x -= speed;
+					worldY += speed;
+					worldX -= speed;
 					direction = 5;
 				}
 				else{
-					y += speed;
+					worldY += speed;
 					direction = 4;
 				}
 
 			}else if(keyH.leftPressed){
-				x -= speed;
+				worldX -= speed;
 				direction = 6;
 			}else if(keyH.rightPressed){
-				x += speed;
+				worldX += speed;
 				direction = 2;
 			}
 		}
@@ -186,8 +191,8 @@ public class Player extends entity{
 		BufferedImage shadowImage = selectedShadowImage.getSubimage((selectedCol * shadowTextureWidth), (direction * shadowTextureHeight), shadowTextureWidth, shadowTextureHeight);
 
 
-		g2.drawImage(shadowImage, x + 20, y + 65, shadowTextureWidth, shadowTextureHeight, null);
-		g2.drawImage(playerImage, x, y, entityTextureWidth, entityTextureHeight, null);
+		g2.drawImage(shadowImage, shadowX, shadowY, shadowTextureWidth, shadowTextureHeight, null);
+		g2.drawImage(playerImage, screenX, screenY, entityTextureWidth, entityTextureHeight, null);
 
 	
 	

@@ -77,11 +77,17 @@ public class BackgroundManager {
 			int col = 0;
 			int row = 0;
 
-
+			// double beforeTime = System.nanoTime();
+			// double timeBtwn = 0;
+			// double afterTime = 0;
+			// double biggestTime = 0;
+			// double totalTime = 0;
 
 			while (col <= gp.chunkSize && row <= gp.chunkSize){
 
 				String line = br.readLine();
+
+				// beforeTime = System.nanoTime();
 
 				while(col <= gp.chunkSize){
 
@@ -93,12 +99,23 @@ public class BackgroundManager {
 					col++;
 				}
 
-				if (col > gp.chunkSize){
+				// afterTime = System.nanoTime();
+				// timeBtwn = (afterTime - beforeTime);
+				// // System.out.println(timeBtwn);
+				// if (timeBtwn > biggestTime){
+				// 	biggestTime = timeBtwn;
+				// }
+				// totalTime = totalTime + timeBtwn;
+
+
 					col = 0;
 					row++;
-				}
+				
 
 			}
+			
+			// System.out.println(biggestTime);
+			// System.out.println(totalTime);
 			br.close();
 			
 			
@@ -111,39 +128,36 @@ public class BackgroundManager {
 	public void draw(Graphics2D g2){
 
 
-		int col = 0;
-		int row = 0;
-		int x = 0;
-		int y = 0;
-		// int drawNum = 0;
+		//NEEDS TO BE REDONE PER CHUNK
+		int worldCol = 0;
+		int worldRow = 0;
 
 
 		this.terrainSeed.setSeed(44);
 
-		while (col < gp.chunkSize && row < gp.chunkSize){
+		while (worldCol < gp.chunkSize && worldRow < gp.chunkSize){
 			
 
-			int tileNum = mapTileNum[col][row];
+			int tileNum = mapTileNum[worldCol][worldRow];
+
+			int worldX = worldCol * gp.tileSize;
+			int worldY = worldRow * gp.tileSize;
+			int screenX = worldX - gp.player.worldX + gp.player.screenX;
+			int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
 
 
 			// drawNum++;
-			g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], x, y, gp.tileSize, gp.tileSize, null);
+			g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
 			
-
-			// g2.drawImage(background[0].image.getSubimage(0, 0, background[0].width, background[0].width), x, y, gp.tileSize, gp.tileSize, null);
-			// maybe use for like stone paths or something
 			
 
 
-			col++;
-			x += gp.tileSize;
+			worldCol++;
 
-			if(col == gp.chunkSize){
-				col = 0;
-				x = 0;
-				row++;
-				y += gp.tileSize;
+			if(worldCol == gp.chunkSize){
+				worldCol = 0;
+				worldRow++;
 			}
 
 
