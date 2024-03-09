@@ -19,10 +19,14 @@ public class GamePanel extends JPanel implements Runnable{
 	public int tileSize = originalTileSize * zoom; //96x96 tiles
 	public int maxScreenCol = 20;
 	public int maxScreenRow = 20;
-	public int screenWidth = originalTileSize * maxScreenCol; 
-	public int screenHeight = originalTileSize * maxScreenRow;
+	public int screenWidth = 1000;
+	public int screenHeight = 1000;
 
-	public int chunkSize = 15;
+
+	// public int screenWidth = originalTileSize * maxScreenCol; 
+	// public int screenHeight = originalTileSize * maxScreenRow;
+
+	public int chunkSize = 31;
 
 
 	//FPS
@@ -32,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
 	KeyHandler keyH = new KeyHandler();
 	ResizeListener resizeL = new ResizeListener();
 	Thread gameThread;
-	Player player = new Player(this, keyH);
+	public Player player = new Player(this, keyH);
 
 
 	public GamePanel() {
@@ -109,6 +113,10 @@ public class GamePanel extends JPanel implements Runnable{
 				maxScreenCol = (screenWidth/originalTileSize) + 1;
 				maxScreenRow = (screenHeight/originalTileSize) + 1;
 				resizeL.resized = false;
+				player.screenY = (screenHeight/2) - player.entityTextureHeight;
+				player.screenX = (screenWidth/2) - player.entityTextureWidth;
+				player.shadowX = player.screenX + 20;
+				player.shadowY = player.screenY + 65;
 			}catch(Exception e){
 				e.printStackTrace();
 			}
