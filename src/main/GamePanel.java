@@ -29,8 +29,8 @@ public class GamePanel extends JPanel implements Runnable{
 	// public int screenHeight = originalTileSize * maxScreenRow;
 
 	//DEBUG
-	// long longestTime = 0;
-	// public long timePassed = 0;
+	long longestTime = 0;
+	public long timePassed = 0;
 	//DEBUG
 
 
@@ -116,13 +116,13 @@ public class GamePanel extends JPanel implements Runnable{
 				
 
 				//DEBUG
-				// if (timePassed > longestTime){
-				// 	longestTime = timePassed;
-				// 	if (longestTime > 16600000){
-				// 		System.out.println(longestTime);
-				// 		longestTime = 0;
-				// 	}
-				// }
+				if (timePassed > longestTime){
+					longestTime = timePassed;
+					if (longestTime > 16600000){
+						System.out.println(longestTime);
+						longestTime = 0;
+					}
+				}
 				//DEBUG
 				
 				delta--;
@@ -175,8 +175,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 		//DEBUG
-		// long drawStart = 0;
-		// drawStart = System.nanoTime();
+		long drawStart = 0;
+		drawStart = System.nanoTime();
 		//DEBUG
 
 
@@ -189,9 +189,9 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 		//DEBUG
-		// long drawEnd = 0;
-		// drawEnd = System.nanoTime();
-		// timePassed = drawEnd-drawStart;
+		long drawEnd = 0;
+		drawEnd = System.nanoTime();
+		timePassed = drawEnd-drawStart;
 		//DEBUG
 
 

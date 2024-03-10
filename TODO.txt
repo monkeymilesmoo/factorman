@@ -1,10 +1,12 @@
 TODO:
 
 
-figure out how to make rendering more efficient - only render whats actually on screen
 
 Tile entities
 Buildings
+
+Probably make rendering more efficient somehow. It currently is a little too slow I think.
+
 
 Maybe add zoom
 Add map
