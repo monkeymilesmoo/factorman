@@ -34,7 +34,7 @@ public class Player extends entity{
 		this.gp = gp;
 		this.keyH = keyH;
 		
-		spawnCoords = (Chunk.chunkSize * ChunkGrid.gridSize * gp.tileSize) / 2;
+		spawnCoords = (Chunk.chunkSize * (ChunkGrid.gridSize - 1) * gp.tileSize);
 
 		this.idleArray = new BufferedImage[22][8];
 		this.runningArray = new BufferedImage[22][8];
@@ -238,7 +238,6 @@ public class Player extends entity{
 		g2.drawImage(shadowImage, shadowX, shadowY, shadowTextureWidth, shadowTextureHeight, null);
 		g2.drawImage(playerImage, screenX, screenY, entityTextureWidth, entityTextureHeight, null);
 
-	
 	
 	
 	}

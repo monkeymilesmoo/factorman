@@ -77,9 +77,6 @@ public class BackgroundManager {
 		int chunkRow = 0;
 
 
-		// Starting chunk to render
-		// int leftCol = (gp.player.worldX - (gp.player.worldY % Chunk.chunkSize) * Chunk.chunkSize);
-		// int topRow = (gp.player.worldY - (gp.player.worldY % Chunk.chunkSize) * Chunk.chunkSize);
 
 		int leftCol = ((gp.player.worldX - gp.player.screenX) / (Chunk.chunkSize * gp.tileSize));
 		int topRow = ((gp.player.worldY - gp.player.screenY) / (Chunk.chunkSize * gp.tileSize));
@@ -101,27 +98,34 @@ public class BackgroundManager {
 			
 
 
-			int tileNum = gp.chunkGrid.getChunk(worldCol, worldRow).getTile(chunkCol, chunkRow);
+			Chunk chunk = gp.chunkGrid.getChunk(worldCol, worldRow);
+			// NEED TO MAKE SURE THAT GAME WONT CRASH ON THE EDGE OF THE WORLD
+			if (chunk != null){
+				
+				int tileNum = chunk.getTile(chunkCol, chunkRow);
 
 
 
-			int worldX = (worldCol * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkCol);
-			int worldY = (worldRow * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkRow);
-			int screenX = worldX - gp.player.worldX + gp.player.screenX;
-			int screenY = worldY - gp.player.worldY + gp.player.screenY;
+				int worldX = (worldCol * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkCol);
+				int worldY = (worldRow * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkRow);
+				int screenX = worldX - gp.player.worldX + gp.player.screenX;
+				int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-			// System.out.println(worldX);
-			// System.out.println(worldY);
-			// System.out.println(screenX);
-			// System.out.println(screenY);
-			
-			// break;
+				// System.out.println(worldX);
+				// System.out.println(worldY);
+				// System.out.println(screenX);
+				// System.out.println(screenY);
+				
+				// break;
 
-			// drawNum++;
-			g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
-			
+				// drawNum++;				
+				g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
+				
+				// }else{
+				// 	terrainSeed.nextInt(8);
+				// }
 
-		
+			}
 			chunkCol++;
 
 			if(chunkCol >= Chunk.chunkSize){
@@ -138,8 +142,7 @@ public class BackgroundManager {
 				worldCol = leftCol - 1;
 				worldRow++;
 			}
-
-
+			
 
 		}
 

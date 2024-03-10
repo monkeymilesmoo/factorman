@@ -42,28 +42,30 @@ public class ChunkGrid implements Serializable{
 			// double biggestTime = 0;
 			// double totalTime = 0;
 
-			while (col <= Chunk.chunkSize && row <= Chunk.chunkSize){
+			while (col < Chunk.chunkSize && row < Chunk.chunkSize){
 
 				String line = br.readLine();
 
 				// beforeTime = System.nanoTime();
 
-				while(col <= Chunk.chunkSize){
+				while(col < Chunk.chunkSize){
 
 					String numbers[] = line.split(" ");
 
-					int num = Integer.parseInt(numbers[col]);
+					byte num = Byte.parseByte(numbers[col]);
 
-					chunks[gridSize/2][gridSize/2].setTile(col, row, (byte) num);
+					// System.out.print(num + " ");
+
+					chunks[50][50].setTile(col, row, num);
 					col++;
 				}
-
 
 					col = 0;
 					row++;
 				
 
-			}
+			
+				}
 			
 			// System.out.println(biggestTime);
 			// System.out.println(totalTime);
@@ -72,7 +74,7 @@ public class ChunkGrid implements Serializable{
 			
 
 		}catch(Exception e){
-
+			e.printStackTrace();
 		}
 		}
 		
@@ -87,7 +89,11 @@ public class ChunkGrid implements Serializable{
 	}
 
 	public Chunk getChunk(int chunkX, int chunkY) {
-		return chunks[chunkX][chunkY];
+		try {
+			return chunks[chunkX][chunkY];
+		} catch(Exception e){
+			return null;
+		}
 	}
 	
 	public void setChunk(int chunkX, int chunkY, Chunk chunk){
