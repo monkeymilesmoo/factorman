@@ -71,7 +71,6 @@ public class BackgroundManager {
 		
 
 
-		this.terrainSeed.setSeed(44);
 
 		//Which tile in each chunk is selected
 		int chunkCol = 0;
@@ -82,21 +81,21 @@ public class BackgroundManager {
 		// int leftCol = (gp.player.worldX - (gp.player.worldY % Chunk.chunkSize) * Chunk.chunkSize);
 		// int topRow = (gp.player.worldY - (gp.player.worldY % Chunk.chunkSize) * Chunk.chunkSize);
 
-		int leftCol = (gp.player.worldX / (Chunk.chunkSize * gp.tileSize));
-		int topRow = (gp.player.worldY / (Chunk.chunkSize * gp.tileSize));
+		int leftCol = ((gp.player.worldX - gp.player.screenX) / (Chunk.chunkSize * gp.tileSize));
+		int topRow = ((gp.player.worldY - gp.player.screenY) / (Chunk.chunkSize * gp.tileSize));
 
 
 		//Which chunk is selected
-		int worldCol = leftCol - 1;
-		int worldRow = topRow - 1;
+		int worldCol = leftCol;
+		int worldRow = topRow;
 
-		int endWorldCol = leftCol + 1;
-		int endWorldRow = topRow + 1; 
+		int endWorldCol = leftCol + 2;
+		int endWorldRow = topRow + 2; 
 
-		System.out.println(gp.player.worldY);
-		System.out.println(leftCol);
-		System.out.println(topRow);
-		System.out.println();
+		// System.out.println(gp.player.worldY);
+		// System.out.println(leftCol);
+		// System.out.println(topRow);
+		// System.out.println();
 
 		while ((worldCol < endWorldCol) && (worldRow < endWorldRow)){
 			
@@ -113,7 +112,10 @@ public class BackgroundManager {
 
 			// System.out.println(worldX);
 			// System.out.println(worldY);
-			// System.out.println();
+			// System.out.println(screenX);
+			// System.out.println(screenY);
+			
+			// break;
 
 			// drawNum++;
 			g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
@@ -122,16 +124,17 @@ public class BackgroundManager {
 		
 			chunkCol++;
 
-			if(chunkCol == Chunk.chunkSize){
+			if(chunkCol >= Chunk.chunkSize){
 				chunkCol = 0;
 				chunkRow++;
 			}
 
-			if(chunkRow == Chunk.chunkSize){
+			if(chunkRow >= Chunk.chunkSize){
 				worldCol++;
 				chunkRow = 0;
+				this.terrainSeed.setSeed(44);
 			}
-			if (worldCol > endWorldCol){
+			if (worldCol >= endWorldCol){
 				worldCol = leftCol - 1;
 				worldRow++;
 			}

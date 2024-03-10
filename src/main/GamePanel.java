@@ -28,9 +28,11 @@ public class GamePanel extends JPanel implements Runnable{
 	// public int screenWidth = originalTileSize * maxScreenCol; 
 	// public int screenHeight = originalTileSize * maxScreenRow;
 
-
+	//DEBUG
 	// long longestTime = 0;
 	// public long timePassed = 0;
+	//DEBUG
+
 
 
 	boolean loading = false;
@@ -112,17 +114,16 @@ public class GamePanel extends JPanel implements Runnable{
 				update();	//STEP ONE: Update information like character pos
 				repaint();	//STEP TWO: Calls paintComponent to draw screen
 				
+
+				//DEBUG
 				// if (timePassed > longestTime){
 				// 	longestTime = timePassed;
-				// 	System.out.println(longestTime);
-				// 	try{
-				// 		Thread.sleep(1000);
-				// 	}catch(Exception e){
-
+				// 	if (longestTime > 16600000){
+				// 		System.out.println(longestTime);
+				// 		longestTime = 0;
 				// 	}
-					
 				// }
-				
+				//DEBUG
 				
 				delta--;
 				drawCount++;
@@ -133,8 +134,8 @@ public class GamePanel extends JPanel implements Runnable{
 				System.out.println("FPS: " + drawCount);
 				timer = 0;
 				drawCount = 0;
+				
 			}
-
 
 
 			
