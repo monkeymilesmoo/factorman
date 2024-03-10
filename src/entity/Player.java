@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import src.Chunk.Chunk;
+import src.Chunk.ChunkGrid;
 import src.main.GamePanel;
 
 public class Player extends entity{
@@ -20,28 +22,41 @@ public class Player extends entity{
 	public int shadowX;
 	public int shadowY;
 
+	
+
+	public final int spawnCoords;
+
 
 	public Player(GamePanel gp, KeyHandler keyH){
 		
+		
+	
 		this.gp = gp;
 		this.keyH = keyH;
+		
+		spawnCoords = (Chunk.chunkSize * ChunkGrid.gridSize * gp.tileSize) / 2;
+
+		this.idleArray = new BufferedImage[22][8];
+		this.runningArray = new BufferedImage[22][8];
+		this.miningArray = new BufferedImage[26][8];
 
 		getPlayerImages();
 		setDefaultValues();
 	}
 
+
 	public void setDefaultValues() {
 
 		speed = 8;
-		worldX = 400;
-		worldY = 400;
+		worldX = spawnCoords;
+		worldY = spawnCoords;
 		entityTextureWidth = 92;
 		entityTextureHeight = 116;
 		shadowTextureWidth = 164;
 		shadowTextureHeight = 78;
 		direction = 4;
-		selectedCol = 0;
-		selectedEntityImage = idleImage;
+		animationFrame = 0;
+		selectedEntityImage = idleArray;
 		selectedShadowImage = idleShadowImage;
 		moving = false;
 		totalFramesInAnimation = 22;
@@ -61,12 +76,44 @@ public class Player extends entity{
 			runningShadowImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_running_shadow.png"));
 			miningShadowImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_mining_tool_shadow.png"));
 
-
+			playerImagesToArrays();
 
 			
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public void playerImagesToArrays() {
+
+		//This will need to be updated if more animations are ever added
+		//Idle animations
+		for(int i = 0; i < 8; i++){
+			for (int j = 0; j < idleArray.length; j++){
+			idleArray[j][i] = idleImage.getSubimage((j * 92), (i * 116), 92, 116);
+
+			}
+		}
+		//Running animations
+		for(int i = 0; i < 8; i++){
+			for (int j = 0; j < runningArray.length; j++){
+				runningArray[j][i] = runningImage.getSubimage((j * 88), (i * 132), 88, 132);
+
+			}
+		}
+
+
+		
+		//Mining animations
+		for(int i = 0; i < 8; i++){
+			for (int j = 0; j < idleArray.length; j++){
+				miningArray[j][i] = miningImage.getSubimage((j * 196), (i * 194), 196, 194);
+
+			}
+		}
+
+
 
 	}
 
@@ -82,7 +129,7 @@ public class Player extends entity{
 	
 		mining = keyH.testable ? true : false;
 		if(keyH.testable){
-			selectedEntityImage = miningImage;
+			selectedEntityImage = miningArray;
 		}
 		moving = (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) ? true : false;
 
@@ -143,38 +190,35 @@ public class Player extends entity{
 
 	public void nextAnimationFrame(){
 		if(mining){
-			selectedEntityImage = miningImage;
+			selectedEntityImage = miningArray;
 			selectedShadowImage = miningShadowImage;
 			entityTextureWidth = 196;
 			entityTextureHeight = 194;
 			shadowTextureWidth = 292;
 			shadowTextureHeight = 142;
-			totalFramesInAnimation = 26;
 
 		}else if (moving){
-			selectedEntityImage = runningImage;
+			selectedEntityImage = runningArray;
 			selectedShadowImage = runningShadowImage;
 			entityTextureWidth = 88;
 			entityTextureHeight = 132;
 			shadowTextureWidth = 190;
 			shadowTextureHeight = 68;
-			totalFramesInAnimation = 22;
 
 		}else {
-			selectedEntityImage = idleImage;
+			selectedEntityImage = idleArray;
 			selectedShadowImage = idleShadowImage;
 			entityTextureWidth = 92;
 			entityTextureHeight = 116;
 			shadowTextureWidth = 164;
 			shadowTextureHeight = 78;
-			totalFramesInAnimation = 22;
 		}
 		animationTick++;
 		if (animationTick > 4 || moving || mining) {
 			animationTick = 0;
-			selectedCol++;
-		if (selectedCol >= totalFramesInAnimation){
-			selectedCol = 0;
+			animationFrame++;
+		if (animationFrame >= totalFramesInAnimation){
+			animationFrame = 0;
 		}
 		
 		}
@@ -187,9 +231,9 @@ public class Player extends entity{
 
 
 
-		BufferedImage playerImage = selectedEntityImage.getSubimage((selectedCol * entityTextureWidth), (direction * entityTextureHeight), entityTextureWidth, entityTextureHeight);
-		BufferedImage shadowImage = selectedShadowImage.getSubimage((selectedCol * shadowTextureWidth), (direction * shadowTextureHeight), shadowTextureWidth, shadowTextureHeight);
-
+		// BufferedImage playerImage = selectedEntityImage.getSubimage((animationFrame * entityTextureWidth), (direction * entityTextureHeight), entityTextureWidth, entityTextureHeight);
+		BufferedImage shadowImage = selectedShadowImage.getSubimage((animationFrame * shadowTextureWidth), (direction * shadowTextureHeight), shadowTextureWidth, shadowTextureHeight);
+		BufferedImage playerImage = selectedEntityImage[animationFrame][direction];
 
 		g2.drawImage(shadowImage, shadowX, shadowY, shadowTextureWidth, shadowTextureHeight, null);
 		g2.drawImage(playerImage, screenX, screenY, entityTextureWidth, entityTextureHeight, null);

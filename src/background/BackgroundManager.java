@@ -1,14 +1,12 @@
 package src.background;
 
 import java.awt.Graphics2D;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import src.Chunk.Chunk;
 import src.main.GamePanel;
 
 public class BackgroundManager {
@@ -16,9 +14,9 @@ public class BackgroundManager {
 
 	GamePanel gp;
 	Terrain[] terrain;
-	int mapTileNum[][];
 
 	Random terrainSeed;
+
 
 
 	public BackgroundManager(GamePanel gp){
@@ -28,10 +26,8 @@ public class BackgroundManager {
 		this.terrainSeed = new Random();
 
 		terrain = new Terrain[2]; // CHANGE TO NUMBER OF TERRAINS
-		mapTileNum = new int[gp.chunkSize + 1][gp.chunkSize + 1];
 		
 		getBackgroundImage();
-		loadChunk();
 
 	}
 
@@ -66,104 +62,83 @@ public class BackgroundManager {
 		}	
 	}
 
-	public void loadChunk(){
 
-		try {
-			
-			//FOR NOW JUST READING ONE TXT FILE
-			InputStream is = getClass().getResourceAsStream("/data/map/map.txt");
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-			int col = 0;
-			int row = 0;
-
-			// double beforeTime = System.nanoTime();
-			// double timeBtwn = 0;
-			// double afterTime = 0;
-			// double biggestTime = 0;
-			// double totalTime = 0;
-
-			while (col <= gp.chunkSize && row <= gp.chunkSize){
-
-				String line = br.readLine();
-
-				// beforeTime = System.nanoTime();
-
-				while(col <= gp.chunkSize){
-
-					String numbers[] = line.split(" ");
-
-					int num = Integer.parseInt(numbers[col]);
-
-					mapTileNum[col][row] = num;
-					col++;
-				}
-
-				// afterTime = System.nanoTime();
-				// timeBtwn = (afterTime - beforeTime);
-				// // System.out.println(timeBtwn);
-				// if (timeBtwn > biggestTime){
-				// 	biggestTime = timeBtwn;
-				// }
-				// totalTime = totalTime + timeBtwn;
-
-
-					col = 0;
-					row++;
-				
-
-			}
-			
-			// System.out.println(biggestTime);
-			// System.out.println(totalTime);
-			br.close();
-			
-			
-
-		}catch(Exception e){
-
-		}
-	}
+		
 
 	public void draw(Graphics2D g2){
 
 
-		//NEEDS TO BE REDONE PER CHUNK
-		int worldCol = 0;
-		int worldRow = 0;
+		
 
 
 		this.terrainSeed.setSeed(44);
 
-		while (worldCol < gp.chunkSize && worldRow < gp.chunkSize){
+		//Which tile in each chunk is selected
+		int chunkCol = 0;
+		int chunkRow = 0;
+
+
+		// Starting chunk to render
+		// int leftCol = (gp.player.worldX - (gp.player.worldY % Chunk.chunkSize) * Chunk.chunkSize);
+		// int topRow = (gp.player.worldY - (gp.player.worldY % Chunk.chunkSize) * Chunk.chunkSize);
+
+		int leftCol = (gp.player.worldX / (Chunk.chunkSize * gp.tileSize));
+		int topRow = (gp.player.worldY / (Chunk.chunkSize * gp.tileSize));
+
+
+		//Which chunk is selected
+		int worldCol = leftCol - 1;
+		int worldRow = topRow - 1;
+
+		int endWorldCol = leftCol + 1;
+		int endWorldRow = topRow + 1; 
+
+		System.out.println(gp.player.worldY);
+		System.out.println(leftCol);
+		System.out.println(topRow);
+		System.out.println();
+
+		while ((worldCol < endWorldCol) && (worldRow < endWorldRow)){
 			
 
-			int tileNum = mapTileNum[worldCol][worldRow];
 
-			int worldX = worldCol * gp.tileSize;
-			int worldY = worldRow * gp.tileSize;
+			int tileNum = gp.chunkGrid.getChunk(worldCol, worldRow).getTile(chunkCol, chunkRow);
+
+
+
+			int worldX = (worldCol * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkCol);
+			int worldY = (worldRow * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkRow);
 			int screenX = worldX - gp.player.worldX + gp.player.screenX;
 			int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-
+			// System.out.println(worldX);
+			// System.out.println(worldY);
+			// System.out.println();
 
 			// drawNum++;
 			g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
 			
-			
 
+		
+			chunkCol++;
 
-			worldCol++;
+			if(chunkCol == Chunk.chunkSize){
+				chunkCol = 0;
+				chunkRow++;
+			}
 
-			if(worldCol == gp.chunkSize){
-				worldCol = 0;
+			if(chunkRow == Chunk.chunkSize){
+				worldCol++;
+				chunkRow = 0;
+			}
+			if (worldCol > endWorldCol){
+				worldCol = leftCol - 1;
 				worldRow++;
 			}
 
 
 
 		}
-
 
 		// System.out.println(drawNum);
 

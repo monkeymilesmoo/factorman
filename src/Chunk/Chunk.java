@@ -3,13 +3,14 @@ package src.Chunk;
 import java.io.Serializable;
 
 public class Chunk implements Serializable{
-	private int[][] tiles;
+	byte[][] tiles;
+	public final static int chunkSize = 32;
 
 	public Chunk() {
-		tiles = new int[32][32];
+		tiles = new byte[chunkSize][chunkSize];
 	}
 
-	public void setTile(int x, int y, int tileID) {
+	public void setTile(int x, int y, byte tileID) {
 
 		tiles[x][y] = tileID;
 	}

@@ -1,0 +1,10 @@
+TODO:
+
+
+figure out how to make rendering more efficient - only render whats actually on screen
+
+Tile entities
+Buildings
+
+Maybe add zoom
+Add map

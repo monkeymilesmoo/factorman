@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import src.background.BackgroundManager;
 import src.entity.Player;
+import src.Chunk.ChunkGrid;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,23 +24,51 @@ public class GamePanel extends JPanel implements Runnable{
 	public int screenHeight = 1000;
 
 
+
 	// public int screenWidth = originalTileSize * maxScreenCol; 
 	// public int screenHeight = originalTileSize * maxScreenRow;
 
-	public int chunkSize = 31;
+
+	// long longestTime = 0;
+	// public long timePassed = 0;
+
+
+	boolean loading = false;
+
+
+
 
 
 	//FPS
 	int FPS = 60;
 
-	BackgroundManager backgroundM = new BackgroundManager(this);
 	KeyHandler keyH = new KeyHandler();
 	ResizeListener resizeL = new ResizeListener();
 	Thread gameThread;
 	public Player player = new Player(this, keyH);
 
+	public ChunkGrid chunkGrid;
+
+	public BackgroundManager backgroundM = new BackgroundManager(this);
 
 	public GamePanel() {
+
+		// 
+		//NEEDS TO BE FINISHED - LOADING AND SAVING MAP
+		// 
+		// 
+		// MAKE LOAD OR NEW PROMPT
+		if(!loading){
+			chunkGrid = new ChunkGrid(this, loading);
+			chunkGrid.saveToFile("chunkGrid.dat");
+		}else{
+			chunkGrid = ChunkGrid.loadFromFile("chunkGrid.dat");
+		}
+
+
+
+
+
 
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
@@ -47,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable{
 		this.addKeyListener(keyH);
 		this.addComponentListener(resizeL);
 		this.setFocusable(true);
+
 
 	}
 
@@ -81,6 +111,18 @@ public class GamePanel extends JPanel implements Runnable{
 				
 				update();	//STEP ONE: Update information like character pos
 				repaint();	//STEP TWO: Calls paintComponent to draw screen
+				
+				// if (timePassed > longestTime){
+				// 	longestTime = timePassed;
+				// 	System.out.println(longestTime);
+				// 	try{
+				// 		Thread.sleep(1000);
+				// 	}catch(Exception e){
+
+				// 	}
+					
+				// }
+				
 				
 				delta--;
 				drawCount++;
@@ -148,8 +190,7 @@ public class GamePanel extends JPanel implements Runnable{
 		//DEBUG
 		// long drawEnd = 0;
 		// drawEnd = System.nanoTime();
-		// long timePassed = drawEnd-drawStart;
-		// System.out.println(timePassed);
+		// timePassed = drawEnd-drawStart;
 		//DEBUG
 
 
