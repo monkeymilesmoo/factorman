@@ -10,11 +10,12 @@ public class entity {
 	public int shadowTextureWidth, shadowTextureHeight;
 
 	public BufferedImage idleImage, runningImage, miningImage;
+	public BufferedImage[][] idleArray, runningArray, miningArray;
 	public BufferedImage idleShadowImage, runningShadowImage, miningShadowImage;
 	public int direction; //cardinal directions going clockwise 0 -> 7
-	public int selectedCol, selectedRow;
+	public int animationFrame;
 	public int totalFramesInAnimation;
-	public BufferedImage selectedEntityImage;
+	public BufferedImage[][] selectedEntityImage;
 	public BufferedImage selectedShadowImage;
 
 	public BufferedImage testImage;
