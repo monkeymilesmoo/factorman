@@ -95,6 +95,10 @@ public class ChunkGrid implements Serializable{
 		}
 	}
 
+	public void generateNewChunk() {
+		//IMPLEMENT
+	}
+
 	public Chunk getChunk(int chunkX, int chunkY) {
 		try {
 			return chunks[chunkX][chunkY];
