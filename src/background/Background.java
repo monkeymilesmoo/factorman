@@ -11,8 +11,7 @@ public class Background {
 	public int worldX, worldY;
 	public int howMany;
 	
-	BufferedImage[] drawingImage = new BufferedImage[8];
-
+	BufferedImage[] drawingImage;
 
 
 }
