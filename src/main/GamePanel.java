@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Thread gameThread;
 	public Player player = new Player(this, keyH);
 
-	public ChunkGrid chunkGrid;
+	public ChunkGrid terrainChunkGrid;
 
 	public BackgroundManager backgroundM = new BackgroundManager(this);
 
@@ -61,10 +61,9 @@ public class GamePanel extends JPanel implements Runnable{
 		// 
 		// MAKE LOAD OR NEW PROMPT
 		if(!loading){
-			chunkGrid = new ChunkGrid(this, loading);
-			chunkGrid.saveToFile("chunkGrid.dat");
+			terrainChunkGrid = new ChunkGrid(this, loading);
 		}else{
-			chunkGrid = ChunkGrid.loadFromFile("chunkGrid.dat");
+			terrainChunkGrid = ChunkGrid.loadFromFile("terrainChunkGrid.dat");
 		}
 
 
@@ -134,6 +133,10 @@ public class GamePanel extends JPanel implements Runnable{
 				System.out.println("FPS: " + drawCount);
 				timer = 0;
 				drawCount = 0;
+				if(keyH.Lpressed == true){
+					terrainChunkGrid.saveToFile("terrainChunkGrid.dat");
+					keyH.Lpressed = false;
+				}
 				
 			}
 

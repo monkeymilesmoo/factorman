@@ -105,7 +105,7 @@ public class ChunkGrid implements Serializable{
 			FileOutputStream fileOut = new FileOutputStream(filename);
 			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 			objectOut.writeObject(this);
-			System.out.println("Map saved successfully to file");
+			System.out.println("Map saved successfully to: " + filename);
 			
 			objectOut.close();
 
