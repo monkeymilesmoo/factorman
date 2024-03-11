@@ -1,6 +1,7 @@
 package src.background;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
@@ -55,7 +56,8 @@ public class BackgroundManager {
 			int gettingSub = 0;
 
 			while (renderingTerrain < terrain.length){
-
+				
+				terrain[renderingTerrain].drawingImage = new BufferedImage[terrain[renderingTerrain].howMany];
 
 				while (gettingSub < terrain[renderingTerrain].howMany){
 					terrain[renderingTerrain].drawingImage[gettingSub] = terrain[renderingTerrain].image.getSubimage(terrain[renderingTerrain].width * terrainSeed.nextInt(8), 160, gp.tileSize, gp.tileSize);
