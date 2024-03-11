@@ -91,6 +91,14 @@ public class BackgroundManager {
 		int topRow = ((gp.player.worldY - gp.player.screenY) / (Chunk.chunkSize * gp.tileSize));
 
 
+		if(leftCol < gp.chunkGrid.leftmostChunk){
+			gp.chunkGrid.leftmostChunk = leftCol;
+		}
+		if (topRow < gp.chunkGrid.topmostChunk){
+			gp.chunkGrid.topmostChunk = topRow;
+		}
+
+
 		//Which chunk is selected
 		int worldCol = leftCol;
 		int worldRow = topRow;
@@ -98,17 +106,22 @@ public class BackgroundManager {
 		int endWorldCol = leftCol + 2;
 		int endWorldRow = topRow + 2; 
 
-		// System.out.println(gp.player.worldY);
-		// System.out.println(leftCol);
-		// System.out.println(topRow);
-		// System.out.println();
+		if(endWorldCol > gp.chunkGrid.rightmostChunk){
+			gp.chunkGrid.rightmostChunk = endWorldCol;
+		}
+		if (endWorldRow > gp.chunkGrid.bottommostChunk){
+			gp.chunkGrid.bottommostChunk = endWorldRow;
+		}
+
+
+
 
 		while ((worldCol < endWorldCol) && (worldRow < endWorldRow)){
 			
 
 
-			Chunk chunk = gp.terrainChunkGrid.getChunk(worldCol, worldRow);
-			// NEED TO MAKE SURE THAT GAME WONT CRASH ON THE EDGE OF THE WORLD
+			Chunk chunk = gp.chunkGrid.getChunk(worldCol, worldRow);
+			// Makes sure going to edge of the world won't crash the game
 			if (chunk != null){
 				
 				int tileNum = chunk.getTile(chunkCol, chunkRow);
@@ -119,20 +132,10 @@ public class BackgroundManager {
 				int worldY = (worldRow * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkRow);
 				int screenX = worldX - gp.player.worldX + gp.player.screenX;
 				int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
-				// System.out.println(worldX);
-				// System.out.println(worldY);
-				// System.out.println(screenX);
-				// System.out.println(screenY);
-				
-				// break;
-
-				// drawNum++;				
+			
 				g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
 				
-				// }else{
-				// 	terrainSeed.nextInt(8);
-				// }
+				
 
 			}
 			chunkCol++;
