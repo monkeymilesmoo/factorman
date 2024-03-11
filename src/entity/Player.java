@@ -22,6 +22,9 @@ public class Player extends entity{
 	public int shadowX;
 	public int shadowY;
 
+	public int XCoords;
+	public int YCoords;
+
 	
 
 	public final int spawnCoords;
@@ -34,7 +37,9 @@ public class Player extends entity{
 		this.gp = gp;
 		this.keyH = keyH;
 		
-		spawnCoords = (Chunk.chunkSize * (ChunkGrid.gridSize - 1) * gp.tileSize);
+		spawnCoords = ((Chunk.chunkSize * ChunkGrid.gridSize * gp.tileSize)/2 + (gp.tileSize * Chunk.chunkSize)/2);
+
+		
 
 		this.idleArray = new BufferedImage[22][8];
 		this.runningArray = new BufferedImage[22][8];
@@ -50,6 +55,8 @@ public class Player extends entity{
 		speed = 8;
 		worldX = spawnCoords;
 		worldY = spawnCoords;
+		XCoords = spawnCoords;
+		YCoords = spawnCoords;
 		entityTextureWidth = 92;
 		entityTextureHeight = 116;
 		shadowTextureWidth = 164;
@@ -180,9 +187,12 @@ public class Player extends entity{
 
 
 
+		XCoords = (worldX - spawnCoords) / gp.tileSize;
+		YCoords = (worldY - spawnCoords) / gp.tileSize;
 
-
-
+		// System.out.println(XCoords);
+		// System.out.println(YCoords);
+		// System.out.println();
 
 
 

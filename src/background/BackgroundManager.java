@@ -13,7 +13,7 @@ public class BackgroundManager {
 
 
 	GamePanel gp;
-	Terrain[] terrain;
+	Background[] terrain;
 
 	Random terrainSeed;
 
@@ -25,7 +25,7 @@ public class BackgroundManager {
 
 		this.terrainSeed = new Random();
 
-		terrain = new Terrain[2]; // CHANGE TO NUMBER OF TERRAINS
+		terrain = new Background[3]; // CHANGE TO NUMBER OF TERRAINS
 		
 		getBackgroundImage();
 
@@ -35,22 +35,29 @@ public class BackgroundManager {
 
 		try{
 			
-			terrain[0] = new Terrain();
+			terrain[0] = new Background();
 			terrain[0].image = ImageIO.read(getClass().getResourceAsStream("/res/background/terrain/dirt-1.png"));
-			terrain[0].width = 65;
+			terrain[0].width = 64;
+			terrain[0].howMany = 8;
 			
-			terrain[1] = new Terrain();
+			terrain[1] = new Background();
 			terrain[1].image = ImageIO.read(getClass().getResourceAsStream("/res/background/terrain/sand-1.png"));
 			terrain[1].width = 128;
+			terrain[1].howMany = 8;
+			
+			terrain[2] = new Background();
+			terrain[2].image = ImageIO.read(getClass().getResourceAsStream("/res/background/terrain/grass-1.png"));
+			terrain[2].width = 128;
+			terrain[2].howMany = 16;
 
 
 			int renderingTerrain = 0;
 			int gettingSub = 0;
 
-			while (renderingTerrain < 2){
+			while (renderingTerrain < terrain.length){
 
 
-				while (gettingSub < 8){
+				while (gettingSub < terrain[renderingTerrain].howMany){
 					terrain[renderingTerrain].drawingImage[gettingSub] = terrain[renderingTerrain].image.getSubimage(terrain[renderingTerrain].width * terrainSeed.nextInt(8), 160, gp.tileSize, gp.tileSize);
 					gettingSub++;
 				}
@@ -98,7 +105,7 @@ public class BackgroundManager {
 			
 
 
-			Chunk chunk = gp.chunkGrid.getChunk(worldCol, worldRow);
+			Chunk chunk = gp.terrainChunkGrid.getChunk(worldCol, worldRow);
 			// NEED TO MAKE SURE THAT GAME WONT CRASH ON THE EDGE OF THE WORLD
 			if (chunk != null){
 				

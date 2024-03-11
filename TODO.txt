@@ -5,8 +5,15 @@ TODO:
 Tile entities
 Buildings
 
+Add ability to detect mouse location
+Clicking makes a building or something
+Add inventory - at least a hotbar to place Buildings
+The little yellow selection thing around tileentities in factorio - its in C:\Program Files\Factorio\data\core\graphics
+
+Actual terrain generation with noise and such
+
 Probably make rendering more efficient somehow. It currently is a little too slow I think.
 
 
-Maybe add zoom
 Add map
+Maybe add zoom

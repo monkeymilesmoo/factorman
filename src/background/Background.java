@@ -9,6 +9,7 @@ public class Background {
 	public boolean collision = false;
 	public int width;
 	public int worldX, worldY;
+	public int howMany;
 	
 	BufferedImage[] drawingImage = new BufferedImage[8];
 
