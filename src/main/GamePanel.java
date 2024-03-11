@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 
-	boolean loading = false;
+	boolean loading = true;
 
 
 
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Thread gameThread;
 	public Player player = new Player(this, keyH);
 
-	public ChunkGrid terrainChunkGrid;
+	public ChunkGrid chunkGrid;
 
 	public BackgroundManager backgroundM = new BackgroundManager(this);
 
@@ -60,12 +60,14 @@ public class GamePanel extends JPanel implements Runnable{
 		// 
 		// 
 		// MAKE LOAD OR NEW PROMPT
-		if(!loading){
-			terrainChunkGrid = new ChunkGrid(this, loading);
-		}else{
-			terrainChunkGrid = ChunkGrid.loadFromFile("terrainChunkGrid.dat");
-		}
+		long beforeOpening = System.nanoTime();
 
+		if(!loading){
+			chunkGrid = new ChunkGrid(this, loading);
+		}else{
+			chunkGrid = ChunkGrid.loadFromFile("chunkGrid.dat");
+			System.out.println("loadtime: " + (System.nanoTime() - beforeOpening));
+		}
 
 
 
@@ -97,6 +99,7 @@ public class GamePanel extends JPanel implements Runnable{
 		long currentTime;
 		int timer = 0;
 		int drawCount = 0;
+		int frameNumber = 0;
 
 
 		while(gameThread != null){
@@ -110,6 +113,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 			if (delta >= 1){
 				
+				frameNumber++; //Step 0.5: update frame number
 				update();	//STEP ONE: Update information like character pos
 				repaint();	//STEP TWO: Calls paintComponent to draw screen
 				
@@ -134,7 +138,7 @@ public class GamePanel extends JPanel implements Runnable{
 				timer = 0;
 				drawCount = 0;
 				if(keyH.Lpressed == true){
-					terrainChunkGrid.saveToFile("terrainChunkGrid.dat");
+					chunkGrid.saveToFile("chunkGrid.dat");
 					keyH.Lpressed = false;
 				}
 				

@@ -15,18 +15,25 @@ import src.main.GamePanel;
 
 public class ChunkGrid implements Serializable{
 	public static final int gridSize = 100;
-	public Chunk[][] chunks;
+	public transient Chunk[][] chunks;
 
-	public int leftmostChunk;
-	public int topmostChunk;
+	public final static int middleChunk = gridSize/2;
+	public int leftmostChunk = middleChunk;
+	public int topmostChunk = middleChunk;
+	public int rightmostChunk = middleChunk;
+	public int bottommostChunk = middleChunk;
+	
+
+	public Chunk[][] generatedChunks;
 
 
 	//REMOVE GAMEPANEL LATER MAYBE
 	public ChunkGrid(GamePanel gp, boolean loading) {
-		chunks = new Chunk[gridSize][gridSize];
 
+		chunks = new Chunk[gridSize][gridSize];
+		
 		if (!loading){
-			newEmptyChunk();
+			newEmptyChunks();
 			try {
 			
 			//FOR NOW JUST READING ONE TXT FILE
@@ -56,7 +63,7 @@ public class ChunkGrid implements Serializable{
 
 					// System.out.print(num + " ");
 
-					chunks[50][50].setTile(col, row, num);
+					chunks[gridSize/2][gridSize/2].setTile(col, row, num);
 					col++;
 				}
 
@@ -80,7 +87,7 @@ public class ChunkGrid implements Serializable{
 		
 	}
 
-	public void newEmptyChunk() {
+	public void newEmptyChunks() {
 		for(int x = 0; x < gridSize; x++){
 			for (int y = 0; y < gridSize; y++){
 				chunks[x][y] = new Chunk();
@@ -101,6 +108,14 @@ public class ChunkGrid implements Serializable{
 	}
 
 	public void saveToFile(String filename) {
+
+		generatedChunks = new Chunk[rightmostChunk-leftmostChunk][bottommostChunk-topmostChunk];
+		for (int i=leftmostChunk; i<rightmostChunk; i++){
+			for (int j=topmostChunk; j<bottommostChunk; j++){
+				generatedChunks[i - leftmostChunk][j - topmostChunk] = getChunk(i,j);
+			}
+		}
+
 		try {
 			FileOutputStream fileOut = new FileOutputStream(filename);
 			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
@@ -121,7 +136,16 @@ public class ChunkGrid implements Serializable{
 			FileInputStream fileIn = new FileInputStream(filename);
 			ObjectInputStream objectIn = new ObjectInputStream(new BufferedInputStream(fileIn));
 			// double beforeLoadTime = System.nanoTime();
+
 			grid = (ChunkGrid) objectIn.readObject();
+			grid.chunks = new Chunk[gridSize][gridSize];
+
+			for(int i = 0; i < grid.generatedChunks.length; i++){
+				for(int j = 0; i < grid.generatedChunks[0].length; j++){
+					System.out.println(j);
+					grid.setChunk(i + grid.leftmostChunk, j + grid.topmostChunk, grid.generatedChunks[i][j]);
+				}
+			}
 			System.out.println("Map successfully loaded from: " + filename);
 			// double afterLoadTime = System.nanoTime();
 			// System.out.println("Done in: " + (afterLoadTime-beforeLoadTime) + "nanoseconds");

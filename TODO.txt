@@ -4,6 +4,8 @@ TODO:
 
 Tile entities
 Buildings
+Interact with gp.frameNumber somehow.
+Maybe make in a separate thread, but that seems weird.
 
 Add ability to detect mouse location
 Clicking makes a building or something
