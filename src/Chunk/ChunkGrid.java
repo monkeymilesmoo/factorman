@@ -30,10 +30,12 @@ public class ChunkGrid implements Serializable{
 	//REMOVE GAMEPANEL LATER MAYBE
 	public ChunkGrid(GamePanel gp, boolean loading) {
 
+
 		chunks = new Chunk[gridSize][gridSize];
 		
 		if (!loading){
-			newEmptyChunks();
+			// newEmptyChunks();
+			chunks[middleChunk][middleChunk] = new Chunk();
 			try {
 			
 			//FOR NOW JUST READING ONE TXT FILE
@@ -63,7 +65,7 @@ public class ChunkGrid implements Serializable{
 
 					// System.out.print(num + " ");
 
-					chunks[gridSize/2][gridSize/2].setTile(col, row, num);
+					chunks[middleChunk][middleChunk].setTile(col, row, num);
 					col++;
 				}
 
@@ -95,8 +97,19 @@ public class ChunkGrid implements Serializable{
 		}
 	}
 
-	public void generateNewChunk() {
-		//IMPLEMENT
+	public void generateNewChunk(int chunkX, int chunkY) {
+		//FOR NOW IT JUST MAKES AN EMPTY CHUNK
+		//
+		//
+		// CHANGE LATER
+		//
+		//
+		chunks[chunkX][chunkY] = new Chunk();
+		for(int x = 0; x < Chunk.chunkSize; x++){
+			for (int y = 0; y < Chunk.chunkSize; y++){
+				chunks[chunkX][chunkY].setTile(x, y, (byte) 0);
+			}
+		}
 	}
 
 	public Chunk getChunk(int chunkX, int chunkY) {
@@ -144,10 +157,12 @@ public class ChunkGrid implements Serializable{
 			grid = (ChunkGrid) objectIn.readObject();
 			grid.chunks = new Chunk[gridSize][gridSize];
 
+
 			for(int i = 0; i < grid.generatedChunks.length; i++){
-				for(int j = 0; i < grid.generatedChunks[0].length; j++){
-					System.out.println(j);
+				int j = 0;
+				while(j < grid.generatedChunks[0].length){
 					grid.setChunk(i + grid.leftmostChunk, j + grid.topmostChunk, grid.generatedChunks[i][j]);
+					j++;
 				}
 			}
 			System.out.println("Map successfully loaded from: " + filename);
