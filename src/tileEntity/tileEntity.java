@@ -1,9 +1,12 @@
 package src.tileEntity;
 
-public class tileEntity {
+import java.io.Serializable;
 
-	public int x, y;
+public class TileEntity implements Serializable{
+	//ALL BUILDING AND NON BUILDING VARIABLES MUST BE DECLARED HERE
+	short textureID;
+	byte tileWidth, tileHeight;
+	public TileEntity(){
 
-
-
+	}
 }

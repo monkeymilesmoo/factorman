@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 
-	boolean loading = true;
+	boolean loading = false;
 
 
 
@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable{
 	int FPS = 60;
 
 	KeyHandler keyH = new KeyHandler();
+	MouseHandler mouseH = new MouseHandler(this);
 	ResizeListener resizeL = new ResizeListener();
 	Thread gameThread;
 	public Player player = new Player(this, keyH);
@@ -66,9 +67,9 @@ public class GamePanel extends JPanel implements Runnable{
 			chunkGrid = new ChunkGrid(this, loading);
 		}else{
 			chunkGrid = ChunkGrid.loadFromFile("chunkGrid.dat");
-			System.out.println("loadtime: " + (System.nanoTime() - beforeOpening));
 		}
 
+		System.out.println("loadtime: " + (System.nanoTime() - beforeOpening));
 
 
 
@@ -77,6 +78,8 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
+		this.addMouseListener(mouseH);
+		this.addMouseMotionListener(mouseH);
 		this.addComponentListener(resizeL);
 		this.setFocusable(true);
 

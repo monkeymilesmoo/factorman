@@ -91,11 +91,11 @@ public class BackgroundManager {
 		int topRow = ((gp.player.worldY - gp.player.screenY) / (Chunk.chunkSize * gp.tileSize));
 
 
-		if(leftCol < gp.chunkGrid.leftmostChunk){
-			gp.chunkGrid.leftmostChunk = leftCol;
+		if(leftCol - 1< gp.chunkGrid.leftmostChunk){
+			gp.chunkGrid.leftmostChunk = leftCol - 1;
 		}
-		if (topRow < gp.chunkGrid.topmostChunk){
-			gp.chunkGrid.topmostChunk = topRow;
+		if (topRow - 1< gp.chunkGrid.topmostChunk){
+			gp.chunkGrid.topmostChunk = topRow - 1;
 		}
 
 
@@ -106,10 +106,10 @@ public class BackgroundManager {
 		int endWorldCol = leftCol + 2;
 		int endWorldRow = topRow + 2; 
 
-		if(endWorldCol > gp.chunkGrid.rightmostChunk){
+		if(endWorldCol + 1 > gp.chunkGrid.rightmostChunk){
 			gp.chunkGrid.rightmostChunk = endWorldCol;
 		}
-		if (endWorldRow > gp.chunkGrid.bottommostChunk){
+		if (endWorldRow + 1> gp.chunkGrid.bottommostChunk){
 			gp.chunkGrid.bottommostChunk = endWorldRow;
 		}
 
@@ -119,9 +119,12 @@ public class BackgroundManager {
 		while ((worldCol < endWorldCol) && (worldRow < endWorldRow)){
 			
 
-
 			Chunk chunk = gp.chunkGrid.getChunk(worldCol, worldRow);
 			// Makes sure going to edge of the world won't crash the game
+
+			if (chunk == null){
+				gp.chunkGrid.generateNewChunk(worldCol, worldRow);
+			}
 			if (chunk != null){
 				
 				int tileNum = chunk.getTile(chunkCol, chunkRow);

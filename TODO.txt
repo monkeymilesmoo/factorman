@@ -1,15 +1,14 @@
 TODO:
 
 
-
-Implement generateNewChunk();
-
 Tile entities
+make a tileentity arraylist in chunkgrid that saves every placed tileentity
+call every instance on this list every tick to update()
+
 Buildings
 Interact with gp.frameNumber somehow.
 Maybe make in a separate thread, but that seems weird.
 
-Add ability to detect mouse location
 Clicking makes a building or something
 Add inventory - at least a hotbar to place Buildings
 The little yellow selection thing around tileentities in factorio - its in C:\Program Files\Factorio\data\core\graphics
