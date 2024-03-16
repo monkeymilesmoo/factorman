@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 
 import src.background.BackgroundManager;
 import src.entity.Player;
+import src.tileEntity.Building;
+import src.tileEntity.TileEntityManager;
 import src.Chunk.ChunkGrid;
 
 import java.awt.Color;
@@ -33,6 +35,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public long timePassed = 0;
 	//DEBUG
 
+	public int frameNumber = 0;
+
 
 
 	boolean loading = false;
@@ -53,6 +57,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public ChunkGrid chunkGrid;
 
 	public BackgroundManager backgroundM = new BackgroundManager(this);
+
+	// public TileEntityManager tileEM = new TileEntityManager(this);
 
 	public GamePanel() {
 
@@ -88,6 +94,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public void startGameThread() {
 
+		Building.loadBuildingImages();
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
@@ -102,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable{
 		long currentTime;
 		int timer = 0;
 		int drawCount = 0;
-		int frameNumber = 0;
+		frameNumber = 0;
 
 
 		while(gameThread != null){
@@ -125,7 +132,7 @@ public class GamePanel extends JPanel implements Runnable{
 				if (timePassed > longestTime){
 					longestTime = timePassed;
 					if (longestTime > 16600000){
-						System.out.println(longestTime);
+						System.out.println(longestTime/1000000 + " miliseconds per frame");
 						longestTime = 0;
 					}
 				}
@@ -194,6 +201,7 @@ public class GamePanel extends JPanel implements Runnable{
 		Graphics2D g2 = (Graphics2D)g;
 		
 		backgroundM.draw(g2);
+		// tileEM.draw(g2);
 		player.draw(g2);
 
 

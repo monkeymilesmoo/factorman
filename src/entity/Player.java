@@ -36,6 +36,11 @@ public class Player extends entity{
 	
 		this.gp = gp;
 		this.keyH = keyH;
+
+		screenX = (gp.screenWidth/2) - entityTextureWidth;
+		screenY = (gp.screenHeight/2) - entityTextureHeight;
+		shadowX = screenX + 20;
+		shadowY = screenY + 65;
 		
 		spawnCoords = ((Chunk.chunkSize * ChunkGrid.gridSize * gp.tileSize)/2 + (gp.tileSize * Chunk.chunkSize)/2);
 		// spawnCoords = (Chunk.chunkSize * ChunkGrid.gridSize * gp.tileSize)/2 + gp.tileSize;
