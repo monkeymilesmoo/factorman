@@ -32,6 +32,8 @@ public class GamePanel extends JPanel implements Runnable{
 	//DEBUG
 	long longestTime = 0;
 	public long timePassed = 0;
+	
+	Building test = new Building();
 	//DEBUG
 
 	public int frameNumber = 0;
@@ -139,6 +141,16 @@ public class GamePanel extends JPanel implements Runnable{
 				
 				delta--;
 				drawCount++;
+
+
+
+				if(mouseH.leftMouseClicked){
+					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, test);
+				}
+
+
+
+
 
 			}
 
