@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import src.Chunk.Chunk;
 import src.main.GamePanel;
 import src.tileEntity.Building;
+import src.tileEntity.TileEntity;
 
 public class BackgroundManager {
 
@@ -130,6 +131,8 @@ public class BackgroundManager {
 				
 				int tileNum = chunk.getTile(chunkCol, chunkRow);
 
+				TileEntity tileEntity = chunk.getTileEntity(chunkCol, chunkRow);
+
 
 
 				int worldX = (worldCol * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkCol);
@@ -140,9 +143,10 @@ public class BackgroundManager {
 				g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
 				
 				//For now just draw a building on every possible tile
-				g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX, screenY, 108, 114, null);
 
-				// g2.drawImage(Building.buildingImages.get("assembling-machine-1").imageArr[0][0], screenX, screenY, gp.tileSize * 3, gp.tileSize * 3, null);
+				if (tileEntity != null){
+					g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX, screenY, 108, 114, null);
+				}
 
 				
 

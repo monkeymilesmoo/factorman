@@ -5,7 +5,6 @@ import javax.swing.JPanel;
 import src.background.BackgroundManager;
 import src.entity.Player;
 import src.tileEntity.Building;
-import src.tileEntity.TileEntityManager;
 import src.Chunk.ChunkGrid;
 
 import java.awt.Color;

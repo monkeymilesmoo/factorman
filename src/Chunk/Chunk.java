@@ -14,7 +14,7 @@ public class Chunk implements Serializable{
 	public Chunk() {
 		tiles = new byte[chunkSize][chunkSize];
 		tileEntities = new TileEntity[chunkSize][chunkSize];
-		setTileEntity(16, 16, test);
+		// setTileEntity(17, 18, test);
 	}
 
 	public void setTile(int x, int y, byte tileID) {
