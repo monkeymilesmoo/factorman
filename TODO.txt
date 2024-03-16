@@ -1,12 +1,11 @@
 TODO:
 
-
 Tile entities
 make a tileentity arraylist in chunkgrid that saves every placed tileentity
 call every instance on this list every tick to update()
 
 Buildings
-Interact with gp.frameNumber somehow.
+Anything always animated is animated on gp.frameNumber.
 Maybe make in a separate thread, but that seems weird.
 
 Clicking makes a building or something

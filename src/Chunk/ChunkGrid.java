@@ -173,7 +173,6 @@ public class ChunkGrid implements Serializable{
 		} catch (IOException e){
 			System.err.println("Error loading chunkGrid from file: " + e.getMessage());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return grid;
