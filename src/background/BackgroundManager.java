@@ -144,9 +144,9 @@ public class BackgroundManager {
 				
 				//For now just draw a building on every possible tile
 
-				if (tileEntity != null){
-					g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX, screenY, 108, 114, null);
-				}
+				// if (tileEntity != null){
+				// 	g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX, screenY, gp.tileSize * 3, gp.tileSize * 3, null);
+				// }
 
 				
 
@@ -171,8 +171,62 @@ public class BackgroundManager {
 
 		}
 
+		worldCol = leftCol;
+		worldRow = topRow;
 		// System.out.println(drawNum);
+		while ((worldCol < endWorldCol) && (worldRow < endWorldRow)){
+			
 
+			Chunk chunk = gp.chunkGrid.getChunk(worldCol, worldRow);
+			// Makes sure going to edge of the world won't crash the game
+
+			if (chunk == null){
+				gp.chunkGrid.generateNewChunk(worldCol, worldRow);
+			}
+			if (chunk != null){
+				
+				int tileNum = chunk.getTile(chunkCol, chunkRow);
+
+				TileEntity tileEntity = chunk.getTileEntity(chunkCol, chunkRow);
+
+
+
+				int worldX = (worldCol * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkCol);
+				int worldY = (worldRow * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkRow);
+				int screenX = worldX - gp.player.worldX + gp.player.screenX;
+				int screenY = worldY - gp.player.worldY + gp.player.screenY;
+			
+				// g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
+				
+				//For now just draw a building on every possible tile
+
+				if (tileEntity != null){
+					g2.drawImage(Building.buildingImages[1].imageArr[gp.frameNumber % 32][0], screenX + 13 , screenY + 13, gp.tileSize * Building.buildingImages[1].tileSize - 2, gp.tileSize * Building.buildingImages[1].tileSize - 26, null);
+					g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX - 12, screenY - 18, gp.tileSize * Building.buildingImages[0].tileSize + 24, gp.tileSize * Building.buildingImages[0].tileSize + 36, null);
+				}
+
+				
+
+			}
+			chunkCol++;
+
+			if(chunkCol >= Chunk.chunkSize){
+				chunkCol = 0;
+				chunkRow++;
+			}
+
+			if(chunkRow >= Chunk.chunkSize){
+				worldCol++;
+				chunkRow = 0;
+				this.terrainSeed.setSeed(44);
+			}
+			if (worldCol >= endWorldCol){
+				worldCol = leftCol - 1;
+				worldRow++;
+			}
+			
+
+		}
 
 		
 	}

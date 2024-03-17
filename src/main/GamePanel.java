@@ -147,7 +147,9 @@ public class GamePanel extends JPanel implements Runnable{
 				if(mouseH.leftMouseClicked){
 					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, test);
 				}
-
+				if(mouseH.rightMouseClicked){
+					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTile(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 2);
+				}
 
 
 
@@ -215,6 +217,8 @@ public class GamePanel extends JPanel implements Runnable{
 		// tileEM.draw(g2);
 		player.draw(g2);
 
+		g2.setColor(Color.white);
+		g2.drawString("draw time: " + timePassed/1000000, 10, 10);
 
 
 		//DEBUG
