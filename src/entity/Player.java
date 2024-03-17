@@ -42,8 +42,8 @@ public class Player extends entity{
 		shadowX = screenX + 20;
 		shadowY = screenY + 65;
 		
-		spawnCoords = ((Chunk.chunkSize * ChunkGrid.gridSize * gp.tileSize)/2 + (gp.tileSize * Chunk.chunkSize)/2);
-		// spawnCoords = (Chunk.chunkSize * ChunkGrid.gridSize * gp.tileSize)/2 + gp.tileSize;
+		spawnCoords = ((Chunk.chunkSize * ChunkGrid.gridSize * GamePanel.tileSize)/2 + (GamePanel.tileSize * Chunk.chunkSize)/2);
+		// spawnCoords = (Chunk.chunkSize * ChunkGrid.gridSize * GamePanel.tileSize)/2 + GamePanel.tileSize;
 		
 
 		this.idleArray = new BufferedImage[22][8];
@@ -192,8 +192,8 @@ public class Player extends entity{
 
 
 
-		XCoords = (worldX - spawnCoords) / gp.tileSize;
-		YCoords = (worldY - spawnCoords) / gp.tileSize;
+		XCoords = (worldX - spawnCoords) / GamePanel.tileSize;
+		YCoords = (worldY - spawnCoords) / GamePanel.tileSize;
 
 		// System.out.println(XCoords);
 		// System.out.println(YCoords);

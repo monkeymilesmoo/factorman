@@ -15,10 +15,10 @@ import java.awt.Graphics2D;
 public class GamePanel extends JPanel implements Runnable{
 
 	//Screen Settings
-	final int originalTileSize = 64; //64x64 tiles
-	public int zoom = 1; //not sure what to make this zoom to make it look okay but i'll try this
+	final static int originalTileSize = 64; //64x64 tiles
+	public static int zoom = 1; //not sure what to make this zoom to make it look okay but i'll try this
 
-	public int tileSize = originalTileSize * zoom; //96x96 tiles
+	public static int tileSize = originalTileSize * zoom; //64x64 tiles
 	public int maxScreenCol = 20;
 	public int maxScreenRow = 20;
 	public int screenWidth = 1000;
@@ -131,10 +131,8 @@ public class GamePanel extends JPanel implements Runnable{
 				//DEBUG
 				if (timePassed > longestTime){
 					longestTime = timePassed;
-					if (longestTime > 16600000){
-						System.out.println(longestTime/1000000 + " miliseconds per frame");
-						longestTime = 0;
-					}
+					System.out.println(longestTime/1000000 + " miliseconds per frame");
+					
 				}
 				//DEBUG
 				
@@ -159,6 +157,7 @@ public class GamePanel extends JPanel implements Runnable{
 				System.out.println("FPS: " + drawCount);
 				timer = 0;
 				drawCount = 0;
+				longestTime = 0;
 				if(keyH.Lpressed == true){
 					chunkGrid.saveToFile("chunkGrid.dat");
 					keyH.Lpressed = false;
