@@ -59,7 +59,6 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public BackgroundManager backgroundM = new BackgroundManager(this);
 
-	// public TileEntityManager tileEM = new TileEntityManager(this);
 
 	public GamePanel() {
 
