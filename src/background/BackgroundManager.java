@@ -62,7 +62,7 @@ public class BackgroundManager {
 				terrain[renderingTerrain].drawingImage = new BufferedImage[terrain[renderingTerrain].howMany];
 
 				while (gettingSub < terrain[renderingTerrain].howMany){
-					terrain[renderingTerrain].drawingImage[gettingSub] = terrain[renderingTerrain].image.getSubimage(terrain[renderingTerrain].width * terrainSeed.nextInt(8), 160, gp.tileSize, gp.tileSize);
+					terrain[renderingTerrain].drawingImage[gettingSub] = terrain[renderingTerrain].image.getSubimage(terrain[renderingTerrain].width * terrainSeed.nextInt(8), 160, GamePanel.tileSize, GamePanel.tileSize);
 					gettingSub++;
 				}
 				renderingTerrain++;
@@ -89,8 +89,8 @@ public class BackgroundManager {
 
 
 
-		int leftCol = ((gp.player.worldX - gp.player.screenX) / (Chunk.chunkSize * gp.tileSize));
-		int topRow = ((gp.player.worldY - gp.player.screenY) / (Chunk.chunkSize * gp.tileSize));
+		int leftCol = ((gp.player.worldX - gp.player.screenX) / (Chunk.chunkSize * GamePanel.tileSize));
+		int topRow = ((gp.player.worldY - gp.player.screenY) / (Chunk.chunkSize * GamePanel.tileSize));
 
 
 		if(leftCol - 1< gp.chunkGrid.leftmostChunk){
@@ -131,21 +131,20 @@ public class BackgroundManager {
 				
 				int tileNum = chunk.getTile(chunkCol, chunkRow);
 
-				TileEntity tileEntity = chunk.getTileEntity(chunkCol, chunkRow);
 
 
 
-				int worldX = (worldCol * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkCol);
-				int worldY = (worldRow * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkRow);
+				int worldX = (worldCol * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkCol);
+				int worldY = (worldRow * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkRow);
 				int screenX = worldX - gp.player.worldX + gp.player.screenX;
 				int screenY = worldY - gp.player.worldY + gp.player.screenY;
 			
-				g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
+				g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
 				
 				//For now just draw a building on every possible tile
 
 				// if (tileEntity != null){
-				// 	g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX, screenY, gp.tileSize * 3, gp.tileSize * 3, null);
+				// 	g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX, screenY, GamePanel.tileSize * 3, GamePanel.tileSize * 3, null);
 				// }
 
 				
@@ -185,24 +184,23 @@ public class BackgroundManager {
 			}
 			if (chunk != null){
 				
-				int tileNum = chunk.getTile(chunkCol, chunkRow);
 
 				TileEntity tileEntity = chunk.getTileEntity(chunkCol, chunkRow);
 
 
 
-				int worldX = (worldCol * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkCol);
-				int worldY = (worldRow * gp.tileSize * (Chunk.chunkSize)) + (gp.tileSize * chunkRow);
+				int worldX = (worldCol * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkCol);
+				int worldY = (worldRow * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkRow);
 				int screenX = worldX - gp.player.worldX + gp.player.screenX;
 				int screenY = worldY - gp.player.worldY + gp.player.screenY;
 			
-				// g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, gp.tileSize, gp.tileSize, null);
+				// g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
 				
 				//For now just draw a building on every possible tile
 
 				if (tileEntity != null){
-					g2.drawImage(Building.buildingImages[1].imageArr[gp.frameNumber % 32][0], screenX + 13 , screenY + 13, gp.tileSize * Building.buildingImages[1].tileSize - 2, gp.tileSize * Building.buildingImages[1].tileSize - 26, null);
-					g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX - 12, screenY - 18, gp.tileSize * Building.buildingImages[0].tileSize + 24, gp.tileSize * Building.buildingImages[0].tileSize + 36, null);
+					g2.drawImage(Building.buildingImages[1].imageArr[gp.frameNumber % 32][0], screenX + 13 , screenY + 13, GamePanel.tileSize * Building.buildingImages[1].tileWidth - 2, GamePanel.tileSize * Building.buildingImages[1].tileHeight - 26, null);
+					g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX - 12, screenY - 18, GamePanel.tileSize * Building.buildingImages[0].tileWidth + 24, GamePanel.tileSize * Building.buildingImages[0].tileHeight + 36, null);
 				}
 
 				

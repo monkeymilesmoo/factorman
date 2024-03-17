@@ -46,10 +46,10 @@ public class MouseHandler extends MouseAdapter{
 
 		mouseX = mouseX + gp.player.worldX - gp.player.screenX;
 		mouseY = mouseY + gp.player.worldY - gp.player.screenY;
-		mouseTileX = (mouseX % (Chunk.chunkSize * gp.tileSize)) / gp.tileSize;
-		mouseTileY = (mouseY % (Chunk.chunkSize * gp.tileSize)) / gp.tileSize;
-		mouseCol = (mouseX - mouseTileX) / (Chunk.chunkSize * gp.tileSize);
-		mouseRow = (mouseY - mouseTileY) / (Chunk.chunkSize * gp.tileSize);
+		mouseTileX = (mouseX % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
+		mouseTileY = (mouseY % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
+		mouseCol = (mouseX - mouseTileX) / (Chunk.chunkSize * GamePanel.tileSize);
+		mouseRow = (mouseY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
 	}
 
 	public void mouseMoved(MouseEvent e){
@@ -58,10 +58,10 @@ public class MouseHandler extends MouseAdapter{
 
 		mouseX = mouseX + gp.player.worldX - gp.player.screenX;
 		mouseY = mouseY + gp.player.worldY - gp.player.screenY;
-		mouseTileX = (mouseX % (Chunk.chunkSize * gp.tileSize)) / gp.tileSize;
-		mouseTileY = (mouseY % (Chunk.chunkSize * gp.tileSize)) / gp.tileSize;
-		mouseCol = (mouseX - mouseTileX) / (Chunk.chunkSize * gp.tileSize);
-		mouseRow = (mouseY - mouseTileY) / (Chunk.chunkSize * gp.tileSize);
+		mouseTileX = (mouseX % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
+		mouseTileY = (mouseY % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
+		mouseCol = (mouseX - mouseTileX) / (Chunk.chunkSize * GamePanel.tileSize);
+		mouseRow = (mouseY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
 	}
 	
 }

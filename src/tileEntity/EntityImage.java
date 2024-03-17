@@ -9,9 +9,9 @@ public class EntityImage {
 	
 	public BufferedImage image; 
 	public BufferedImage[][] imageArr;
-	public int tileSize;
+	public int tileHeight, tileWidth;
 
-	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileSize){
+	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileWidth, int tileHeight){
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + filePath + ".png")));
 		} catch (IOException e) {
@@ -22,7 +22,8 @@ public class EntityImage {
 			makeEntityImageArray(frameWidth, frameHeight);
 		}
 
-		this.tileSize = tileSize;
+		this.tileHeight = tileHeight;
+		this.tileWidth = tileWidth;
 
 	}
 
