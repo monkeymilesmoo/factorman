@@ -16,7 +16,7 @@ public class Building extends TileEntity{
 
 	public static void loadBuildingImages(){
 
-		buildingImages = new EntityImage[1];
+		buildingImages = new EntityImage[2];
 
 
 
@@ -25,7 +25,8 @@ public class Building extends TileEntity{
 			
 			
 			// buildingImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1));
-			buildingImages[0] = new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1);
+			buildingImages[0] = new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3);
+			buildingImages[1] = new EntityImage("building/assembling-machine-1/assembling-machine-1-shadow", 32, 1, 3);
 
 
 			// buildingImages[0] = ImageIO.read(getClass().getResourceAsStream("/res/tileEntity/assembling-machine-1/assembling-machine-1.png"));
