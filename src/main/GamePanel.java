@@ -33,7 +33,6 @@ public class GamePanel extends JPanel implements Runnable{
 	long longestTime = 0;
 	public long timePassed = 0;
 	
-	Building test = new Building();
 	//DEBUG
 
 	public int frameNumber = 0;
@@ -131,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable{
 				//DEBUG
 				if (timePassed > longestTime){
 					longestTime = timePassed;
-					System.out.println(longestTime/1000000 + " miliseconds per frame");
+					// System.out.println(longestTime/1000000 + " miliseconds per frame");
 					
 				}
 				//DEBUG
@@ -142,7 +141,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 				if(mouseH.leftMouseClicked){
-					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, test);
+					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, (short) 1);
 				}
 				if(mouseH.rightMouseClicked){
 					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTile(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 2);
@@ -214,6 +213,7 @@ public class GamePanel extends JPanel implements Runnable{
 		backgroundM.draw(g2);
 		// tileEM.draw(g2);
 		player.draw(g2);
+		mouseH.hoveredTileEntity(g2);
 
 		g2.setColor(Color.white);
 		g2.drawString("draw time: " + timePassed/1000000, 10, 10);
