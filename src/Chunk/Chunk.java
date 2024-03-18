@@ -1,15 +1,16 @@
 package src.Chunk;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import src.tileEntity.TileEntity;
-import src.tileEntity.Building;
 
 public class Chunk implements Serializable{
 	byte[][] tiles;
 	TileEntity[][] tileEntities;
-	Building test = new Building();
 	public final static int chunkSize = 32;
+
+	ArrayList<TileEntity> tileEntityList = new ArrayList<TileEntity>();
 
 	public Chunk() {
 		tiles = new byte[chunkSize][chunkSize];
@@ -30,8 +31,17 @@ public class Chunk implements Serializable{
 		return tileEntities[x][y];
 	}
 
-	public void setTileEntity(int x, int y, TileEntity tileEntityID){
-		tileEntities[x][y] = tileEntityID;
+	public void setTileEntity(int x, int y, byte tileWidth, byte tileHeight, short tileEntityID){
+
+		TileEntity insertingTE = new TileEntity(tileWidth, tileHeight, tileEntityID);
+		tileEntities[x][y] = insertingTE;
+		for (int i = x; i < (x + tileWidth); i++){
+			for(int j = y; j < (y + tileHeight); j++){
+				tileEntities[i][j] = tileEntities[x][y];
+			}
+		}
+
+		tileEntityList.add(insertingTE);
 	}
 	
 }
