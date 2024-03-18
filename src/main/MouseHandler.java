@@ -74,7 +74,6 @@ public class MouseHandler extends MouseAdapter{
 		mouseTileY = (mouseWorldY % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
 		mouseCol = (mouseWorldX - mouseTileX) / (Chunk.chunkSize * GamePanel.tileSize);
 		mouseRow = (mouseWorldY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
-		System.out.println("" + (gp.chunkGrid.getChunk(mouseCol, mouseRow).getTileEntity(mouseTileX, mouseTileY)));
 
 	}
 

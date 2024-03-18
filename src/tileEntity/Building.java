@@ -10,9 +10,9 @@ public class Building extends TileEntity{
 	byte rotation = 2;
 
 
-	public Building(byte tileWidth, byte tileHeight, short tileEntityID){
+	public Building(byte x, byte y, byte tileWidth, byte tileHeight, short tileEntityID){
 
-		super(tileWidth, tileHeight, tileEntityID);
+		super(x, y, tileWidth, tileHeight, tileEntityID);
 
 	}
 

@@ -33,7 +33,7 @@ public class Chunk implements Serializable{
 
 	public void setTileEntity(int x, int y, byte tileWidth, byte tileHeight, short tileEntityID){
 
-		TileEntity insertingTE = new TileEntity(tileWidth, tileHeight, tileEntityID);
+		TileEntity insertingTE = new TileEntity((byte) x, (byte) y, tileWidth, tileHeight, tileEntityID);
 		tileEntities[x][y] = insertingTE;
 		for (int i = x; i < (x + tileWidth); i++){
 			for(int j = y; j < (y + tileHeight); j++){

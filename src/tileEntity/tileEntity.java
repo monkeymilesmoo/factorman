@@ -8,12 +8,14 @@ public class TileEntity implements Serializable{
 	public short textureID;
 	public byte tileWidth, tileHeight;
 	public byte xOffset, yOffset;
+	public byte x, y;
 
-	public TileEntity(byte tileWidth, byte tileHeight, short tileEntityID){
+	public TileEntity(byte x, byte y, byte tileWidth, byte tileHeight, short tileEntityID){
 
 		this.tileHeight = tileHeight;
 		this.tileWidth = tileWidth;
-
+		this.x = x;
+		this.y = y;
 		
 
 
