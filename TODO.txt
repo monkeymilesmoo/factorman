@@ -1,16 +1,14 @@
 TODO:
 
-Tile entities
+
+Add inventory - at least a hotbar to place Buildings
+
 make a tileentity arraylist in chunkgrid that saves every placed tileentity
 call every instance on this list every tick to update()
 
-Buildings
-Anything always animated is animated on gp.frameNumber.
 Maybe make in a separate thread, but that seems weird.
 
 Clicking makes a building or something
-Add inventory - at least a hotbar to place Buildings
-The little yellow selection thing around tileentities in factorio - its in C:\Program Files\Factorio\data\core\graphics
 
 Actual terrain generation with noise and such
 
