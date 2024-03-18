@@ -125,42 +125,36 @@ public class BackgroundManager {
 			Chunk chunk = gp.chunkGrid.getChunk(worldCol, worldRow);
 			// Makes sure going to edge of the world won't crash the game
 
-			// if (chunk == null){
-			// 	gp.chunkGrid.generateNewChunk(worldCol, worldRow);
-			// }
+			if (chunk == null){
+				gp.chunkGrid.generateNewChunk(worldCol, worldRow);
+			}
 			if (chunk != null){
+				for(chunkCol = 0; chunkCol < Chunk.chunkSize; chunkCol++){
+					for(chunkRow = 0; chunkRow < Chunk.chunkSize; chunkRow++){
+						
+						int tileNum = chunk.getTile(chunkCol, chunkRow);
+
+
+
+
+						int worldX = (worldCol * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkCol);
+						int worldY = (worldRow * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkRow);
+						int screenX = worldX - gp.player.worldX + gp.player.screenX;
+						int screenY = worldY - gp.player.worldY + gp.player.screenY;
+					
+						g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
+
+
+						
+					}
+				}
 				
-				int tileNum = chunk.getTile(chunkCol, chunkRow);
-
-
-
-
-				int worldX = (worldCol * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkCol);
-				int worldY = (worldRow * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkRow);
-				int screenX = worldX - gp.player.worldX + gp.player.screenX;
-				int screenY = worldY - gp.player.worldY + gp.player.screenY;
-			
-				// long firstTime = System.nanoTime();
-				g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
-				// long secondTime = System.nanoTime();
-
-				//For now just draw a building on every possible tile
-
-				// if (tileEntity != null){
-				// 	g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 32][0], screenX, screenY, GamePanel.tileSize * 3, GamePanel.tileSize * 3, null);
-				// }
-
-				// if(secondTime - firstTime > 50000){
-					// System.out.println("" + (secondTime - firstTime) + " " + chunkCol + " " + chunkRow + " " + tileNum);
-					// System.out.println(tileNum);
-				// }
 			}
-			chunkCol++;
 
-			if(chunkCol >= Chunk.chunkSize){
-				chunkCol = 0;
-				chunkRow++;
-			}
+			// if(chunkCol >= Chunk.chunkSize){
+			// 	chunkCol = 0;
+			// 	chunkRow++;
+			// }
 
 			if(chunkRow >= Chunk.chunkSize){
 				worldCol++;
@@ -177,60 +171,65 @@ public class BackgroundManager {
 
 		worldCol = leftCol;
 		worldRow = topRow;
+		chunkCol = 0;
+		chunkRow = 0;
 		// System.out.println(drawNum);
-		while ((worldCol < endWorldCol) && (worldRow < endWorldRow)){
+		
+
+		for (worldRow = topRow; worldRow < endWorldRow; worldRow++){
+			for(worldCol = leftCol; worldCol < endWorldCol; worldCol++){
+				Chunk chunk = gp.chunkGrid.getChunk(worldCol, worldRow);
+				// Makes sure going to edge of the world won't crash the game
+	
+	
+				if (chunk != null){
+					for(chunkCol = 0; chunkCol < Chunk.chunkSize; chunkCol++){
+						for(chunkRow = 0; chunkRow < Chunk.chunkSize; chunkRow++){
+							
 			
-
-			Chunk chunk = gp.chunkGrid.getChunk(worldCol, worldRow);
-			// Makes sure going to edge of the world won't crash the game
-
-			if (chunk == null){
-				gp.chunkGrid.generateNewChunk(worldCol, worldRow);
-			}
-			if (chunk != null){
-				
-
-				TileEntity tileEntity = chunk.getTileEntity(chunkCol, chunkRow);
-
-
-
-				int worldX = (worldCol * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkCol);
-				int worldY = (worldRow * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkRow);
-				int screenX = worldX - gp.player.worldX + gp.player.screenX;
-				int screenY = worldY - gp.player.worldY + gp.player.screenY;
+							TileEntity tileEntity = chunk.getTileEntity(chunkCol, chunkRow);
 			
-				// g2.drawImage(terrain[tileNum].drawingImage[terrainSeed.nextInt(8)], screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
-				
-				//For now just draw a building on every possible tile
-
-				if (tileEntity != null){
-					g2.drawImage(Building.buildingImages[1].imageArr[gp.frameNumber % 256 / 8][0], screenX + 13 , screenY + 13, GamePanel.tileSize * Building.buildingImages[1].tileWidth - 2, GamePanel.tileSize * Building.buildingImages[1].tileHeight - 26, null);
-					g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 256 / 8][0], screenX - 12, screenY - 18, GamePanel.tileSize * Building.buildingImages[0].tileWidth + 24, GamePanel.tileSize * Building.buildingImages[0].tileHeight + 36, null);
+			
+			
+							int worldX = (worldCol * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkCol);
+							int worldY = (worldRow * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkRow);
+							int screenX = worldX - gp.player.worldX + gp.player.screenX;
+							int screenY = worldY - gp.player.worldY + gp.player.screenY;
+						
+			
+							if (tileEntity != null){
+								g2.drawImage(Building.buildingImages[1].imageArr[gp.frameNumber % 256 / 8][0], screenX + 13 , screenY + 13, GamePanel.tileSize * Building.buildingImages[1].tileWidth - 2, GamePanel.tileSize * Building.buildingImages[1].tileHeight - 26, null);
+								g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 256 / 8][0], screenX - 12, screenY - 18, GamePanel.tileSize * Building.buildingImages[0].tileWidth + 24, GamePanel.tileSize * Building.buildingImages[0].tileHeight + 36, null);
+							}
+						}
+					}
+	
 				}
-
-				
-
+	
+				if(chunkCol >= Chunk.chunkSize){
+					chunkCol = 0;
+					chunkRow++;
+				}
+	
+				if(chunkRow >= Chunk.chunkSize){
+					worldCol++;
+					chunkRow = 0;
+					this.terrainSeed.setSeed(44);
+				}
+				if (worldCol >= endWorldCol){
+					worldCol = leftCol - 1;
+					worldRow++;
+				}
 			}
-			chunkCol++;
-
-			if(chunkCol >= Chunk.chunkSize){
-				chunkCol = 0;
-				chunkRow++;
-			}
-
-			if(chunkRow >= Chunk.chunkSize){
-				worldCol++;
-				chunkRow = 0;
-				this.terrainSeed.setSeed(44);
-			}
-			if (worldCol >= endWorldCol){
-				worldCol = leftCol - 1;
-				worldRow++;
-			}
-			
-
 		}
 
+
+
+
+
+
+
+	
 		
 	}
 
