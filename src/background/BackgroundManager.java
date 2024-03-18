@@ -150,7 +150,7 @@ public class BackgroundManager {
 				}
 				
 			}
-
+			this.terrainSeed.setSeed(44);
 			// if(chunkCol >= Chunk.chunkSize){
 			// 	chunkCol = 0;
 			// 	chunkRow++;
@@ -159,7 +159,7 @@ public class BackgroundManager {
 			if(chunkRow >= Chunk.chunkSize){
 				worldCol++;
 				chunkRow = 0;
-				this.terrainSeed.setSeed(44);
+				// this.terrainSeed.setSeed(44);
 			}
 			if (worldCol >= endWorldCol){
 				worldCol = leftCol - 1;
@@ -178,30 +178,31 @@ public class BackgroundManager {
 
 		for (worldRow = topRow; worldRow < endWorldRow; worldRow++){
 			for(worldCol = leftCol; worldCol < endWorldCol; worldCol++){
+
+				
 				Chunk chunk = gp.chunkGrid.getChunk(worldCol, worldRow);
 				// Makes sure going to edge of the world won't crash the game
 	
 	
 				if (chunk != null){
-					for(chunkCol = 0; chunkCol < Chunk.chunkSize; chunkCol++){
-						for(chunkRow = 0; chunkRow < Chunk.chunkSize; chunkRow++){
+					for(TileEntity entity : chunk.tileEntityList){
 							
 			
-							TileEntity tileEntity = chunk.getTileEntity(chunkCol, chunkRow);
-			
-			
-			
-							int worldX = (worldCol * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkCol);
-							int worldY = (worldRow * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * chunkRow);
-							int screenX = worldX - gp.player.worldX + gp.player.screenX;
-							int screenY = worldY - gp.player.worldY + gp.player.screenY;
-						
-			
-							if (tileEntity != null){
-								g2.drawImage(Building.buildingImages[1].imageArr[gp.frameNumber % 256 / 8][0], screenX + 13 , screenY + 13, GamePanel.tileSize * Building.buildingImages[1].tileWidth - 2, GamePanel.tileSize * Building.buildingImages[1].tileHeight - 26, null);
-								g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 256 / 8][0], screenX - 12, screenY - 18, GamePanel.tileSize * Building.buildingImages[0].tileWidth + 24, GamePanel.tileSize * Building.buildingImages[0].tileHeight + 36, null);
-							}
+						TileEntity tileEntity = chunk.getTileEntity(entity.x, entity.y);
+		
+		
+		
+						int worldX = (worldCol * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * entity.x);
+						int worldY = (worldRow * GamePanel.tileSize * (Chunk.chunkSize)) + (GamePanel.tileSize * entity.y);
+						int screenX = worldX - gp.player.worldX + gp.player.screenX;
+						int screenY = worldY - gp.player.worldY + gp.player.screenY;
+					
+		
+						if (tileEntity != null){
+							g2.drawImage(Building.buildingImages[1].imageArr[gp.frameNumber % 256 / 8][0], screenX + 13 , screenY + 13, GamePanel.tileSize * Building.buildingImages[1].tileWidth - 2, GamePanel.tileSize * Building.buildingImages[1].tileHeight - 26, null);
+							g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 256 / 8][0], screenX - 12, screenY - 18, GamePanel.tileSize * Building.buildingImages[0].tileWidth + 24, GamePanel.tileSize * Building.buildingImages[0].tileHeight + 36, null);
 						}
+						
 					}
 	
 				}

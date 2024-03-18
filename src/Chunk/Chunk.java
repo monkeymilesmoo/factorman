@@ -10,7 +10,7 @@ public class Chunk implements Serializable{
 	TileEntity[][] tileEntities;
 	public final static int chunkSize = 32;
 
-	ArrayList<TileEntity> tileEntityList = new ArrayList<TileEntity>();
+	public ArrayList<TileEntity> tileEntityList = new ArrayList<TileEntity>();
 
 	public Chunk() {
 		tiles = new byte[chunkSize][chunkSize];
@@ -33,15 +33,32 @@ public class Chunk implements Serializable{
 
 	public void setTileEntity(int x, int y, byte tileWidth, byte tileHeight, short tileEntityID){
 
-		TileEntity insertingTE = new TileEntity((byte) x, (byte) y, tileWidth, tileHeight, tileEntityID);
-		tileEntities[x][y] = insertingTE;
+		boolean canDo = true;
+
+
 		for (int i = x; i < (x + tileWidth); i++){
 			for(int j = y; j < (y + tileHeight); j++){
-				tileEntities[i][j] = tileEntities[x][y];
+				if(tileEntities[i][j] != null){
+					canDo = false;
+				}
 			}
 		}
 
-		tileEntityList.add(insertingTE);
+		if(canDo){
+			
+			TileEntity insertingTE = new TileEntity( x, y, tileWidth, tileHeight, tileEntityID);
+			tileEntities[x][y] = insertingTE;
+			for (int i = x; i < (x + tileWidth); i++){
+				for(int j = y; j < (y + tileHeight); j++){
+					tileEntities[i][j] = tileEntities[x][y];
+				}
+			}
+
+			tileEntityList.add(insertingTE);
+		}
+		else{
+			System.out.println("Can't place that there");
+		}
 	}
 	
 }
