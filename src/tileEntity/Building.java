@@ -1,6 +1,5 @@
 package src.tileEntity;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class Building extends TileEntity{
