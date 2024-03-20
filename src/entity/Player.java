@@ -131,6 +131,21 @@ public class Player extends entity{
 
 	}
 
+	public void addItemToInventory(){
+		//TODO IMPLEMENT
+
+
+	}
+
+	public void removeItemFromInventory(){
+		//TODO IMPLEMENT
+	}
+
+
+
+
+
+
 	public void update() {
 		
 		
@@ -141,7 +156,7 @@ public class Player extends entity{
 		// 
 
 	
-		mining = keyH.testable ? true : false;
+		// mining = keyH.testable ? true : false;
 		if(keyH.testable){
 			selectedEntityImage = miningArray;
 		}

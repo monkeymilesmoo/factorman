@@ -30,9 +30,9 @@ public class Building extends TileEntity{
 			
 			
 			// buildingImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1));
-			buildingImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3, 3));
-			buildingImages.put("assembling-machine-1-shadow", new EntityImage("building/assembling-machine-1/assembling-machine-1-shadow", 32, 1, 3, 3));
-			buildingImages.put("steel-chest", new EntityImage("building/steel-chest/steel-chest", 1, 1, 1, 1));
+			buildingImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3, 3, 12, 18));
+			buildingImages.put("assembling-machine-1-shadow", new EntityImage("building/assembling-machine-1/assembling-machine-1-shadow", 32, 1, 3, 3, 4, 13));
+			buildingImages.put("steel-chest", new EntityImage("building/steel-chest/steel-chest", 1, 1, 1, 1, 0, 10));
 
 			// buildingImages[0] = ImageIO.read(getClass().getResourceAsStream("/res/tileEntity/assembling-machine-1/assembling-machine-1.png"));
 			// buildingImages[1] = ImageIO.read(getClass().getResourceAsStream("/res/tileEntity/steel-chest/steel-chest.png"));
