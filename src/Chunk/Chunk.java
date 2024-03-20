@@ -7,12 +7,19 @@ import src.tileEntity.TileEntity;
 
 public class Chunk implements Serializable{
 	byte[][] tiles;
-	TileEntity[][] tileEntities;
+	public TileEntity[][] tileEntities;
 	public final static int chunkSize = 32;
 
 	public ArrayList<TileEntity> tileEntityList = new ArrayList<TileEntity>();
+	private int thisChunkX;
+	private int thisChunkY;
+	private ChunkGrid chunkGrid;
 
-	public Chunk() {
+	public Chunk(int thisChunkX, int thisChunkY, ChunkGrid chunkGrid) {
+		this.thisChunkX = thisChunkX;
+		this.thisChunkY = thisChunkY;
+		this.chunkGrid = chunkGrid;
+
 		tiles = new byte[chunkSize][chunkSize];
 		tileEntities = new TileEntity[chunkSize][chunkSize];
 		// setTileEntity(17, 18, test);
@@ -34,25 +41,39 @@ public class Chunk implements Serializable{
 	public void setTileEntity(int x, int y, byte tileWidth, byte tileHeight, String tileEntityID){
 
 		boolean canDo = true;
-		//TODO BE ABLE TO PLACE ON CHUNK BOUNDARY
+
 
 		for (int i = x; i < (x + tileWidth); i++){
 			for(int j = y; j < (y + tileHeight); j++){
-				if(tileEntities[i][j] != null){
+				if(chunkGrid.getChunk(thisChunkX + (Math.floorDiv(i, Chunk.chunkSize)), thisChunkY + (Math.floorDiv(j, Chunk.chunkSize))).getTileEntity(i % Chunk.chunkSize, j % Chunk.chunkSize) != null){
 					canDo = false;
 				}
 			}
 		}
 
+
 		if(canDo){
 			
-			TileEntity insertingTE = new TileEntity( x, y, tileWidth, tileHeight, tileEntityID);
-			tileEntities[x][y] = insertingTE;
+
+			//TODO CHANGE THIS BACK TO TILEENTITY I JUST AM TESTING WITH ORE
+			TileEntity insertingTE = new TileEntity( x, y, thisChunkX, thisChunkY, tileWidth, tileHeight, tileEntityID);
+			
+			
+			
 			for (int i = x; i < (x + tileWidth); i++){
 				for(int j = y; j < (y + tileHeight); j++){
-					tileEntities[i][j] = tileEntities[x][y];
+					chunkGrid.getChunk(thisChunkX + (Math.floorDiv(i, Chunk.chunkSize)), thisChunkY + (Math.floorDiv(j, Chunk.chunkSize))).tileEntities[i % Chunk.chunkSize][j % Chunk.chunkSize] = insertingTE;
 				}
 			}
+			
+			
+			
+			
+			// for (int i = x; i < (x + tileWidth); i++){
+			// 	for(int j = y; j < (y + tileHeight); j++){
+			// 		tileEntities[i][j] = tileEntities[x][y];
+			// 	}
+			// }
 
 			tileEntityList.add(insertingTE);
 		}
@@ -61,13 +82,21 @@ public class Chunk implements Serializable{
 		}
 	}
 
-	public void removeTileEntity(int x, int y, byte tileWidth, byte tileHeight, TileEntity removingTE){
+	public void removeTileEntity(int x, int y, int chunkX, int chunkY, byte tileWidth, byte tileHeight, TileEntity removingTE){
 		
+
 		for (int i = x; i < (x + tileWidth); i++){
 			for(int j = y; j < (y + tileHeight); j++){
-				tileEntities[i][j] = null;
+				chunkGrid.getChunk(chunkX + (Math.floorDiv(i, Chunk.chunkSize)), chunkY + (Math.floorDiv(j, Chunk.chunkSize))).tileEntities[i % Chunk.chunkSize][j % Chunk.chunkSize] = null;
 			}
 		}
+
+
+		// for (int i = x; i < (x + tileWidth); i++){
+		// 	for(int j = y; j < (y + tileHeight); j++){
+		// 		tileEntities[i][j] = null;
+		// 	}
+		// }
 
 		tileEntityList.remove(removingTE);
 	}

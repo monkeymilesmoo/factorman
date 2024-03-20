@@ -2,6 +2,7 @@ package src.tileEntity;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -12,11 +13,15 @@ public class EntityImage {
 	public int tileHeight, tileWidth;
 	public int shiftX, shiftY;
 
+
+	public transient static HashMap<String, EntityImage> entityImages = new HashMap<String, EntityImage>();
+
 	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileWidth, int tileHeight, int shiftX, int shiftY, String hasIcon){
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + filePath + ".png")));
 			if(hasIcon != null){
 				icon = ImageIO.read(getClass().getResourceAsStream(("/res/icons/" + hasIcon + ".png")));
+				icon = icon.getSubimage(0, 0, 64, 64);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -24,7 +29,6 @@ public class EntityImage {
 
 		makeEntityImageArray(frameWidth, frameHeight);
 
-		icon = icon.getSubimage(0, 0, 64, 64);
 
 		this.shiftX = shiftX;
 		this.shiftY = shiftY;
@@ -49,6 +53,40 @@ public class EntityImage {
 		}
 
 
+
+	}
+
+	public static void loadEntityImages(){
+
+		// entityImages = new EntityImage[3];
+
+
+
+		//THISLL PROBABLY NEED TO BE REVISED
+		try{
+			
+			
+			// entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1));
+			entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3, 3, 12, 18, "assembling-machine-1"));
+			entityImages.put("assembling-machine-1-shadow", new EntityImage("building/assembling-machine-1/assembling-machine-1-shadow", 32, 1, 3, 3, 4, 13, null));
+			entityImages.put("steel-chest", new EntityImage("building/steel-chest/steel-chest", 1, 1, 1, 1, 0, 10, "steel-chest"));
+			entityImages.put("steel-chest-shadow", new EntityImage("building/steel-chest/steel-chest-shadow", 1, 1, 1, 1, 0, 10, null));
+			entityImages.put("iron-ore", new EntityImage("Ore/iron-ore", 8, 8, 1, 1, 0, 0, "iron-ore"));
+
+			// entityImages[0] = ImageIO.read(getClass().getResourceAsStream("/res/tileEntity/assembling-machine-1/assembling-machine-1.png"));
+			// entityImages[1] = ImageIO.read(getClass().getResourceAsStream("/res/tileEntity/steel-chest/steel-chest.png"));
+			
+
+
+
+
+
+
+
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 }
