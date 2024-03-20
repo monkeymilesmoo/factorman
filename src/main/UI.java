@@ -5,12 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
-import java.nio.Buffer;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import src.tileEntity.Building;
 import src.tileEntity.EntityImage;
 
 public class UI {
@@ -42,6 +40,8 @@ public class UI {
 
 
 
+
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -63,7 +63,7 @@ public class UI {
 
 	public void drawHotbar(){
 
-		hotbarY = gp.screenHeight* 7 / 8;
+		hotbarY = gp.screenHeight - 100;
 		hotbarX = gp.player.screenX - 300;
 
 		g2.setColor(outerLayerEdge);
@@ -74,9 +74,9 @@ public class UI {
 
 		for(int i = 0; i< 11; i++){
 			for(int j = 0; j < 2; j++){
-				g2.drawImage(hotbarButton, 60 + hotbarX + (40 * i), hotbarY + 8 + (40* j), 40, 40, null);
+				g2.drawImage(hotbarButton, 60 + hotbarX + (40 * i), hotbarY + 8 + (45* j), 40, 40, null);
 				
-				g2.drawImage(Building.buildingImages.get("assembling-machine-1").icon, 60 + hotbarX + (40 * i) + 5, hotbarY + 8 + (40* j) + 5, 30, 30, null);
+				g2.drawImage(EntityImage.entityImages.get("assembling-machine-1").icon, 60 + hotbarX + (40 * i) + 5, hotbarY + 8 + (45 * j) + 5, 30, 30, null);
 			}
 		}
 
