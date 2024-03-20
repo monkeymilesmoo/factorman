@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 
 import src.Chunk.Chunk;
 import src.Chunk.ChunkGrid;
-import src.item.Item;
 import src.main.GamePanel;
 
 public class Player extends entity{
@@ -26,7 +25,6 @@ public class Player extends entity{
 	public int XCoords;
 	public int YCoords;
 
-	public Item[] inventory;
 	
 
 	public final int spawnCoords;
