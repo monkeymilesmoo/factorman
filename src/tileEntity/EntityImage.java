@@ -7,21 +7,24 @@ import javax.imageio.ImageIO;
 
 public class EntityImage {
 	
-	public BufferedImage image; 
+	public BufferedImage image, icon; 
 	public BufferedImage[][] imageArr;
 	public int tileHeight, tileWidth;
 	public int shiftX, shiftY;
 
-	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileWidth, int tileHeight, int shiftX, int shiftY){
+	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileWidth, int tileHeight, int shiftX, int shiftY, String hasIcon){
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + filePath + ".png")));
+			if(hasIcon != null){
+				icon = ImageIO.read(getClass().getResourceAsStream(("/res/icons/" + hasIcon + ".png")));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		// if (frameWidth > 1 || frameHeight > 1){
-			makeEntityImageArray(frameWidth, frameHeight);
-		// }
+		makeEntityImageArray(frameWidth, frameHeight);
+
+		icon = icon.getSubimage(0, 0, 64, 64);
 
 		this.shiftX = shiftX;
 		this.shiftY = shiftY;

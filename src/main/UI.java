@@ -5,8 +5,13 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.nio.Buffer;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+
+import src.tileEntity.Building;
+import src.tileEntity.EntityImage;
 
 public class UI {
 	
@@ -17,6 +22,7 @@ public class UI {
 	Color outerLayerBody, outerLayerEdge;
 	int hotbarX, hotbarY;
 	BufferedImage behindItem, hotbarButton;
+	HashMap <String, BufferedImage> icons = new HashMap<String, BufferedImage>();;
 
 
 	public UI (GamePanel gp){
@@ -34,19 +40,25 @@ public class UI {
 			hotbarButton = guiElements.getSubimage(3, 739, 76, 76);
 
 
+
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 
+		// createUIElement(gp.player.screenX - 300, gp.screenHeight - 96, 732, 96, "hotbar");
+	}
+
+	// public void createUIElement(int x, int y, int width, int height, String ID){
+
+		
+
+	// }
+
+
+	public void drawInventory(){
 		
 	}
-
-	public void createUIElement(int x, int y, String ID){
-
-
-
-	}
-
 
 
 	public void drawHotbar(){
@@ -63,8 +75,11 @@ public class UI {
 		for(int i = 0; i< 11; i++){
 			for(int j = 0; j < 2; j++){
 				g2.drawImage(hotbarButton, 60 + hotbarX + (40 * i), hotbarY + 8 + (40* j), 40, 40, null);
+				
+				g2.drawImage(Building.buildingImages.get("assembling-machine-1").icon, 60 + hotbarX + (40 * i) + 5, hotbarY + 8 + (40* j) + 5, 30, 30, null);
 			}
 		}
+
 		//For now, nothing to the left or right of hotbar items is necessary
 
 	}
@@ -82,4 +97,13 @@ public class UI {
 
 		g2.setFont(titilliumBold.deriveFont(32.0F));
 	}
+
+
+
+
+
+
+
+
+
 }
