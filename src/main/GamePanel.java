@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 import src.background.BackgroundManager;
 import src.entity.Player;
-import src.tileEntity.Building;
+import src.tileEntity.EntityImage;
 import src.Chunk.ChunkGrid;
 
 import java.awt.Color;
@@ -95,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public void startGameThread() {
 
-		Building.loadBuildingImages();
+		EntityImage.loadEntityImages();
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
@@ -142,17 +142,39 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 
+
+				//This should probably go somewhere else eventually
 				if(mouseH.leftMouseClicked){
 					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, "assembling-machine-1");
 				}
 				if(mouseH.rightMouseClicked){
-					try{
-						chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).beingMined(mouseH.mouseCol, mouseH.mouseRow, chunkGrid);
+					if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY) != null){
+						chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).beingMined(chunkGrid, player);
 						player.mining = true;
-					}catch(Exception e){
+						if(mouseH.mouseX > player.screenX){
+							if(mouseH.mouseY > player.screenY){
+								player.direction = 3;
+							}else{
+								player.direction = 1;
+							}
+						}else{
+							if(mouseH.mouseY > player.screenY){
+								player.direction = 5;
+							}else{
+								player.direction = 7;
+							}
+						}
 
+
+
+
+
+
+					}else{
+						player.mining = false;
 					}
-				}else if(mouseH.rightMouseClicked == false){
+				}
+				else{
 					player.mining = false;
 				}
 
@@ -228,10 +250,12 @@ public class GamePanel extends JPanel implements Runnable{
 
 		g2.setColor(Color.white);
 		g2.drawString("draw time: " + timePassed/1000000, 10, screenHeight - 30);
-		try{
-			g2.drawString("" + chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).miningDurability, 100, 100);
-		}catch (Exception e){
-
+		if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow] != null){
+			if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY) != null){
+				g2.drawString("" + (chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY)).miningDurability, 100, 100);
+				
+				
+			}
 		}
 
 		//DEBUG
