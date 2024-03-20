@@ -8,8 +8,10 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import src.Chunk.Chunk;
+import src.entity.entity;
 import src.main.GamePanel;
 import src.tileEntity.Building;
+import src.tileEntity.EntityImage;
 import src.tileEntity.TileEntity;
 
 public class BackgroundManager {
@@ -20,6 +22,7 @@ public class BackgroundManager {
 
 	Random terrainSeed;
 
+	EntityImage entityImage;
 
 
 	public BackgroundManager(GamePanel gp){
@@ -199,8 +202,12 @@ public class BackgroundManager {
 					
 		
 						if (tileEntity != null){
-							g2.drawImage(Building.buildingImages.get("assembling-machine-1-shadow").imageArr[gp.frameNumber % 256 / 8][0], screenX + 13 , screenY + 13, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1-shadow").tileWidth - 2, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1-shadow").tileHeight - 26, null);
-							g2.drawImage(Building.buildingImages.get("assembling-machine-1").imageArr[gp.frameNumber % 256 / 8][0], screenX - 12, screenY - 18, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1").tileWidth + 24, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1").tileHeight + 36, null);
+							entityImage = Building.buildingImages.get(tileEntity.tileEntityID);
+							// g2.drawImage(Building.buildingImages.get("assembling-machine-1-shadow").imageArr[0][0], screenX + 13 , screenY + 13, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1-shadow").tileWidth - 2, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1-shadow").tileHeight - 26, null);
+							// g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + 24, GamePanel.tileSize * entityImage.tileHeight + 36, null);
+
+							g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), null);
+
 						}
 						
 					}

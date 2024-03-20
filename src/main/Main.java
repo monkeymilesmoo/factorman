@@ -1,5 +1,7 @@
 package src.main;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 
@@ -19,6 +21,7 @@ public class Main {
 		window.add(gp);
 		window.pack();
 		window.setVisible(true);
+		window.setMinimumSize(new Dimension(1000,1000));
 
 
 		gp.startGameThread();

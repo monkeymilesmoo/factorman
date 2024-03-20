@@ -10,18 +10,21 @@ public class EntityImage {
 	public BufferedImage image; 
 	public BufferedImage[][] imageArr;
 	public int tileHeight, tileWidth;
+	public int shiftX, shiftY;
 
-	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileWidth, int tileHeight){
+	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileWidth, int tileHeight, int shiftX, int shiftY){
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + filePath + ".png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		if (frameWidth > 1 || frameHeight > 1){
+		// if (frameWidth > 1 || frameHeight > 1){
 			makeEntityImageArray(frameWidth, frameHeight);
-		}
+		// }
 
+		this.shiftX = shiftX;
+		this.shiftY = shiftY;
 		this.tileHeight = tileHeight;
 		this.tileWidth = tileWidth;
 

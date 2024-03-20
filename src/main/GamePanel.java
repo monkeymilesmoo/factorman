@@ -148,9 +148,12 @@ public class GamePanel extends JPanel implements Runnable{
 				if(mouseH.rightMouseClicked){
 					try{
 						chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).beingMined(mouseH.mouseCol, mouseH.mouseRow, chunkGrid);
+						player.mining = true;
 					}catch(Exception e){
-						
+
 					}
+				}else if(mouseH.rightMouseClicked == false){
+					player.mining = false;
 				}
 
 
