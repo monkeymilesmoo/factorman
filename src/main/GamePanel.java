@@ -58,6 +58,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public BackgroundManager backgroundM = new BackgroundManager(this);
 
+	public UI ui = new UI(this); 
+
 
 	public GamePanel() {
 
@@ -215,8 +217,10 @@ public class GamePanel extends JPanel implements Runnable{
 		player.draw(g2);
 		mouseH.hoveredTileEntity(g2);
 
+		ui.draw(g2);
+
 		g2.setColor(Color.white);
-		g2.drawString("draw time: " + timePassed/1000000, 10, 10);
+		g2.drawString("draw time: " + timePassed/1000000, 10, screenHeight - 30);
 
 
 		//DEBUG

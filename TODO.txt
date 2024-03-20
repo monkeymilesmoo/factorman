@@ -10,6 +10,8 @@ Maybe make in a separate thread, but that seems weird.
 
 Clicking makes a building or something
 
+Add player mask for different colors
+
 Actual terrain generation with noise and such
 
 Probably make rendering more efficient somehow. It currently is a little too slow I think.
