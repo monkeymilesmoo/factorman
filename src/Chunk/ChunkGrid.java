@@ -35,7 +35,7 @@ public class ChunkGrid implements Serializable{
 		
 		if (!loading){
 			// newEmptyChunks();
-			chunks[middleChunk][middleChunk] = new Chunk();
+			chunks[middleChunk][middleChunk] = new Chunk(middleChunk, middleChunk, this);
 			try {
 			
 			//FOR NOW JUST READING ONE TXT FILE
@@ -92,7 +92,7 @@ public class ChunkGrid implements Serializable{
 	public void newEmptyChunks() {
 		for(int x = 0; x < gridSize; x++){
 			for (int y = 0; y < gridSize; y++){
-				chunks[x][y] = new Chunk();
+				chunks[x][y] = new Chunk(x, y, this);
 			}
 		}
 	}
@@ -104,7 +104,7 @@ public class ChunkGrid implements Serializable{
 		// CHANGE LATER
 		//
 		//
-		chunks[chunkX][chunkY] = new Chunk();
+		chunks[chunkX][chunkY] = new Chunk(chunkX, chunkY, this);
 		for(int x = 0; x < Chunk.chunkSize; x++){
 			for (int y = 0; y < Chunk.chunkSize; y++){
 				chunks[chunkX][chunkY].setTile(x, y, (byte) 0);

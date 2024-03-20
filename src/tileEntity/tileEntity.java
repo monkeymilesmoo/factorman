@@ -3,6 +3,7 @@ package src.tileEntity;
 import java.io.Serializable;
 
 import src.Chunk.ChunkGrid;
+import src.entity.Player;
 
 
 public class TileEntity implements Serializable{
@@ -12,9 +13,13 @@ public class TileEntity implements Serializable{
 	public int x, y;
 	public byte miningDurability = 25;
 	public String tileEntityID;
+	public int chunkX;
+	public int chunkY;
 
-	public TileEntity(int x, int y, byte tileWidth, byte tileHeight, String tileEntityID){
+	public TileEntity(int x, int y, int chunkX, int chunkY, byte tileWidth, byte tileHeight, String tileEntityID){
 
+		this.chunkX = chunkX;
+		this.chunkY = chunkY;
 		this.tileHeight = tileHeight;
 		this.tileWidth = tileWidth;
 		this.x = x;
@@ -26,12 +31,13 @@ public class TileEntity implements Serializable{
 	}
 
 	//IM not sure what the best way to remove it is other than this
-	public void beingMined(int chunkX, int chunkY, ChunkGrid chunkGrid){
+	public void beingMined(ChunkGrid chunkGrid, Player player){
 
-		miningDurability -= 1;
+		miningDurability -= 0;
 
 		if (miningDurability <= 0){
-			chunkGrid.chunks[chunkX][chunkY].removeTileEntity(x, y, tileWidth, tileHeight, this);
+			chunkGrid.chunks[chunkX][chunkY].removeTileEntity(x, y, chunkX, chunkY, tileWidth, tileHeight, this);
+			player.mining = false;
 		}
 
 
