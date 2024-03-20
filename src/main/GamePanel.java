@@ -143,10 +143,14 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 				if(mouseH.leftMouseClicked){
-					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, (short) 1);
+					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, "assembling-machine-1");
 				}
 				if(mouseH.rightMouseClicked){
-					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTile(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 2);
+					try{
+						chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).beingMined(mouseH.mouseCol, mouseH.mouseRow, chunkGrid);
+					}catch(Exception e){
+						
+					}
 				}
 
 
@@ -221,7 +225,11 @@ public class GamePanel extends JPanel implements Runnable{
 
 		g2.setColor(Color.white);
 		g2.drawString("draw time: " + timePassed/1000000, 10, screenHeight - 30);
+		try{
+			g2.drawString("" + chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).miningDurability, 100, 100);
+		}catch (Exception e){
 
+		}
 
 		//DEBUG
 		long drawEnd = 0;
