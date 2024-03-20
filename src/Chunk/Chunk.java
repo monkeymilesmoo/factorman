@@ -31,7 +31,7 @@ public class Chunk implements Serializable{
 		return tileEntities[x][y];
 	}
 
-	public void setTileEntity(int x, int y, byte tileWidth, byte tileHeight, short tileEntityID){
+	public void setTileEntity(int x, int y, byte tileWidth, byte tileHeight, String tileEntityID){
 
 		boolean canDo = true;
 		//TODO BE ABLE TO PLACE ON CHUNK BOUNDARY
@@ -59,6 +59,17 @@ public class Chunk implements Serializable{
 		else{
 			System.out.println("Can't place that there");
 		}
+	}
+
+	public void removeTileEntity(int x, int y, byte tileWidth, byte tileHeight, TileEntity removingTE){
+		
+		for (int i = x; i < (x + tileWidth); i++){
+			for(int j = y; j < (y + tileHeight); j++){
+				tileEntities[i][j] = null;
+			}
+		}
+
+		tileEntityList.remove(removingTE);
 	}
 	
 }

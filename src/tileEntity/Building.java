@@ -13,7 +13,7 @@ public class Building extends TileEntity{
 	byte rotation = 2;
 
 
-	public Building(int x, int y, byte tileWidth, byte tileHeight, short tileEntityID){
+	public Building(int x, int y, byte tileWidth, byte tileHeight, String tileEntityID){
 
 		super(x, y, tileWidth, tileHeight, tileEntityID);
 
