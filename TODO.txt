@@ -6,6 +6,8 @@ Add inventory - at least a hotbar to place Buildings
 make a tileentity arraylist in chunkgrid that saves every placed tileentity
 call every instance on this list every tick to update()
 
+Bake shadows into images
+
 Maybe make in a separate thread, but that seems weird.
 
 Clicking makes a building or something
