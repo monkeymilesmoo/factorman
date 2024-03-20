@@ -57,12 +57,12 @@ public class MouseHandler extends MouseAdapter{
 		mouseY = e.getY();
 
 
-		mouseX = mouseX + gp.player.worldX - gp.player.screenX;
-		mouseY = mouseY + gp.player.worldY - gp.player.screenY;
-		mouseTileX = (mouseX % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
-		mouseTileY = (mouseY % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
-		mouseCol = (mouseX - mouseTileX) / (Chunk.chunkSize * GamePanel.tileSize);
-		mouseRow = (mouseY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
+		mouseWorldX = mouseX + gp.player.worldX - gp.player.screenX;
+		mouseWorldY = mouseY + gp.player.worldY - gp.player.screenY;
+		mouseTileX = (mouseWorldX % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
+		mouseTileY = (mouseWorldY % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
+		mouseCol = (mouseWorldX - mouseTileX) / (Chunk.chunkSize * GamePanel.tileSize);
+		mouseRow = (mouseWorldY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
 	}
 
 	public void mouseMoved(MouseEvent e){
@@ -81,8 +81,10 @@ public class MouseHandler extends MouseAdapter{
 	public void hoveredTileEntity(Graphics2D g2){
 
 	
-		try{ //TODO FIX THIS maybe set chunk as a variable first and check if null
-			TileEntity hovered = gp.chunkGrid.getChunk(mouseCol, mouseRow).getTileEntity(mouseTileX, mouseTileY);
+		
+		Chunk hoveredChunk = gp.chunkGrid.getChunk(mouseCol, mouseRow);
+		if(hoveredChunk != null){
+			TileEntity hovered = hoveredChunk.getTileEntity(mouseTileX, mouseTileY);
 
 			if (hovered != null){
 
@@ -92,8 +94,6 @@ public class MouseHandler extends MouseAdapter{
 				g2.drawImage(selectionYellow, hoveredWorldX, hoveredWorldY, GamePanel.tileSize * hovered.tileWidth, GamePanel.tileSize* hovered.tileHeight, null);
 
 			}
-		}catch(Exception e){
-
 		}
 
 	}
