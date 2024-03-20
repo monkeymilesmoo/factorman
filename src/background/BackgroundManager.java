@@ -199,8 +199,8 @@ public class BackgroundManager {
 					
 		
 						if (tileEntity != null){
-							g2.drawImage(Building.buildingImages[1].imageArr[gp.frameNumber % 256 / 8][0], screenX + 13 , screenY + 13, GamePanel.tileSize * Building.buildingImages[1].tileWidth - 2, GamePanel.tileSize * Building.buildingImages[1].tileHeight - 26, null);
-							g2.drawImage(Building.buildingImages[0].imageArr[gp.frameNumber % 256 / 8][0], screenX - 12, screenY - 18, GamePanel.tileSize * Building.buildingImages[0].tileWidth + 24, GamePanel.tileSize * Building.buildingImages[0].tileHeight + 36, null);
+							g2.drawImage(Building.buildingImages.get("assembling-machine-1-shadow").imageArr[gp.frameNumber % 256 / 8][0], screenX + 13 , screenY + 13, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1-shadow").tileWidth - 2, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1-shadow").tileHeight - 26, null);
+							g2.drawImage(Building.buildingImages.get("assembling-machine-1").imageArr[gp.frameNumber % 256 / 8][0], screenX - 12, screenY - 18, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1").tileWidth + 24, GamePanel.tileSize * Building.buildingImages.get("assembling-machine-1").tileHeight + 36, null);
 						}
 						
 					}
