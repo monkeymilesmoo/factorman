@@ -88,8 +88,8 @@ public class MouseHandler extends MouseAdapter{
 
 			if (hovered != null){
 
-				int hoveredWorldX = (mouseCol * Chunk.chunkSize * GamePanel.tileSize) + (hovered.x * GamePanel.tileSize) - gp.player.worldX + gp.player.screenX;
-				int hoveredWorldY = (mouseRow * Chunk.chunkSize * GamePanel.tileSize) + (hovered.y * GamePanel.tileSize) - gp.player.worldY + gp.player.screenY;
+				int hoveredWorldX = (hovered.chunkX * Chunk.chunkSize * GamePanel.tileSize) + (hovered.x * GamePanel.tileSize) - gp.player.worldX + gp.player.screenX;
+				int hoveredWorldY = (hovered.chunkY * Chunk.chunkSize * GamePanel.tileSize) + (hovered.y * GamePanel.tileSize) - gp.player.worldY + gp.player.screenY;
 				
 				g2.drawImage(selectionYellow, hoveredWorldX, hoveredWorldY, GamePanel.tileSize * hovered.tileWidth, GamePanel.tileSize* hovered.tileHeight, null);
 

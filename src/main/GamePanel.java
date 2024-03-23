@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import src.background.BackgroundManager;
 import src.entity.Player;
+import src.item.ItemProperties;
 import src.tileEntity.EntityImage;
 import src.Chunk.ChunkGrid;
 
@@ -96,6 +97,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void startGameThread() {
 
 		EntityImage.loadEntityImages();
+		ItemProperties.InitializeItemProperties();
 		gameThread = new Thread(this);
 		gameThread.start();
 	}

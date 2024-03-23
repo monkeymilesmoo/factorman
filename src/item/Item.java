@@ -3,11 +3,12 @@ package src.item;
 public class Item {
 	
 	int quantity;
-	String itemType;
-	int stackSize;
+	String itemID;
 
-	public Item() {
+	public Item(String itemID, int quantity) {
 
+		this.itemID = itemID;
+		this.quantity = quantity;
 
 
 	}

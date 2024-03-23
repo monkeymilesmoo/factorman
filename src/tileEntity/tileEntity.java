@@ -33,7 +33,7 @@ public class TileEntity implements Serializable{
 	//IM not sure what the best way to remove it is other than this
 	public void beingMined(ChunkGrid chunkGrid, Player player){
 
-		miningDurability -= 0;
+		miningDurability -= 1;
 
 		if (miningDurability <= 0){
 			chunkGrid.chunks[chunkX][chunkY].removeTileEntity(x, y, chunkX, chunkY, tileWidth, tileHeight, this);

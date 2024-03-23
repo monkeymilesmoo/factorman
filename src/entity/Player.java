@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import src.Chunk.Chunk;
 import src.Chunk.ChunkGrid;
 import src.item.Item;
+import src.item.storageInventory;
 import src.main.GamePanel;
 
 public class Player extends entity{
@@ -25,11 +26,11 @@ public class Player extends entity{
 
 	public int XCoords;
 	public int YCoords;
-
-	public Item[] inventory;
 	
 
 	public final int spawnCoords;
+
+	public storageInventory inventory = new storageInventory(80);
 
 
 	public Player(GamePanel gp, KeyHandler keyH){
@@ -131,15 +132,6 @@ public class Player extends entity{
 
 	}
 
-	public void addItemToInventory(){
-		//TODO IMPLEMENT
-
-
-	}
-
-	public void removeItemFromInventory(){
-		//TODO IMPLEMENT
-	}
 
 
 
