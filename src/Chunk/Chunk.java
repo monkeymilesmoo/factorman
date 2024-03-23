@@ -55,7 +55,6 @@ public class Chunk implements Serializable{
 		if(canDo){
 			
 
-			//TODO CHANGE THIS BACK TO TILEENTITY I JUST AM TESTING WITH ORE
 			TileEntity insertingTE = new TileEntity( x, y, thisChunkX, thisChunkY, tileWidth, tileHeight, tileEntityID);
 			
 			
