@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 
 import src.Chunk.Chunk;
 import src.Chunk.ChunkGrid;
-import src.item.Item;
 import src.item.storageInventory;
 import src.main.GamePanel;
 

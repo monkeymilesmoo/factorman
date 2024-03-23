@@ -4,6 +4,8 @@ package src.item;
 public class storageInventory {
 
 	//For chests and players and such. Make a different class for furnaces and assemblers I think
+	//Or maybe have there be a new inventory for each? im not sure
+	//Maybe have a boolean for filtered or something not sure
 
 
 
@@ -33,11 +35,16 @@ public class storageInventory {
 		
 
 		for(int i = 0; i < invSize; i++){
+			
 			if (invContents[i].itemID == insertingItem.itemID){
 						
 				
 				if (aboutToUseSlots > remainingSlots){
 					
+					invContents[i].quantity += remainingSlots * stackSize;
+					insertingItem.quantity -= remainingSlots * stackSize;
+					remainingSlots = 0;
+					return insertingItem;
 
 
 				}else{
@@ -47,9 +54,30 @@ public class storageInventory {
 					return null;
 				}
 			}
+			if(invContents[i] == null){
+				if (aboutToUseSlots > remainingSlots){
+					
+					invContents[i] = insertingItem;
+					invContents[i].quantity += remainingSlots * stackSize;
+					insertingItem.quantity -= remainingSlots * stackSize;
+					remainingSlots = 0;
+					return insertingItem;
+
+
+				}else{
+					invContents[i].quantity += insertingItem.quantity;
+					remainingSlots -= aboutToUseSlots;
+
+					return null;
+				}
+
+			}
 		}
+		
 
 
+
+		//why would this be called????
 		return insertingItem;
 	}
 
