@@ -41,6 +41,9 @@ public class storageInventory {
 
 		for(int i = 0; i < invSize; i++){
 			if(invContents[i] == null){
+				if (remainingSlots == 0){
+					return insertingItem;
+				}
 				if (aboutToUseSlots > remainingSlots){
 					
 					invContents[i] = insertingItem;
