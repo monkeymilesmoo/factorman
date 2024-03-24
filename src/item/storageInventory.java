@@ -29,9 +29,6 @@ public class storageInventory {
 	public Item addItemToInventory(Item insertingItem){
 		//IMPORTANT: When using this, do "InsertingItem = foo.bar.addItemToInventory(); this will make sure to subtract inserted amount out"
 
-		if (remainingSlots == 0){
-			return insertingItem;
-		}
 
 		stackSize = ItemProperties.itemPropertyMap.get(insertingItem.itemID).stackSize;
 
@@ -90,11 +87,17 @@ public class storageInventory {
 			if (invContents[i].itemID == insertingItem.itemID){
 						
 				
-				if (((invContents[i].quantity % stackSize) + insertingItem.quantity) / stackSize >= remainingSlots){
+				if (remainingSlots == 0 && (invContents[i].quantity % stackSize) == 0){
+					return insertingItem;
+				}
+
+				if (((invContents[i].quantity % stackSize) + insertingItem.quantity) / stackSize >= remainingSlots && ((invContents[i].quantity % stackSize) + insertingItem.quantity) >= stackSize){
 					// if ((invContents[i].quantity % stackSize) + insertingItem.quantity >= stackSize){
 					// 	remainingSlots -= aboutToUseSlots;
 					// }
-					invContents[i].quantity += (remainingSlots * stackSize) - (invContents[i].quantity % stackSize);
+					System.out.println("he");
+
+					invContents[i].quantity += (Math.max(remainingSlots, 1) * stackSize) - (invContents[i].quantity % stackSize);
 
 					insertingItem.quantity -= remainingSlots * stackSize;
 					remainingSlots = 0;
@@ -102,9 +105,7 @@ public class storageInventory {
 
 
 				}else{
-					// if ((invContents[i].quantity % stackSize) + insertingItem.quantity >= stackSize){
-						remainingSlots -= ((invContents[i].quantity % stackSize) + insertingItem.quantity) / stackSize;
-					// }
+					remainingSlots -= ((invContents[i].quantity % stackSize) + insertingItem.quantity) / stackSize;
 					invContents[i].quantity += insertingItem.quantity;
 					
 					return null;

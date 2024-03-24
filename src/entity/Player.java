@@ -150,8 +150,9 @@ public class Player extends entity{
 	
 		// mining = keyH.testable ? true : false;
 		if(keyH.testable){
+			System.out.println(inventory.invContents[0].quantity);
+			inventory.addItemToInventory(new Item("assembling-machine-1", 3));
 			inventory.addItemToInventory(new Item("iron-ore", 124));
-			// inventory.addItemToInventory(new Item("assembling-machine-1", 1));
 			keyH.testable = false;
 		}
 		moving = (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) ? true : false;
