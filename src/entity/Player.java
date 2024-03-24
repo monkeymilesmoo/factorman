@@ -29,7 +29,7 @@ public class Player extends entity{
 
 	public final int spawnCoords;
 
-	public storageInventory inventory = new storageInventory(80);
+	public storageInventory inventory = new storageInventory(90);
 
 
 	public Player(GamePanel gp, KeyHandler keyH){

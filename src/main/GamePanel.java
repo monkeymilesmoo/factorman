@@ -220,6 +220,7 @@ public class GamePanel extends JPanel implements Runnable{
 				player.screenX = (screenWidth/2) - player.entityTextureWidth;
 				player.shadowX = player.screenX + 20;
 				player.shadowY = player.screenY + 65;
+				ui.resizeWindow();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
