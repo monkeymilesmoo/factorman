@@ -2,8 +2,8 @@ package src.item;
 
 public class Item {
 	
-	int quantity;
-	String itemID;
+	public int quantity;
+	public String itemID;
 
 	public Item(String itemID, int quantity) {
 

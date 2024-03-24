@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import src.Chunk.Chunk;
 import src.Chunk.ChunkGrid;
+import src.item.Item;
 import src.item.storageInventory;
 import src.main.GamePanel;
 
@@ -149,7 +150,9 @@ public class Player extends entity{
 	
 		// mining = keyH.testable ? true : false;
 		if(keyH.testable){
-			selectedEntityImage = miningArray;
+			inventory.addItemToInventory(new Item("iron-ore", 50));
+			// inventory.addItemToInventory(new Item("assembling-machine-1", 1));
+			keyH.testable = false;
 		}
 		moving = (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) ? true : false;
 
