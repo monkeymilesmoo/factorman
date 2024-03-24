@@ -1,5 +1,7 @@
 package src.item;
 
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class storageInventory {
 
@@ -10,7 +12,7 @@ public class storageInventory {
 
 
 	public Item[] invContents;
-	private int invSize;
+	public int invSize;
 	private int remainingSlots;
 	private int stackSize;
 	private int aboutToUseSlots;
@@ -61,16 +63,30 @@ public class storageInventory {
 					invContents[i].quantity += remainingSlots * stackSize;
 					insertingItem.quantity -= remainingSlots * stackSize;
 					remainingSlots = 0;
-					return insertingItem;
+					
 
 
 				}else{
 					invContents[i].quantity += insertingItem.quantity;
 					remainingSlots -= aboutToUseSlots;
-
-					return null;
+					insertingItem = null;
+					
 				}
 
+				//I think this works??
+				Arrays.sort(invContents, new Comparator<Item>() {
+					@Override
+					public int compare(Item i1, Item i2) {
+						return i1.itemID.compareTo(i2.itemID);
+					}
+				});
+		
+
+
+
+
+				return insertingItem;
+				
 			}
 		}
 		

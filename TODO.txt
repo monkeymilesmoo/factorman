@@ -1,7 +1,8 @@
 TODO:
 
 
-Add inventory - at least a hotbar to place Buildings
+Refactor UI class to have subclasses for each ui type which are initialized at startup and inherit variables such as topleft x and y and such
+Maybe use map with id for each ui and if mouse is over each one thats which thing mouse is used for
 
 make a tileentity arraylist in chunkgrid that saves every placed tileentity
 call every instance on this list every tick to update()
