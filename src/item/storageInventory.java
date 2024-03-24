@@ -90,11 +90,12 @@ public class storageInventory {
 			if (invContents[i].itemID == insertingItem.itemID){
 						
 				
-				if (aboutToUseSlots >= remainingSlots){
+				if (((invContents[i].quantity % stackSize) + insertingItem.quantity) / stackSize >= remainingSlots){
 					// if ((invContents[i].quantity % stackSize) + insertingItem.quantity >= stackSize){
 					// 	remainingSlots -= aboutToUseSlots;
 					// }
 					invContents[i].quantity += (remainingSlots * stackSize) - (invContents[i].quantity % stackSize);
+
 					insertingItem.quantity -= remainingSlots * stackSize;
 					remainingSlots = 0;
 					return insertingItem;

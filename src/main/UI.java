@@ -190,7 +190,7 @@ public class UI {
 				if(i > (80 - gp.player.inventory.remainingSlots)){
 					g2.setColor(Color.white);
 					// g2.fillRect( 26  + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 40, 40);
-					System.out.println(gp.player.inventory.remainingSlots);
+					// System.out.println(gp.player.inventory.remainingSlots);
 					// System.out.println(gp.player.inventory.invContents[0].quantity);
 				}
 
