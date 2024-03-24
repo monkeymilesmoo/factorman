@@ -173,7 +173,7 @@ public class UI {
 						repeatedSlots++;
 					}
 				
-					for (int j = 0; j < repeatedSlots; j++){
+					for (int j = 1; j < repeatedSlots; j++){
 						g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
 						g2.setColor(Color.white);
 						g2.drawString(((Integer) (stackSize)).toString(), 26  + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + 30 + (40 * (i / 10)) + 5);
@@ -186,6 +186,13 @@ public class UI {
 					g2.setColor(Color.white);
 					g2.drawString(((Integer) ((slotItem.quantity - 1) % (stackSize) + 1)).toString(), 26  + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + 30 + (40 * (i / 10)) + 5);
 				}	
+
+				if(i > (80 - gp.player.inventory.remainingSlots)){
+					g2.setColor(Color.white);
+					// g2.fillRect( 26  + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 40, 40);
+					System.out.println(gp.player.inventory.remainingSlots);
+					// System.out.println(gp.player.inventory.invContents[0].quantity);
+				}
 
 
 				slot++;

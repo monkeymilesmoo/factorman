@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import src.background.BackgroundManager;
 import src.entity.Player;
+import src.item.Item;
 import src.item.ItemProperties;
 import src.tileEntity.EntityImage;
 import src.Chunk.ChunkGrid;
@@ -98,6 +99,14 @@ public class GamePanel extends JPanel implements Runnable{
 
 		EntityImage.loadEntityImages();
 		ItemProperties.InitializeItemProperties();
+
+
+		//TODO DEBUG
+		player.inventory.addItemToInventory(new Item("iron-ore", 4000));
+
+
+
+
 		gameThread = new Thread(this);
 		gameThread.start();
 	}

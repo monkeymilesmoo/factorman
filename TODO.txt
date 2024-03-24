@@ -1,7 +1,10 @@
 TODO:
 
 
-Refactor UI class to have subclasses for each ui type which are initialized at startup and inherit variables such as topleft x and y and such
+Fix inventory to not overflow anymore
+
+Add ability to remove from inventory
+
 Maybe use map with id for each ui and if mouse is over each one thats which thing mouse is used for
 
 make a tileentity arraylist in chunkgrid that saves every placed tileentity
