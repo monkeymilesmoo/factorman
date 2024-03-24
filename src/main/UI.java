@@ -19,8 +19,9 @@ public class UI {
 	Font titilliumBold, titilliumRegular;
 	GamePanel gp;
 	BufferedImage guiElements;
-	Color outerLayerBody, outerLayerEdge;
-	Color middleLayerBody, middleLayerEdge;
+	static Color outerLayerBody;
+	static Color outerLayerEdge;
+	static Color middleLayerBody, middleLayerEdge;
 	BufferedImage behindItem, hotbarButton;
 	HashMap <String, BufferedImage> icons = new HashMap<String, BufferedImage>();;
 
@@ -47,6 +48,15 @@ public class UI {
 			hotbarButton = guiElements.getSubimage(3, 739, 76, 76);
 
 
+			//Outer edge for outermost windows
+
+
+
+
+
+
+
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -59,11 +69,36 @@ public class UI {
 
 		//Add for each new window
 		hotbar.draw();
-		SIUI.draw();
-
+		if(gp.invOpen){
+			SIUI.draw();
+		}
 
 		g2.setFont(titilliumBold.deriveFont(32.0F));
 	}
+
+
+	public static void drawOuterEdge(int x, int y, int width, int height, Graphics2D g2){
+
+
+		//draw edges around main body
+
+
+
+		g2.setColor(outerLayerBody);
+		g2.fillRect(x, y, width, height);
+
+
+	}
+
+
+
+
+
+
+
+
+
+
 
 
 	public void resizeWindow(){
@@ -135,17 +170,23 @@ public class UI {
 		public void draw(){
 			
 			//Draw outer rectangle
-			g2.setColor(outerLayerEdge);
-			g2.fillRect(topleftX - 2, topleftY - 2, largerWidth + 4, largerHeight + 4);
+			UI.drawOuterEdge(topleftX, topleftY, largerWidth, largerHeight, g2);
+
+			// g2.setColor(outerLayerEdge);
+			// g2.fillRect(topleftX - 2, topleftY - 2, largerWidth + 4, largerHeight + 4);
 	
-			g2.setColor(outerLayerBody);
-			g2.fillRect(topleftX, topleftY, largerWidth, largerHeight);
+			// g2.setColor(outerLayerBody);
+			// g2.fillRect(topleftX, topleftY, largerWidth, largerHeight);
 
 			//Draw inner rectangles
 			g2.setColor(middleLayerBody);
 			for (int i = 0; i < 3; i++){
-				g2.fillRect(topleftX + 12 + ((width + 13) * i), topleftY + 41, width, height);
+				g2.fillRect(topleftX + 11 + ((width + 13) * i), topleftY + 41, width, height);
 			}
+
+			g2.setFont(titilliumBold.deriveFont(18.0F));
+			g2.setColor(Color.white);
+			g2.drawString("Character", topleftX + 14, topleftY + 25);
 
 			g2.setFont(titilliumBold.deriveFont(16.0F));
 			
