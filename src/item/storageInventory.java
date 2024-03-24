@@ -15,7 +15,7 @@ public class storageInventory {
 
 	public Item[] invContents;
 	public int invSize;
-	private int remainingSlots;
+	public int remainingSlots;
 	private int stackSize;
 	private int aboutToUseSlots;
 
@@ -37,7 +37,7 @@ public class storageInventory {
 
 
 		aboutToUseSlots = (insertingItem.quantity / stackSize);
-		if((insertingItem.quantity % stackSize) != 0){
+		if(insertingItem.quantity <  stackSize){
 			aboutToUseSlots++;
 		}
 		
@@ -91,19 +91,19 @@ public class storageInventory {
 						
 				
 				if (aboutToUseSlots >= remainingSlots){
-					if ((invContents[i].quantity % stackSize) + insertingItem.quantity >= stackSize){
-						remainingSlots -= aboutToUseSlots;
-					}
-					invContents[i].quantity += remainingSlots * stackSize;
+					// if ((invContents[i].quantity % stackSize) + insertingItem.quantity >= stackSize){
+					// 	remainingSlots -= aboutToUseSlots;
+					// }
+					invContents[i].quantity += (remainingSlots * stackSize) - (invContents[i].quantity % stackSize);
 					insertingItem.quantity -= remainingSlots * stackSize;
 					remainingSlots = 0;
 					return insertingItem;
 
 
 				}else{
-					if ((invContents[i].quantity % stackSize) + insertingItem.quantity >= stackSize){
-						remainingSlots -= aboutToUseSlots;
-					}
+					// if ((invContents[i].quantity % stackSize) + insertingItem.quantity >= stackSize){
+						remainingSlots -= ((invContents[i].quantity % stackSize) + insertingItem.quantity) / stackSize;
+					// }
 					invContents[i].quantity += insertingItem.quantity;
 					
 					return null;
