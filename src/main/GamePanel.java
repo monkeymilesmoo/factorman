@@ -39,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public int frameNumber = 0;
 
+	public boolean invOpen = false;
 
 
 	boolean loading = false;
@@ -152,7 +153,10 @@ public class GamePanel extends JPanel implements Runnable{
 				drawCount++;
 
 
-
+				if (keyH.Epressed){
+					keyH.Epressed = false;
+					invOpen = !invOpen;
+				}
 
 				//This should probably go somewhere else eventually
 				if(mouseH.leftMouseClicked){
