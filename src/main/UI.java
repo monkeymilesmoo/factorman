@@ -19,11 +19,11 @@ public class UI {
 	Font titilliumBold, titilliumRegular;
 	GamePanel gp;
 	BufferedImage guiElements;
-	static Color outerLayerBody;
-	static Color outerLayerEdge;
 	static Color middleLayerBody, middleLayerEdge;
 	BufferedImage behindItem, hotbarButton;
 	HashMap <String, BufferedImage> icons = new HashMap<String, BufferedImage>();;
+	static Color[][] outerLayer;
+	BufferedImage closeWhite, closeBlack;
 
 
 	private hotbarUI hotbar = new hotbarUI();
@@ -38,8 +38,6 @@ public class UI {
 			titilliumBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("fonts/TitilliumWeb-Bold.ttf"));
 
 			guiElements = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/gui-new.png"));
-			outerLayerBody = new Color(guiElements.getRGB(9, 9));
-			outerLayerEdge = new Color(guiElements.getRGB(9, 1));
 
 			middleLayerBody = new Color(guiElements.getRGB(77, 9));
 			middleLayerEdge = new Color(guiElements.getRGB(77, 1));
@@ -47,8 +45,17 @@ public class UI {
 			behindItem = guiElements.getSubimage(3, 427, 76, 76);
 			hotbarButton = guiElements.getSubimage(3, 739, 76, 76);
 
+			closeWhite = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-white.png"));
+			closeBlack = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-black.png"));
+
 
 			//Outer edge for outermost windows
+			outerLayer = new Color[17][17];
+
+			for (int i = 0; i < 17; i++){
+				outerLayer[i][8] = new Color(guiElements.getRGB(i, 9));
+				outerLayer[8][i] = new Color(guiElements.getRGB(9, i));
+			}
 
 
 
@@ -82,9 +89,31 @@ public class UI {
 
 		//draw edges around main body
 
+		//Top edge
+		for(int i = 0; i< 4; i++){
+			g2.setColor(outerLayer[8][(2 * i)]);
+			g2.fillRect(x - 4 + i, y - 4 + i, width + 8 - (2 * i), 1);
+		}
+		
+		//Left edge
+		for(int i = 0; i< 4; i++){
+			g2.setColor(outerLayer[(2 * i)][8]);
+			g2.fillRect(x - 4 + i, y - 4 + i, 1, height + 8 - (2 * i));
+		}
+		
+		// //Right edge
+		for(int i = 0; i< 4; i++){
+			g2.setColor(outerLayer[15 - (2 * i)][8]);
+			g2.fillRect(x + width + i, y - i, 1, height + (2 * i));
+		}
+		
+		//Bottom edge
+		for(int i = 0; i< 4; i++){
+			g2.setColor(outerLayer[8][(2 * -i) + 15]);
+			g2.fillRect(x - i, y + height + i, width + (2 * i) + 1, 1);
+		}
 
-
-		g2.setColor(outerLayerBody);
+		g2.setColor(outerLayer[8][8]);
 		g2.fillRect(x, y, width, height);
 
 
@@ -133,11 +162,8 @@ public class UI {
 		public void draw(){
 			
 
-			g2.setColor(outerLayerEdge);
-			g2.fillRect(topleftX - 2, topleftY - 2, width + 4, height + 4);
-	
-			g2.setColor(outerLayerBody);
-			g2.fillRect(topleftX, topleftY, width, height);
+			UI.drawOuterEdge(topleftX, topleftY, width, height, g2);
+			
 	
 			for(int i = 0; i< 11; i++){
 				for(int j = 0; j < 2; j++){
@@ -172,11 +198,10 @@ public class UI {
 			//Draw outer rectangle
 			UI.drawOuterEdge(topleftX, topleftY, largerWidth, largerHeight, g2);
 
-			// g2.setColor(outerLayerEdge);
-			// g2.fillRect(topleftX - 2, topleftY - 2, largerWidth + 4, largerHeight + 4);
-	
-			// g2.setColor(outerLayerBody);
-			// g2.fillRect(topleftX, topleftY, largerWidth, largerHeight);
+			//Draw close x top right
+			UI.drawOuterEdge(topleftX + largerWidth - 36, topleftY + 7, 24, 24, g2);
+			g2.drawImage(closeWhite, topleftX + largerWidth - 34, topleftY + 10, 20, 20, null);
+
 
 			//Draw inner rectangles
 			g2.setColor(middleLayerBody);
