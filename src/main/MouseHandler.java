@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import javax.sound.midi.SysexMessage;
 
 import src.Chunk.Chunk;
 import src.tileEntity.TileEntity;
@@ -17,6 +18,7 @@ public class MouseHandler extends MouseAdapter{
 	public int mouseWorldX, mouseWorldY;
 	public int mouseCol, mouseRow;
 	public int mouseTileX, mouseTileY;
+	public boolean notOverGUI;
 
 	BufferedImage selectionYellow;
 
@@ -63,6 +65,9 @@ public class MouseHandler extends MouseAdapter{
 		mouseTileY = (mouseWorldY % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
 		mouseCol = (mouseWorldX - mouseTileX) / (Chunk.chunkSize * GamePanel.tileSize);
 		mouseRow = (mouseWorldY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
+
+		notOverGUI = gp.ui.checkMouseWindow(mouseX, mouseY);
+
 	}
 
 	public void mouseMoved(MouseEvent e){
@@ -76,6 +81,9 @@ public class MouseHandler extends MouseAdapter{
 		mouseCol = (mouseWorldX - mouseTileX) / (Chunk.chunkSize * GamePanel.tileSize);
 		mouseRow = (mouseWorldY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
 
+
+		notOverGUI = gp.ui.checkMouseWindow(mouseX, mouseY);
+		System.out.println(notOverGUI);
 	}
 
 	public void hoveredTileEntity(Graphics2D g2){

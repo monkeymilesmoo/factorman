@@ -24,10 +24,11 @@ public class UI {
 	HashMap <String, BufferedImage> icons = new HashMap<String, BufferedImage>();;
 	static Color[][] outerLayer;
 	BufferedImage closeWhite, closeBlack;
+	String selectedUI;
 
 
-	private hotbarUI hotbar = new hotbarUI();
-	private inventoryUI SIUI = new inventoryUI();
+	public hotbarUI hotbar = new hotbarUI();
+	public inventoryUI SIUI = new inventoryUI();
 	
 
 	public UI (GamePanel gp){
@@ -76,11 +77,28 @@ public class UI {
 
 		//Add for each new window
 		hotbar.draw();
-		if(gp.invOpen){
+		if(SIUI.visible){
 			SIUI.draw();
 		}
 
 		g2.setFont(titilliumBold.deriveFont(32.0F));
+	}
+
+
+	public boolean checkMouseWindow(int mouseX, int mouseY){
+
+		if(hotbar.checkMouseWindow(mouseX, mouseY)){
+			selectedUI = "hotbar";
+			return false;
+		}
+		if(SIUI.visible){
+			if(SIUI.checkMouseWindow(mouseX, mouseY)){
+				selectedUI = "playerInv";
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 
@@ -138,13 +156,6 @@ public class UI {
 
 	}
 
-	public void drawBacking(int x, int y, int width, int height){
-
-
-
-
-	}
-
 
 	public class hotbarUI{
 	
@@ -175,6 +186,14 @@ public class UI {
 
 		}
 
+		public boolean checkMouseWindow(int mouseX, int mouseY){
+
+			if(mouseX > topleftX && mouseX < topleftX + width && mouseY > topleftY && mouseY < topleftY + height){
+				return true;
+			}
+			return false;
+		}
+
 
 	}
 
@@ -186,12 +205,21 @@ public class UI {
 		final private int largerHeight = 500;
 		final private int width = 424;
 		final private int height = 448;
+		public boolean visible = false;
 
 
 		public void resizeWindow(){
 			this.topleftX = gp.screenWidth/ 5 - 150;
 			this.topleftY = gp.screenHeight / 4;
 		} 
+
+		public boolean checkMouseWindow(int mouseX, int mouseY){
+			if(mouseX > topleftX && mouseX < topleftX + largerWidth && mouseY > topleftY && mouseY < topleftY + largerHeight){
+				return true;
+			}
+			return false;
+		}
+
 
 		public void draw(){
 			

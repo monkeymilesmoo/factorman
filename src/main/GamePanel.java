@@ -39,7 +39,6 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public int frameNumber = 0;
 
-	public boolean invOpen = false;
 
 
 	boolean loading = false;
@@ -155,44 +154,45 @@ public class GamePanel extends JPanel implements Runnable{
 
 				if (keyH.Epressed){
 					keyH.Epressed = false;
-					invOpen = !invOpen;
+					ui.SIUI.visible = !ui.SIUI.visible;
 				}
 
 				//This should probably go somewhere else eventually
-				if(mouseH.leftMouseClicked){
-					chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, "assembling-machine-1");
-				}
-				if(mouseH.rightMouseClicked){
-					if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY) != null){
-						chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).beingMined(chunkGrid, player);
-						player.mining = true;
-						if(mouseH.mouseX > player.screenX){
-							if(mouseH.mouseY > player.screenY){
-								player.direction = 3;
+				if(mouseH.notOverGUI){
+					if(mouseH.leftMouseClicked){
+						chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, "assembling-machine-1");
+					}
+					if(mouseH.rightMouseClicked){
+						if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY) != null){
+							chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).beingMined(chunkGrid, player);
+							player.mining = true;
+							if(mouseH.mouseX > player.screenX){
+								if(mouseH.mouseY > player.screenY){
+									player.direction = 3;
+								}else{
+									player.direction = 1;
+								}
 							}else{
-								player.direction = 1;
+								if(mouseH.mouseY > player.screenY){
+									player.direction = 5;
+								}else{
+									player.direction = 7;
+								}
 							}
+
+
+
+
+
+
 						}else{
-							if(mouseH.mouseY > player.screenY){
-								player.direction = 5;
-							}else{
-								player.direction = 7;
-							}
+							player.mining = false;
 						}
-
-
-
-
-
-
-					}else{
+					}
+					else{
 						player.mining = false;
 					}
 				}
-				else{
-					player.mining = false;
-				}
-
 
 
 
@@ -260,8 +260,10 @@ public class GamePanel extends JPanel implements Runnable{
 		backgroundM.draw(g2);
 		// tileEM.draw(g2);
 		player.draw(g2);
-		mouseH.hoveredTileEntity(g2);
-
+		if(mouseH.notOverGUI){
+			mouseH.hoveredTileEntity(g2);
+		}
+		
 		ui.draw(g2);
 
 		g2.setColor(Color.white);
