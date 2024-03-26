@@ -83,7 +83,6 @@ public class MouseHandler extends MouseAdapter{
 
 
 		notOverGUI = gp.ui.checkMouseWindow(mouseX, mouseY);
-		System.out.println(notOverGUI);
 	}
 
 	public void hoveredTileEntity(Graphics2D g2){

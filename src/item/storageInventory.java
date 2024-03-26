@@ -95,10 +95,7 @@ public class storageInventory {
 				}
 
 				if (((invContents[i].quantity % stackSize) + insertingItem.quantity) / stackSize >= remainingSlots && ((invContents[i].quantity % stackSize) + insertingItem.quantity) >= stackSize){
-					// if ((invContents[i].quantity % stackSize) + insertingItem.quantity >= stackSize){
-					// 	remainingSlots -= aboutToUseSlots;
-					// }
-					System.out.println("he");
+					
 
 					invContents[i].quantity += (Math.max(remainingSlots, 1) * stackSize) - (invContents[i].quantity % stackSize);
 

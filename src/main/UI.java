@@ -20,10 +20,11 @@ public class UI {
 	GamePanel gp;
 	BufferedImage guiElements;
 	static Color middleLayerBody, middleLayerEdge;
-	BufferedImage behindItem, hotbarButton;
+	BufferedImage[] behindItem, hotbarButton;
 	HashMap <String, BufferedImage> icons = new HashMap<String, BufferedImage>();;
 	static Color[][] outerLayer;
-	BufferedImage closeWhite, closeBlack;
+	static BufferedImage closeWhite;
+	BufferedImage closeBlack;
 	String selectedUI;
 
 
@@ -43,8 +44,17 @@ public class UI {
 			middleLayerBody = new Color(guiElements.getRGB(77, 9));
 			middleLayerEdge = new Color(guiElements.getRGB(77, 1));
 
-			behindItem = guiElements.getSubimage(3, 427, 76, 76);
-			hotbarButton = guiElements.getSubimage(3, 739, 76, 76);
+
+
+			//0 = idle; 1 = hovered; 2 = selected;
+			behindItem = new BufferedImage[3];
+			hotbarButton = new BufferedImage[3];
+			behindItem[0] = guiElements.getSubimage(3, 427, 76, 76);
+			behindItem[1] = guiElements.getSubimage(84, 427, 76, 76);
+			behindItem[2] = guiElements.getSubimage(165, 427, 76, 76);
+			hotbarButton[0] = guiElements.getSubimage(3, 739, 76, 76);
+			hotbarButton[1] = guiElements.getSubimage(84, 739, 76, 76);
+			hotbarButton[2] = guiElements.getSubimage(165, 739, 76, 76);
 
 			closeWhite = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-white.png"));
 			closeBlack = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-black.png"));
@@ -57,6 +67,7 @@ public class UI {
 				outerLayer[i][8] = new Color(guiElements.getRGB(i, 9));
 				outerLayer[8][i] = new Color(guiElements.getRGB(9, i));
 			}
+			
 
 
 
@@ -71,6 +82,19 @@ public class UI {
 
 	}
 
+	public static void drawNumber(int x, int y, int number, Graphics2D g2){
+
+		if(number < 1000){
+			g2.drawString(number + "", x, y);
+		}else if(number < 100000){
+			g2.drawString((number / 1000) + "." + (number % 1000) / 100 + "k", x, y);
+		}
+		//I dont think I need million. Maybe?
+	}
+
+	public static void drawWindowTitle(int x, int y, String string, Graphics2D g2){
+		g2.drawString(string, x + 14, y + 25);
+	}
 
 	public void draw(Graphics2D g2){
 		this.g2 = g2;
@@ -102,7 +126,7 @@ public class UI {
 	}
 
 
-	public static void drawOuterEdge(int x, int y, int width, int height, Graphics2D g2){
+	public static void drawOuterEdge(int x, int y, int width, int height, Graphics2D g2, boolean drawingCloseButton){
 
 
 		//draw edges around main body
@@ -134,6 +158,12 @@ public class UI {
 		g2.setColor(outerLayer[8][8]);
 		g2.fillRect(x, y, width, height);
 
+
+		//Draw close x top right
+		if (drawingCloseButton){
+			UI.drawOuterEdge(x + width - 36, y + 7, 24, 24, g2, false);
+			g2.drawImage(closeWhite, x + width - 34, y + 10, 20, 20, null);
+		}
 
 	}
 
@@ -173,12 +203,12 @@ public class UI {
 		public void draw(){
 			
 
-			UI.drawOuterEdge(topleftX, topleftY, width, height, g2);
+			UI.drawOuterEdge(topleftX, topleftY, width, height, g2, false);
 			
 	
 			for(int i = 0; i< 11; i++){
 				for(int j = 0; j < 2; j++){
-					g2.drawImage(hotbarButton, 60 + topleftX + (40 * i), topleftY + 8 + (45* j), 40, 40, null);
+					g2.drawImage(hotbarButton[0], 60 + topleftX + (40 * i), topleftY + 8 + (45* j), 40, 40, null);
 					
 					g2.drawImage(EntityImage.entityImages.get("assembling-machine-1").icon, 60 + topleftX + (40 * i) + 5, topleftY + 8 + (45 * j) + 5, 30, 30, null);
 				}
@@ -224,11 +254,8 @@ public class UI {
 		public void draw(){
 			
 			//Draw outer rectangle
-			UI.drawOuterEdge(topleftX, topleftY, largerWidth, largerHeight, g2);
+			UI.drawOuterEdge(topleftX, topleftY, largerWidth, largerHeight, g2, true);
 
-			//Draw close x top right
-			UI.drawOuterEdge(topleftX + largerWidth - 36, topleftY + 7, 24, 24, g2);
-			g2.drawImage(closeWhite, topleftX + largerWidth - 34, topleftY + 10, 20, 20, null);
 
 
 			//Draw inner rectangles
@@ -239,13 +266,13 @@ public class UI {
 
 			g2.setFont(titilliumBold.deriveFont(18.0F));
 			g2.setColor(Color.white);
-			g2.drawString("Character", topleftX + 14, topleftY + 25);
+			UI.drawWindowTitle(topleftX, topleftY, "Character", g2);
 
 			g2.setFont(titilliumBold.deriveFont(16.0F));
 			
 
 			for(int i = 0; i < gp.player.inventory.invSize; i++){
-				g2.drawImage(behindItem, 26 + topleftX + (40 * (i % 10)), topleftY + 78 + (40* (i/10)), 40, 40, null);
+				g2.drawImage(behindItem[0], 26 + topleftX + (40 * (i % 10)), topleftY + 78 + (40* (i/10)), 40, 40, null);
 
 			}
 
@@ -270,7 +297,7 @@ public class UI {
 					for (int j = 1; j < repeatedSlots; j++){
 						g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
 						g2.setColor(Color.white);
-						g2.drawString(((Integer) (stackSize)).toString(), 26  + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + 30 + (40 * (i / 10)) + 5);
+						UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 113 + (40 * (i / 10)), stackSize, g2);
 						i++;
 					}
 				}
@@ -278,14 +305,12 @@ public class UI {
 				if (slotItem != null){
 					g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
 					g2.setColor(Color.white);
-					g2.drawString(((Integer) ((slotItem.quantity - 1) % (stackSize) + 1)).toString(), 26  + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + 30 + (40 * (i / 10)) + 5);
+					UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, (slotItem.quantity - 1) % (stackSize) + 1, g2);
 				}	
 
 				if(i > (80 - gp.player.inventory.remainingSlots)){
 					g2.setColor(Color.white);
-					// g2.fillRect( 26  + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 40, 40);
-					// System.out.println(gp.player.inventory.remainingSlots);
-					// System.out.println(gp.player.inventory.invContents[0].quantity);
+					
 				}
 
 
