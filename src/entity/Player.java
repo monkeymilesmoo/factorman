@@ -31,6 +31,7 @@ public class Player extends entity{
 	public final int spawnCoords;
 
 	public storageInventory inventory = new storageInventory(90);
+	public Item[] hotbar = new Item[22];
 
 
 	public Player(GamePanel gp, KeyHandler keyH){
@@ -150,7 +151,6 @@ public class Player extends entity{
 	
 		// mining = keyH.testable ? true : false;
 		if(keyH.testable){
-			System.out.println(inventory.invContents[0].quantity);
 			inventory.addItemToInventory(new Item("assembling-machine-1", 3));
 			inventory.addItemToInventory(new Item("iron-ore", 124));
 			keyH.testable = false;
@@ -208,9 +208,6 @@ public class Player extends entity{
 		XCoords = (worldX - spawnCoords) / GamePanel.tileSize;
 		YCoords = (worldY - spawnCoords) / GamePanel.tileSize;
 
-		// System.out.println(XCoords);
-		// System.out.println(YCoords);
-		// System.out.println();
 
 
 

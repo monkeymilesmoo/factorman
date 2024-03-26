@@ -1,5 +1,6 @@
 TODO:
 
+standard UI drawnumber() replaces 1400 with 1.4k for example
 
 hovered slot turns orange
 selected slot needs to be a thing
