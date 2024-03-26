@@ -36,6 +36,9 @@ public class MouseHandler extends MouseAdapter{
 	public void mousePressed(MouseEvent e){
 		if(e.getButton() == MouseEvent.BUTTON1){
 			leftMouseClicked = true;
+			if(notOverGUI == false){
+				gp.ui.hoveredSlotCheck(mouseX, mouseY, true);
+			}
 		}
 		if(e.getButton() == MouseEvent.BUTTON3){
 			rightMouseClicked = true;
@@ -45,7 +48,9 @@ public class MouseHandler extends MouseAdapter{
 	public void mouseReleased(MouseEvent e){
 		if(e.getButton() == MouseEvent.BUTTON1){
 			leftMouseClicked = false;
-			
+			if(notOverGUI == false){
+				gp.ui.hoveredSlotCheck(mouseX, mouseY, false);
+			}
 			
 			
 		}
@@ -67,6 +72,7 @@ public class MouseHandler extends MouseAdapter{
 		mouseRow = (mouseWorldY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
 
 		notOverGUI = gp.ui.checkMouseWindow(mouseX, mouseY);
+		
 
 	}
 
@@ -83,6 +89,10 @@ public class MouseHandler extends MouseAdapter{
 
 
 		notOverGUI = gp.ui.checkMouseWindow(mouseX, mouseY);
+		
+		if(notOverGUI == false){
+			gp.ui.hoveredSlotCheck(mouseX, mouseY, false);
+		}
 	}
 
 	public void hoveredTileEntity(Graphics2D g2){
