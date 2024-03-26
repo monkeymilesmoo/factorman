@@ -1,8 +1,9 @@
 TODO:
 
-standard UI drawnumber() replaces 1400 with 1.4k for example
 
-hovered slot turns orange
+Somehow get slot number to coorespond with stupid system of stacking all items in one slot
+Maybe make it so each slot gets its own array item? that seems wasteful tho
+probably just make it so each item has an array end index which is calculated when updated
 selected slot needs to be a thing
 
 Add ability to remove from inventory
