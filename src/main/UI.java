@@ -24,8 +24,8 @@ public class UI {
 	BufferedImage[] behindItem, hotbarButton;
 	HashMap <String, BufferedImage> icons = new HashMap<String, BufferedImage>();;
 	static Color[][] outerLayer;
-	static BufferedImage closeWhite;
-	BufferedImage closeBlack;
+	static BufferedImage closeWhite, closeBlack;
+	static BufferedImage inHandOrange, inHandBlack;
 	String selectedUI;
 
 
@@ -59,6 +59,9 @@ public class UI {
 
 			closeWhite = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-white.png"));
 			closeBlack = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-black.png"));
+			
+			inHandOrange = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-white.png"));
+			inHandBlack = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-black.png"));
 
 
 			//Outer edge for outermost windows
@@ -399,15 +402,15 @@ public class UI {
 					}
 				
 					for (int j = 1; j < repeatedSlots; j++){
-						g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
-						UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 113 + (40 * (i / 10)), stackSize, g2);
+							g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
+							UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 113 + (40 * (i / 10)), stackSize, g2);
 						i++;
 					}
 				}
 				
 				if (slotItem != null){
-					g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
-					UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, (slotItem.quantity - 1) % (stackSize) + 1, g2);
+						g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
+						UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, (slotItem.quantity - 1) % (stackSize) + 1, g2);
 				}	
 
 				if(i > (80 - gp.player.inventory.remainingSlots)){

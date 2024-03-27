@@ -1,13 +1,16 @@
 TODO:
 
 
+selecting item makes it follow cursor and dissapear from inventory
+
 Somehow get slot number to coorespond with stupid system of stacking all items in one slot
 Maybe make it so each slot gets its own array item? that seems wasteful tho
 probably just make it so each item has an array end index which is calculated when updated
 
+Selectable working x button
+
 Only able to select slot with an item in it
 
-selecting item makes it follow cursor and dissapear from inventory
 
 Add ability to remove from inventory
 
