@@ -5,7 +5,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import javax.sound.midi.SysexMessage;
 
 import src.Chunk.Chunk;
 import src.tileEntity.TileEntity;
