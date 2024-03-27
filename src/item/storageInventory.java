@@ -73,7 +73,7 @@ public class storageInventory {
 				}
 			}else if(invContents[i].itemID == itemID && invContents[i].quantity != stackSize){
 				if(amountInserting + invContents[i].quantity > stackSize){
-					amountInserting -= invContents[i].quantity;
+					amountInserting -= stackSize - invContents[i].quantity;
 					invContents[i].quantity = stackSize;
 				}else{
 					invContents[i].quantity += amountInserting;
