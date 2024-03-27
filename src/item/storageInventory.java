@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import src.main.GamePanel;
+
 
 public class storageInventory {
 
@@ -18,13 +20,15 @@ public class storageInventory {
 	public int invSize;
 	public int endIndex;
 	private int stackSize;
-	private int amountInserting;
+	private int amountInserting, amountRemoving;
 	private String itemID;
+	private GamePanel gp;
 
-	public storageInventory(int invSize) {
+	public storageInventory(int invSize, GamePanel gp) {
 		invContents = new Item[invSize];
 		endIndex = 0;
 		this.invSize = invSize;
+		this.gp = gp;
 
 	}
 
@@ -197,14 +201,53 @@ public class storageInventory {
 		//Probably do player.addItemToInventory(removeItemFromInventory(whateverItem)); or maybe reverse the order? im not sure yet
 
 
+
 		stackSize = ItemProperties.itemPropertyMap.get(removingItem.itemID).stackSize;
+		itemID = removingItem.itemID;
+		amountRemoving = removingItem.quantity;
 		//TODO actually do this
 
+		invItemsQuantity.get(itemID).quantity -= amountRemoving;
+
+
 		
-		for(int i = 0; i < invSize; i++){
+		for(int i = endIndex - 1; i >= 0; i--){
 			
+			if(invContents[i].itemID == itemID){
+				if(amountRemoving <= 0){
+					return null;
+				}
+				if(amountRemoving >= invContents[i].quantity){
+					amountRemoving -= invContents[i].quantity;
+					invContents[i] = null;
+					endIndex--;
+					gp.ui.SIUI.slotSelection[gp.ui.SIUI.selectedSlot] = 0;
+					gp.ui.SIUI.selectedSlot = gp.ui.SIUI.slotCount;
+					
+				}else{
+					invContents[i].quantity -= amountRemoving;
+					
+					amountRemoving = 0;
+				}
+				
+			}
 		}
 
+		Arrays.sort(invContents, new Comparator<Item>() {
+			@Override
+			public int compare(Item i1, Item i2) {
+				if (i1 == null && i2 == null) {
+					return 0; // Both are null, consider them equal
+				}
+				if (i1 == null) {
+					return 1; // o1 is null, so it should come before o2
+				}
+				if (i2 == null) {
+					return -1; // o2 is null, so it should come after o1
+				}
+				return i1.itemID.compareTo(i2.itemID);
+			}
+		});
 
 		return removingItem;
 	}

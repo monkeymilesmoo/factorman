@@ -9,6 +9,8 @@ public class Chunk implements Serializable{
 	byte[][] tiles;
 	public TileEntity[][] tileEntities;
 	public final static int chunkSize = 32;
+	
+	public boolean canDo = true;
 
 	public ArrayList<TileEntity> tileEntityList = new ArrayList<TileEntity>();
 	private int thisChunkX;
@@ -39,8 +41,8 @@ public class Chunk implements Serializable{
 	}
 
 	public void setTileEntity(int x, int y, byte tileWidth, byte tileHeight, String tileEntityID){
-
-		boolean canDo = true;
+		
+		canDo = true;
 
 
 		for (int i = x; i < (x + tileWidth); i++){

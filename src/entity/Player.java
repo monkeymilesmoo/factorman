@@ -30,15 +30,19 @@ public class Player extends entity{
 
 	public final int spawnCoords;
 
-	public storageInventory inventory = new storageInventory(90);
-	public Item[] hotbar = new Item[22];
-
+	public storageInventory inventory;
+	public Item[] hotbar;
 
 	public Player(GamePanel gp, KeyHandler keyH){
 		
 	
 		this.gp = gp;
 		this.keyH = keyH;
+
+
+		
+		inventory = new storageInventory(90, gp);
+		hotbar = new Item[22];
 
 		screenX = (gp.screenWidth/2) - entityTextureWidth;
 		screenY = (gp.screenHeight/2) - entityTextureHeight;
