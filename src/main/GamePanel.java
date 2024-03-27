@@ -102,7 +102,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 		//TODO DEBUG
-		player.inventory.addItemToInventory(new Item("iron-ore", 4000));
+		// player.inventory.addItemToInventory(new Item("iron-ore", 4000));
 
 
 
@@ -163,7 +163,13 @@ public class GamePanel extends JPanel implements Runnable{
 				//This should probably go somewhere else eventually
 				if(mouseH.notOverGUI){
 					if(mouseH.leftMouseClicked){
-						chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, "assembling-machine-1");
+						if(ui.SIUI.selectedSlot != ui.SIUI.slotCount){
+							if(player.inventory.invContents[ui.SIUI.selectedSlot] != null){
+								if(ItemProperties.itemPropertyMap.get(player.inventory.invContents[ui.SIUI.selectedSlot].itemID).itemType == "building"){
+									chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.inventory.invContents[ui.SIUI.selectedSlot].itemID);
+								}
+							}
+						}
 					}
 					if(mouseH.rightMouseClicked){
 						if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY) != null){

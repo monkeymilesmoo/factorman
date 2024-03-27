@@ -1,18 +1,14 @@
 TODO:
 
 
-selecting item makes it follow cursor and dissapear from inventory
+add removeItemFromInventory
+Use this to remove used items from hotbar item stack
 
-Somehow get slot number to coorespond with stupid system of stacking all items in one slot
-Maybe make it so each slot gets its own array item? that seems wasteful tho
-probably just make it so each item has an array end index which is calculated when updated
+selecting item makes it follow cursor and dissapear from inventory
 
 Selectable working x button
 
 Only able to select slot with an item in it
-
-
-Add ability to remove from inventory
 
 make a tileentity arraylist in chunkgrid that saves every placed tileentity
 call every instance on this list every tick to update()
