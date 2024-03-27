@@ -147,6 +147,9 @@ public class GamePanel extends JPanel implements Runnable{
 					
 				}
 				//DEBUG
+
+
+				mouseH.calculateMousePos();
 				
 				delta--;
 				drawCount++;
@@ -263,7 +266,7 @@ public class GamePanel extends JPanel implements Runnable{
 		if(mouseH.notOverGUI){
 			mouseH.hoveredTileEntity(g2);
 		}
-		
+
 		ui.draw(g2);
 
 		g2.setColor(Color.white);
