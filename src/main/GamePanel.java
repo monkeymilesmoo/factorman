@@ -165,7 +165,7 @@ public class GamePanel extends JPanel implements Runnable{
 					if(mouseH.leftMouseClicked){
 						if(ui.SIUI.selectedSlot != ui.SIUI.slotCount){
 							if(player.inventory.invContents[ui.SIUI.selectedSlot] != null){
-								if(ItemProperties.itemPropertyMap.get(player.inventory.invContents[ui.SIUI.selectedSlot].itemID).itemType == "building"){
+								if(ItemProperties.itemPropertyMap.get(player.inventory.invContents[ui.SIUI.selectedSlot].itemID).placeable){
 									chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.inventory.invContents[ui.SIUI.selectedSlot].itemID);
 									if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
 										player.inventory.removeItemFromInventory(new Item(player.inventory.invContents[ui.SIUI.selectedSlot].itemID, 1));
