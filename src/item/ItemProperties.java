@@ -6,6 +6,7 @@ public class ItemProperties {
 	
 	public int stackSize;
 	public String itemType;
+	public boolean placeable;
 	//Implement fuel types and such eventually
 	
 	public static HashMap<String, ItemProperties> itemPropertyMap = new HashMap<String, ItemProperties>();
@@ -16,7 +17,9 @@ public class ItemProperties {
 		
 		this.stackSize = stackSize;
 		this.itemType = itemType;
-
+		if(itemType == "building"){
+			placeable = true;
+		} 
 
 	}
 

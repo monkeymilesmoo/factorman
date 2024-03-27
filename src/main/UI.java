@@ -117,6 +117,11 @@ public class UI {
 				g2.drawImage(EntityImage.entityImages.get(gp.player.inventory.invContents[SIUI.selectedSlot].itemID).icon, gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 10, 30, 30, null);
 				UI.drawNumber(gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 40, gp.player.inventory.invContents[SIUI.selectedSlot].quantity, g2);
 			}
+			
+		}else if(hotbar.selectedSlot != hotbar.slotCount){
+			g2.drawImage(EntityImage.entityImages.get(gp.player.hotbar[hotbar.selectedSlot].itemID).icon, gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 10, 30, 30, null);
+			UI.drawNumber(gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 40, gp.player.hotbar[hotbar.selectedSlot].quantity, g2);
+			
 		}
 
 		g2.setFont(titilliumBold.deriveFont(32.0F));
@@ -225,7 +230,7 @@ public class UI {
 		final private int height = 96;
 		final private int startSlotsX = 63;
 		final private int startSlotsY = 11;
-		final private int endSlotsX = 730;
+		final private int endSlotsX = 435;
 		final private int endSlotsY = 77;
 		final private int slotNumWidth = 11;
 		final private int slotCount = 22;
@@ -238,6 +243,10 @@ public class UI {
 			this.topleftX = gp.player.screenX - 300;
 		} 
 
+		private void setSlot(int slot, String itemID){
+			gp.player.hotbar[slot] = gp.player.inventory.invItemsQuantity.get(itemID);
+		}
+
 		public void hoveredSlotCheck(int mouseX, int mouseY, boolean clicking){
 			mouseX = mouseX - topleftX - startSlotsX;
 			mouseY = mouseY - topleftY - startSlotsY;
@@ -245,7 +254,7 @@ public class UI {
 				if(slotSelection[lastHovered] != 2){
 					slotSelection[lastHovered] = 0;
 				}
-				lastHovered = 22;
+				lastHovered = slotCount;
 				return;
 			}
 
@@ -253,6 +262,11 @@ public class UI {
 			
 			if(clicking){
 				// System.out.println("whaa");
+				if(hoveredSlot != slotCount){
+					if(gp.player.hotbar[hoveredSlot] == null){
+						setSlot(hoveredSlot, gp.player.inventory.invContents[SIUI.selectedSlot].itemID);
+					}
+				}
 				if(hoveredSlot == selectedSlot){
 					selectedSlot = slotCount;
 					lastHovered = slotCount;
@@ -260,6 +274,8 @@ public class UI {
 				}else{
 					slotSelection[hoveredSlot] = 2;
 					slotSelection[selectedSlot] = 0;
+					SIUI.slotSelection[SIUI.selectedSlot] = 0;
+					SIUI.selectedSlot = SIUI.slotCount;
 					lastHovered = slotCount;
 					selectedSlot = hoveredSlot;
 				}
@@ -284,6 +300,10 @@ public class UI {
 
 				Item slotItem = gp.player.hotbar[i]; 
 				if (slotItem == null){
+					continue;
+				}
+				if(selectedSlot == i){
+					g2.drawImage(inHandIcon, 60 + topleftX + (40 * (i % 11)) + 5, topleftY + 8 + (45 * (i / 11)) + 5, 30, 30, null);;
 					continue;
 				}
 				g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 60 + topleftX + (40 * (i % 11)) + 5, topleftY + 8 + (45 * (i / 11)) + 5, 30, 30, null);
@@ -374,6 +394,8 @@ public class UI {
 					}
 					slotSelection[hoveredSlot] = 2;
 					slotSelection[selectedSlot] = 0;
+					hotbar.slotSelection[hotbar.selectedSlot] = 0;
+					hotbar.selectedSlot = hotbar.slotCount;
 					lastHovered = slotCount;
 					selectedSlot = hoveredSlot;
 				}

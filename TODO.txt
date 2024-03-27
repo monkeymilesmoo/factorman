@@ -1,8 +1,8 @@
 TODO:
 
 
-Use this to remove used items from hotbar item stack
 
+Fix bug moving item from hotbar to hotbar
 
 hovering with building in hand creates green or red ghost depending on placability
 
