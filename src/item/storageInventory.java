@@ -85,8 +85,21 @@ public class storageInventory {
 
 		}
 
-
-
+		Arrays.sort(invContents, new Comparator<Item>() {
+			@Override
+			public int compare(Item i1, Item i2) {
+				if (i1 == null && i2 == null) {
+					return 0; // Both are null, consider them equal
+				}
+				if (i1 == null) {
+					return 1; // o1 is null, so it should come before o2
+				}
+				if (i2 == null) {
+					return -1; // o2 is null, so it should come after o1
+				}
+				return i1.itemID.compareTo(i2.itemID);
+			}
+		});
 
 
 
