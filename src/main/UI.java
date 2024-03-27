@@ -10,7 +10,6 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import src.item.Item;
-import src.item.ItemProperties;
 import src.tileEntity.EntityImage;
 
 public class UI {
@@ -25,7 +24,7 @@ public class UI {
 	HashMap <String, BufferedImage> icons = new HashMap<String, BufferedImage>();;
 	static Color[][] outerLayer;
 	static BufferedImage closeWhite, closeBlack;
-	static BufferedImage inHandOrange, inHandBlack;
+	static BufferedImage inHandIcon;
 	String selectedUI;
 
 
@@ -60,8 +59,7 @@ public class UI {
 			closeWhite = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-white.png"));
 			closeBlack = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-black.png"));
 			
-			inHandOrange = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-white.png"));
-			inHandBlack = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-black.png"));
+			
 
 
 			//Outer edge for outermost windows
@@ -71,8 +69,9 @@ public class UI {
 				outerLayer[i][8] = new Color(guiElements.getRGB(i, 9));
 				outerLayer[8][i] = new Color(guiElements.getRGB(9, i));
 			}
-			
 
+			inHandIcon = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/slot-item-in-hand-black.png"));
+			
 
 
 
@@ -113,6 +112,13 @@ public class UI {
 			SIUI.draw();
 		}
 
+		if(SIUI.selectedSlot != SIUI.slotCount){
+			if(gp.player.inventory.invContents[SIUI.selectedSlot] != null){
+				g2.drawImage(EntityImage.entityImages.get(gp.player.inventory.invContents[SIUI.selectedSlot].itemID).icon, gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 10, 30, 30, null);
+				UI.drawNumber(gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 40, gp.player.inventory.invContents[SIUI.selectedSlot].quantity, g2);
+			}
+		}
+
 		g2.setFont(titilliumBold.deriveFont(32.0F));
 	}
 
@@ -125,6 +131,10 @@ public class UI {
 		if (selectedUI == "playerInv"){
 			SIUI.hoveredSlotCheck(mouseX, mouseY, clicking);
 		}
+		
+
+
+		
 	} 
 
 	public boolean checkMouseWindow(int mouseX, int mouseY){
@@ -221,7 +231,7 @@ public class UI {
 		final private int slotCount = 22;
 		final private int[] slotSelection =  new int[slotCount + 1];
 		private int lastHovered = slotCount;
-		private int selectedSlot = 0;
+		private int selectedSlot = slotCount;
 
 		public void resizeWindow(){
 			this.topleftY = gp.screenHeight - 100;
@@ -243,10 +253,16 @@ public class UI {
 			
 			if(clicking){
 				// System.out.println("whaa");
-				slotSelection[hoveredSlot] = 2;
-				slotSelection[selectedSlot] = 0;
-				lastHovered = slotCount;
-				selectedSlot = hoveredSlot;
+				if(hoveredSlot == selectedSlot){
+					selectedSlot = slotCount;
+					lastHovered = slotCount;
+					slotSelection[hoveredSlot] = 1;
+				}else{
+					slotSelection[hoveredSlot] = 2;
+					slotSelection[selectedSlot] = 0;
+					lastHovered = slotCount;
+					selectedSlot = hoveredSlot;
+				}
 			}else if(slotSelection[hoveredSlot] != 2 && hoveredSlot != lastHovered){
 				// System.out.println("hhh");
 				slotSelection[hoveredSlot] = 1;
@@ -311,9 +327,10 @@ public class UI {
 		final private int endSlotsX = 398;
 		final private int endSlotsY = 358;
 		final private int slotNumWidth = 10;
-		final private int[] slotSelection =  new int[91];
-		private int lastHovered = 90;
-		private int selectedSlot = 0;
+		final public int slotCount = 90;
+		final private int[] slotSelection =  new int[slotCount + 1];
+		private int lastHovered = slotCount;
+		public int selectedSlot = slotCount;
 		public boolean visible = false;
 
 
@@ -336,7 +353,7 @@ public class UI {
 				if(slotSelection[lastHovered] != 2){
 					slotSelection[lastHovered] = 0;
 				}
-				lastHovered = 90;
+				lastHovered = slotCount;
 				return;
 			}
 
@@ -344,10 +361,22 @@ public class UI {
 			
 			if(clicking){
 				// System.out.println("whaa");
-				slotSelection[hoveredSlot] = 2;
-				slotSelection[selectedSlot] = 0;
-				lastHovered = 90;
-				selectedSlot = hoveredSlot;
+				if(hoveredSlot == selectedSlot){
+					slotSelection[selectedSlot] = 0;
+					selectedSlot = slotCount;
+					lastHovered = slotCount;
+				}else{
+					if(gp.player.inventory.invContents[hoveredSlot] == null){
+						slotSelection[selectedSlot] = 0;
+						selectedSlot = slotCount;
+						lastHovered = slotCount;
+						return;
+					}
+					slotSelection[hoveredSlot] = 2;
+					slotSelection[selectedSlot] = 0;
+					lastHovered = slotCount;
+					selectedSlot = hoveredSlot;
+				}
 			}else if(slotSelection[hoveredSlot] != 2 && hoveredSlot != lastHovered){
 				// System.out.println("hhh");
 				slotSelection[hoveredSlot] = 1;
@@ -384,43 +413,22 @@ public class UI {
 			}
 
 
-			int repeatedSlots;
-			int slot = 0;
 
-			for(int i = 0; i< gp.player.inventory.invSize; i++){
-
-				Item slotItem = gp.player.inventory.invContents[slot]; 
-				if (slotItem == null){
-					continue;					
+			for (int i = 0; i < gp.player.inventory.invSize; i++){
+				Item slotItem = gp.player.inventory.invContents[i]; 
+				if(slotItem == null){
+					break;
+				} 
+				if(selectedSlot == i){
+					g2.drawImage(inHandIcon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);;
+					continue;
 				}
-				int stackSize = ItemProperties.itemPropertyMap.get(slotItem.itemID).stackSize;
-					
-				if (slotItem.quantity > stackSize){
-					repeatedSlots = slotItem.quantity / stackSize;
-					if((slotItem.quantity % stackSize) != 0){
-						repeatedSlots++;
-					}
+				g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
+				UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, slotItem.quantity, g2);
 				
-					for (int j = 1; j < repeatedSlots; j++){
-							g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
-							UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 113 + (40 * (i / 10)), stackSize, g2);
-						i++;
-					}
-				}
-				
-				if (slotItem != null){
-						g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
-						UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, (slotItem.quantity - 1) % (stackSize) + 1, g2);
-				}	
 
-				if(i > (gp.player.inventory.endIndex)){
-					g2.setColor(Color.white);
-					
-				}
-
-
-				slot++;
 			}
+
 
 
 		}

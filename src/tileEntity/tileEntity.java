@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import src.Chunk.ChunkGrid;
 import src.entity.Player;
+import src.item.Item;
 
 
 public class TileEntity implements Serializable{
@@ -36,6 +37,7 @@ public class TileEntity implements Serializable{
 		miningDurability -= 1;
 
 		if (miningDurability <= 0){
+			player.inventory.addItemToInventory(new Item(this.tileEntityID, 1));
 			chunkGrid.chunks[chunkX][chunkY].removeTileEntity(x, y, chunkX, chunkY, tileWidth, tileHeight, this);
 			player.mining = false;
 		}

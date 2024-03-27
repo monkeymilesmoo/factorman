@@ -18,10 +18,8 @@ public class storageInventory {
 	public int invSize;
 	public int endIndex;
 	private int stackSize;
-	private int aboutToUseSlots;
 	private int amountInserting;
 	private String itemID;
-	private int tempInt;
 
 	public storageInventory(int invSize) {
 		invContents = new Item[invSize];
@@ -200,7 +198,6 @@ public class storageInventory {
 
 
 		stackSize = ItemProperties.itemPropertyMap.get(removingItem.itemID).stackSize;
-		aboutToUseSlots = (removingItem.quantity / stackSize) + (removingItem.quantity % stackSize);
 		//TODO actually do this
 
 		
