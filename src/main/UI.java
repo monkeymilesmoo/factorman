@@ -413,7 +413,7 @@ public class UI {
 						UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, (slotItem.quantity - 1) % (stackSize) + 1, g2);
 				}	
 
-				if(i > (80 - gp.player.inventory.remainingSlots)){
+				if(i > (gp.player.inventory.endIndex)){
 					g2.setColor(Color.white);
 					
 				}

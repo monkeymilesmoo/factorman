@@ -76,8 +76,6 @@ public class ChunkGrid implements Serializable{
 			
 				}
 			
-			// System.out.println(biggestTime);
-			// System.out.println(totalTime);
 			br.close();
 			
 			
