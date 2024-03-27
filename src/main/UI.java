@@ -328,7 +328,7 @@ public class UI {
 		final private int endSlotsY = 358;
 		final private int slotNumWidth = 10;
 		final public int slotCount = 90;
-		final private int[] slotSelection =  new int[slotCount + 1];
+		public final int[] slotSelection =  new int[slotCount + 1];
 		private int lastHovered = slotCount;
 		public int selectedSlot = slotCount;
 		public boolean visible = false;

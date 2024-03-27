@@ -1,11 +1,8 @@
 TODO:
 
 
-add removeItemFromInventory
 Use this to remove used items from hotbar item stack
 
-
-selecting item makes it follow cursor and dissapear from inventory
 
 hovering with building in hand creates green or red ghost depending on placability
 
