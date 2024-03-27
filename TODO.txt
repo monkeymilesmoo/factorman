@@ -6,6 +6,8 @@ Use this to remove used items from hotbar item stack
 
 selecting item makes it follow cursor and dissapear from inventory
 
+hovering with building in hand creates green or red ghost depending on placability
+
 Selectable working x button
 
 Only able to select slot with an item in it
@@ -16,8 +18,6 @@ call every instance on this list every tick to update()
 Bake shadows into images
 
 Maybe make in a separate thread, but that seems weird.
-
-Clicking makes a building or something
 
 Add player mask for different colors
 
