@@ -18,6 +18,7 @@ public class MouseHandler extends MouseAdapter{
 	public int mouseCol, mouseRow;
 	public int mouseTileX, mouseTileY;
 	public boolean notOverGUI;
+	private int oldMouseX, oldMouseY;
 
 	BufferedImage selectionYellow;
 
@@ -63,14 +64,8 @@ public class MouseHandler extends MouseAdapter{
 		mouseY = e.getY();
 
 
-		mouseWorldX = mouseX + gp.player.worldX - gp.player.screenX;
-		mouseWorldY = mouseY + gp.player.worldY - gp.player.screenY;
-		mouseTileX = (mouseWorldX % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
-		mouseTileY = (mouseWorldY % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
-		mouseCol = (mouseWorldX - mouseTileX) / (Chunk.chunkSize * GamePanel.tileSize);
-		mouseRow = (mouseWorldY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
+		
 
-		notOverGUI = gp.ui.checkMouseWindow(mouseX, mouseY);
 		
 
 	}
@@ -79,6 +74,18 @@ public class MouseHandler extends MouseAdapter{
 		mouseX = e.getX();
 		mouseY = e.getY();
 
+		
+
+
+		
+		if(notOverGUI == false){
+			gp.ui.hoveredSlotCheck(mouseX, mouseY, false);
+		}
+	}
+
+	public void calculateMousePos(){
+
+		if(mouseX != oldMouseX || mouseY != oldMouseY){
 		mouseWorldX = mouseX + gp.player.worldX - gp.player.screenX;
 		mouseWorldY = mouseY + gp.player.worldY - gp.player.screenY;
 		mouseTileX = (mouseWorldX % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
@@ -86,11 +93,12 @@ public class MouseHandler extends MouseAdapter{
 		mouseCol = (mouseWorldX - mouseTileX) / (Chunk.chunkSize * GamePanel.tileSize);
 		mouseRow = (mouseWorldY - mouseTileY) / (Chunk.chunkSize * GamePanel.tileSize);
 
-
-		notOverGUI = gp.ui.checkMouseWindow(mouseX, mouseY);
 		
-		if(notOverGUI == false){
-			gp.ui.hoveredSlotCheck(mouseX, mouseY, false);
+		notOverGUI = gp.ui.checkMouseWindow(mouseX, mouseY);
+
+
+		oldMouseX = mouseX;
+		oldMouseY = mouseY;
 		}
 	}
 
