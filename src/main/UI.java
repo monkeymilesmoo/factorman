@@ -270,7 +270,6 @@ public class UI {
 				g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 60 + topleftX + (40 * (i % 11)) + 5, topleftY + 8 + (45 * (i / 11)) + 5, 30, 30, null);
 				
 				UI.drawNumber(startSlotsX + 5  + topleftX + (40 * (i % 11)), topleftY + startSlotsY + 33 + (40 * (i / 11)), slotItem.quantity, g2);
-				System.out.println(topleftY + startSlotsY + 5 + (40 * (i / 11)));
 			}
 
 			// for(int i = 0; i< 11; i++){
