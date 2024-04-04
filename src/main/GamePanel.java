@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
 	int FPS = 60;
 
 	KeyHandler keyH = new KeyHandler();
-	MouseHandler mouseH = new MouseHandler(this);
+	public MouseHandler mouseH = new MouseHandler(this);
 	ResizeListener resizeL = new ResizeListener();
 	Thread gameThread;
 	public Player player = new Player(this, keyH);
@@ -166,9 +166,10 @@ public class GamePanel extends JPanel implements Runnable{
 						if(ui.SIUI.selectedSlot != ui.SIUI.slotCount){
 							if(player.inventory.invContents[ui.SIUI.selectedSlot] != null){
 								if(ItemProperties.itemPropertyMap.get(player.inventory.invContents[ui.SIUI.selectedSlot].itemID).placeable){
-									chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.inventory.invContents[ui.SIUI.selectedSlot].itemID);
+									chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.inventory.invContents[ui.SIUI.selectedSlot].itemID, this);
 									if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
 										player.inventory.removeItemFromInventory(new Item(player.inventory.invContents[ui.SIUI.selectedSlot].itemID, 1));
+										mouseH.leftMouseClicked = false;
 									}
 								}
 							}
@@ -176,9 +177,10 @@ public class GamePanel extends JPanel implements Runnable{
 							if(player.hotbar[ui.hotbar.selectedSlot] != null){
 								if(ItemProperties.itemPropertyMap.get(player.hotbar[ui.hotbar.selectedSlot].itemID).placeable){
 									if(player.hotbar[ui.hotbar.selectedSlot].quantity > 0){
-										chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.hotbar[ui.hotbar.selectedSlot].itemID);
+										chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.hotbar[ui.hotbar.selectedSlot].itemID, this);
 										if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
 											player.inventory.removeItemFromInventory(new Item(player.hotbar[ui.hotbar.selectedSlot].itemID, 1));
+											mouseH.leftMouseClicked = false;
 										}
 									}
 								}

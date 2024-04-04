@@ -8,6 +8,8 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import src.Chunk.Chunk;
+import src.entity.entity;
+import src.item.ItemProperties;
 import src.main.GamePanel;
 import src.tileEntity.EntityImage;
 import src.tileEntity.TileEntity;
@@ -226,6 +228,30 @@ public class BackgroundManager {
 				if (worldCol >= endWorldCol){
 					worldCol = leftCol - 1;
 					worldRow++;
+				}
+			}
+		}
+
+		if(gp.mouseH.notOverGUI){
+			if(gp.ui.hotbar.selectedSlot != gp.ui.hotbar.slotCount){
+				if(gp.player.hotbar[gp.ui.hotbar.selectedSlot].quantity > 0){
+					if(ItemProperties.itemPropertyMap.get(gp.player.hotbar[gp.ui.hotbar.selectedSlot].itemID).placeable){
+						entityImage = EntityImage.entityImages.get(gp.player.hotbar[gp.ui.hotbar.selectedSlot].itemID);
+						int screenX = (gp.mouseH.mouseTileX * GamePanel.tileSize) + (gp.mouseH.mouseCol * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldX + gp.player.screenX;
+						int screenY = (gp.mouseH.mouseTileY * GamePanel.tileSize) + (gp.mouseH.mouseRow * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldY + gp.player.screenY;
+
+						g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), null);
+					}
+				}
+			}else if(gp.ui.SIUI.selectedSlot != gp.ui.SIUI.slotCount){
+				if(gp.player.inventory.invContents[gp.ui.SIUI.selectedSlot].quantity > 0){
+					if(ItemProperties.itemPropertyMap.get(gp.player.inventory.invContents[gp.ui.SIUI.selectedSlot].itemID).placeable){
+						entityImage = EntityImage.entityImages.get(gp.player.inventory.invContents[gp.ui.SIUI.selectedSlot].itemID);
+						int screenX = (gp.mouseH.mouseTileX * GamePanel.tileSize) + (gp.mouseH.mouseCol * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldX + gp.player.screenX;
+						int screenY = (gp.mouseH.mouseTileY * GamePanel.tileSize) + (gp.mouseH.mouseRow * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldY + gp.player.screenY;
+
+						g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), null);
+					}
 				}
 			}
 		}

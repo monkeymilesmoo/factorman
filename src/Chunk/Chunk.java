@@ -3,6 +3,8 @@ package src.Chunk;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import src.main.GamePanel;
+import src.main.UI;
 import src.tileEntity.TileEntity;
 
 public class Chunk implements Serializable{
@@ -40,7 +42,7 @@ public class Chunk implements Serializable{
 		return tileEntities[x][y];
 	}
 
-	public void setTileEntity(int x, int y, byte tileWidth, byte tileHeight, String tileEntityID){
+	public void setTileEntity(int x, int y, byte tileWidth, byte tileHeight, String tileEntityID, GamePanel gp){
 		
 		canDo = true;
 
@@ -79,6 +81,8 @@ public class Chunk implements Serializable{
 			tileEntityList.add(insertingTE);
 		}
 		else{
+			gp.ui.addNewDisspearingText((thisChunkX * Chunk.chunkSize * GamePanel.tileSize) + (x * GamePanel.tileSize), (thisChunkY * Chunk.chunkSize * GamePanel.tileSize) + (y * GamePanel.tileSize), "Can't place that there");
+			gp.mouseH.leftMouseClicked = false;
 			System.out.println("Can't place that there");
 		}
 	}

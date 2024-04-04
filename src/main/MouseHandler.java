@@ -90,7 +90,7 @@ public class MouseHandler extends MouseAdapter{
 
 	public void calculateMousePos(){
 
-		if(mouseX != oldMouseX || mouseY != oldMouseY){
+		// if(mouseX != oldMouseX || mouseY != oldMouseY){
 		mouseWorldX = mouseX + gp.player.worldX - gp.player.screenX;
 		mouseWorldY = mouseY + gp.player.worldY - gp.player.screenY;
 		mouseTileX = (mouseWorldX % (Chunk.chunkSize * GamePanel.tileSize)) / GamePanel.tileSize;
@@ -102,9 +102,9 @@ public class MouseHandler extends MouseAdapter{
 		notOverGUI = gp.ui.checkMouseWindow(mouseX, mouseY);
 
 
-		oldMouseX = mouseX;
-		oldMouseY = mouseY;
-		}
+		// oldMouseX = mouseX;
+		// oldMouseY = mouseY;
+		// }
 	}
 
 	public void hoveredTileEntity(Graphics2D g2){

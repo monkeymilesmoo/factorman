@@ -5,7 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy;
 
 import javax.imageio.ImageIO;
 
@@ -26,6 +29,7 @@ public class UI {
 	static BufferedImage closeWhite, closeBlack;
 	static BufferedImage inHandIcon;
 	String selectedUI;
+	ArrayList<disappearingText> disappearingTextList = new ArrayList<disappearingText>();
 
 
 	public hotbarUI hotbar = new hotbarUI();
@@ -125,6 +129,19 @@ public class UI {
 			}
 		}
 
+		Iterator<disappearingText> iterator = disappearingTextList.iterator();
+
+		while(iterator.hasNext()){
+			disappearingText nextText = iterator.next();
+			nextText.updateText(iterator);
+		}
+
+
+
+		
+		
+
+
 		g2.setFont(titilliumBold.deriveFont(32.0F));
 	}
 
@@ -158,6 +175,10 @@ public class UI {
 
 		selectedUI = null;
 		return true;
+	}
+
+	public void addNewDisspearingText(int worldX, int worldY, String text){
+		disappearingTextList.add(new disappearingText(worldX, worldY, text));
 	}
 
 
@@ -226,9 +247,37 @@ public class UI {
 		private int worldX;
 		private int worldY;
 
-		public disappearingText(int X, int Y){
+		private int originalY;
+
+		private int screenX;
+		private int screenY;
+
+		private String text;
+
+
+
+		public disappearingText(int worldX, int worldY, String text){
+
+			this.worldX = worldX;
+			this.worldY = worldY; 
+			this.text = text;
+			originalY = worldY;
+
 
 		}
+
+		public void updateText(Iterator<disappearingText> iterator){
+			
+			screenX = worldX - gp.player.worldX + gp.player.screenX;
+			screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+			g2.drawString(text, screenX, screenY);
+			worldY--;
+			if(originalY - worldY > 25){
+				iterator.remove();
+			}
+		}
+
 	}
 
 
@@ -250,7 +299,7 @@ public class UI {
 		final public int slotCount = 22;
 		final private int[] slotSelection =  new int[slotCount + 1];
 		private int lastHovered = slotCount;
-		int selectedSlot = slotCount;
+		public int selectedSlot = slotCount;
 
 		public void resizeWindow(){
 			this.topleftY = gp.screenHeight - 100;
