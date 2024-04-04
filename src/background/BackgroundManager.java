@@ -205,7 +205,8 @@ public class BackgroundManager {
 							// g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + 24, GamePanel.tileSize * entityImage.tileHeight + 36, null);
 
 							g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), null);
-
+							// g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), Color.GREEN, gp);
+							
 						}
 						
 					}

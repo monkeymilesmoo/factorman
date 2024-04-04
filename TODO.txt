@@ -2,7 +2,6 @@ TODO:
 
 
 
-Fix bug moving item from hotbar to hotbar
 
 hovering with building in hand creates green or red ghost depending on placability
 

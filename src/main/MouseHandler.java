@@ -36,26 +36,31 @@ public class MouseHandler extends MouseAdapter{
 	public void mousePressed(MouseEvent e){
 		if(e.getButton() == MouseEvent.BUTTON1){
 			leftMouseClicked = true;
-			if(notOverGUI == false){
-				gp.ui.hoveredSlotCheck(mouseX, mouseY, true);
-			}
+			
 		}
 		if(e.getButton() == MouseEvent.BUTTON3){
 			rightMouseClicked = true;
+			
+		}
+		if(notOverGUI == false){
+			gp.ui.hoveredSlotCheck(mouseX, mouseY, leftMouseClicked, rightMouseClicked);
+			
 		}
 	}
 
 	public void mouseReleased(MouseEvent e){
 		if(e.getButton() == MouseEvent.BUTTON1){
-			leftMouseClicked = false;
-			if(notOverGUI == false){
-				gp.ui.hoveredSlotCheck(mouseX, mouseY, false);
-			}
-			
+			leftMouseClicked = false;	
 			
 		}
 		if(e.getButton() == MouseEvent.BUTTON3){
 			rightMouseClicked = false;
+
+		}
+		
+		if(notOverGUI == false){
+			gp.ui.hoveredSlotCheck(mouseX, mouseY, leftMouseClicked, rightMouseClicked);
+
 		}
 	}
 
@@ -79,7 +84,7 @@ public class MouseHandler extends MouseAdapter{
 
 		
 		if(notOverGUI == false){
-			gp.ui.hoveredSlotCheck(mouseX, mouseY, false);
+			gp.ui.hoveredSlotCheck(mouseX, mouseY, false, false);
 		}
 	}
 

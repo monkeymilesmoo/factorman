@@ -172,6 +172,17 @@ public class GamePanel extends JPanel implements Runnable{
 									}
 								}
 							}
+						}else if(ui.hotbar.selectedSlot != ui.hotbar.slotCount){
+							if(player.hotbar[ui.hotbar.selectedSlot] != null){
+								if(ItemProperties.itemPropertyMap.get(player.hotbar[ui.hotbar.selectedSlot].itemID).placeable){
+									if(player.hotbar[ui.hotbar.selectedSlot].quantity > 0){
+										chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.hotbar[ui.hotbar.selectedSlot].itemID);
+										if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
+											player.inventory.removeItemFromInventory(new Item(player.hotbar[ui.hotbar.selectedSlot].itemID, 1));
+										}
+									}
+								}
+							}
 						}
 					}
 					if(mouseH.rightMouseClicked){

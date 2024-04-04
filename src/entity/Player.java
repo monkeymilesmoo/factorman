@@ -158,7 +158,8 @@ public class Player extends entity{
 			//DEBUG
 			inventory.addItemToInventory(new Item("assembling-machine-1", 3));
 			// inventory.addItemToInventory(new Item("iron-ore", 124));
-			hotbar[0] = inventory.invItemsQuantity.get("assembling-machine-1");
+			// hotbar[0] = inventory.invItemsQuantity.get("assembling-machine-1");
+			// gp.ui.hotbar.setSlot(0, "assembling-machine-1");
 			keyH.testable = false;
 		}
 		moving = (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) ? true : false;

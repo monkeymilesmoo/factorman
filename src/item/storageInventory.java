@@ -205,7 +205,6 @@ public class storageInventory {
 		stackSize = ItemProperties.itemPropertyMap.get(removingItem.itemID).stackSize;
 		itemID = removingItem.itemID;
 		amountRemoving = removingItem.quantity;
-		//TODO actually do this
 
 		invItemsQuantity.get(itemID).quantity -= amountRemoving;
 
