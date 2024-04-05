@@ -51,6 +51,8 @@ public class MouseHandler extends MouseAdapter{
 	public void mouseReleased(MouseEvent e){
 		if(e.getButton() == MouseEvent.BUTTON1){
 			leftMouseClicked = false;	
+			Chunk.onTextCooldown = false;
+			//kinda a bandaid solution to the text getting spammed
 			
 		}
 		if(e.getButton() == MouseEvent.BUTTON3){

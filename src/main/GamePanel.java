@@ -169,7 +169,7 @@ public class GamePanel extends JPanel implements Runnable{
 									chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.inventory.invContents[ui.SIUI.selectedSlot].itemID, this);
 									if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
 										player.inventory.removeItemFromInventory(new Item(player.inventory.invContents[ui.SIUI.selectedSlot].itemID, 1));
-										mouseH.leftMouseClicked = false;
+										// mouseH.leftMouseClicked = false;
 									}
 								}
 							}
@@ -180,7 +180,7 @@ public class GamePanel extends JPanel implements Runnable{
 										chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.hotbar[ui.hotbar.selectedSlot].itemID, this);
 										if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
 											player.inventory.removeItemFromInventory(new Item(player.hotbar[ui.hotbar.selectedSlot].itemID, 1));
-											mouseH.leftMouseClicked = false;
+											// mouseH.leftMouseClicked = false;
 										}
 									}
 								}

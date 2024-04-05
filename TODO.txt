@@ -1,8 +1,7 @@
 TODO:
 
 
-
-Make dissapearing text
+fix dragging buildings
 
 make placing ghost green or red ghost depending on placability
 

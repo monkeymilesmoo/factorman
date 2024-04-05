@@ -12,7 +12,8 @@ public class Chunk implements Serializable{
 	public TileEntity[][] tileEntities;
 	public final static int chunkSize = 32;
 	
-	public boolean canDo = true;
+	public transient boolean canDo = true;
+	public static transient boolean onTextCooldown = false;
 
 	public ArrayList<TileEntity> tileEntityList = new ArrayList<TileEntity>();
 	private int thisChunkX;
@@ -81,9 +82,10 @@ public class Chunk implements Serializable{
 			tileEntityList.add(insertingTE);
 		}
 		else{
-			gp.ui.addNewDisspearingText((thisChunkX * Chunk.chunkSize * GamePanel.tileSize) + (x * GamePanel.tileSize), (thisChunkY * Chunk.chunkSize * GamePanel.tileSize) + (y * GamePanel.tileSize), "Can't place that there");
-			gp.mouseH.leftMouseClicked = false;
-			System.out.println("Can't place that there");
+			if(!onTextCooldown){
+				gp.ui.addNewDisspearingText((thisChunkX * Chunk.chunkSize * GamePanel.tileSize) + (x * GamePanel.tileSize), (thisChunkY * Chunk.chunkSize * GamePanel.tileSize) + (y * GamePanel.tileSize), "Can't place that there");
+				onTextCooldown = true;
+			}
 		}
 	}
 
