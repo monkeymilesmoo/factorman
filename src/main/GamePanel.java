@@ -7,6 +7,7 @@ import src.entity.Player;
 import src.item.Item;
 import src.item.ItemProperties;
 import src.tileEntity.EntityImage;
+import src.Chunk.Chunk;
 import src.Chunk.ChunkGrid;
 
 import java.awt.Color;
@@ -169,6 +170,7 @@ public class GamePanel extends JPanel implements Runnable{
 									chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.inventory.invContents[ui.SIUI.selectedSlot].itemID, this);
 									if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
 										player.inventory.removeItemFromInventory(new Item(player.inventory.invContents[ui.SIUI.selectedSlot].itemID, 1));
+										Chunk.onTextCooldown = true;
 										// mouseH.leftMouseClicked = false;
 									}
 								}
@@ -180,6 +182,8 @@ public class GamePanel extends JPanel implements Runnable{
 										chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, (byte) 3, (byte) 3, player.hotbar[ui.hotbar.selectedSlot].itemID, this);
 										if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
 											player.inventory.removeItemFromInventory(new Item(player.hotbar[ui.hotbar.selectedSlot].itemID, 1));
+											Chunk.onTextCooldown = true;
+
 											// mouseH.leftMouseClicked = false;
 										}
 									}
