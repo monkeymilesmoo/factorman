@@ -70,7 +70,8 @@ public class MouseHandler extends MouseAdapter{
 		mouseY = e.getY();
 
 
-		
+		gp.ui.hoveredSlotCheck(mouseX, mouseY, leftMouseClicked, rightMouseClicked);
+
 
 		
 

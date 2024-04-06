@@ -147,11 +147,40 @@ public class UI {
 
 	public void hoveredSlotCheck(int mouseX, int mouseY, boolean leftClicking, boolean rightClicking){
 		if (selectedUI == "hotbar"){
-			hotbar.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
+			//Check slots first
+			if (mouseX - hotbar.topleftX - hotbar.startSlotsX > 0 && mouseY - hotbar.topleftY - hotbar.startSlotsY > 0 && mouseX - hotbar.topleftX - hotbar.startSlotsX < hotbar.endSlotsX && mouseY - hotbar.topleftY - hotbar.startSlotsY < hotbar.endSlotsY){
+				hotbar.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
+				return;
+			}else{
+				if(hotbar.slotSelection[hotbar.lastHovered] != 2){
+					hotbar.slotSelection[hotbar.lastHovered] = 0;
+				}
+				hotbar.lastHovered = hotbar.slotCount;
+			}
+			
+			
 			return;
 		}
 		if (selectedUI == "playerInv"){
-			SIUI.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
+			//Check slots first
+			if (mouseX - SIUI.topleftX - SIUI.startSlotsX > 0 && mouseY - SIUI.topleftY - SIUI.startSlotsY > 0 && mouseX - SIUI.topleftX - SIUI.startSlotsX < SIUI.endSlotsX && mouseY - SIUI.topleftY - SIUI.startSlotsY < SIUI.endSlotsY){
+				SIUI.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
+				return;
+			}else{
+				if(SIUI.slotSelection[SIUI.lastHovered] != 2){
+					SIUI.slotSelection[SIUI.lastHovered] = 0;
+				}
+				SIUI.lastHovered = SIUI.slotCount;
+			}
+
+			if(mouseX - SIUI.topleftX > 0 && mouseX < SIUI.topleftX + SIUI.largerWidth && mouseY > 0 && mouseY < SIUI.topleftY + 50){
+				SIUI.movingWindowCheck(mouseX, mouseY, leftClicking);
+				return;
+			}
+
+
+			return;
+			
 		}
 		
 
@@ -309,16 +338,11 @@ public class UI {
 			gp.player.hotbar[slot] = gp.player.inventory.invItemsQuantity.get(itemID);
 		}
 
+
 		public void hoveredSlotCheck(int mouseX, int mouseY, boolean leftClicking, boolean rightClicking){
 			mouseX = mouseX - topleftX - startSlotsX;
 			mouseY = mouseY - topleftY - startSlotsY;
-			if (mouseX < 0 || mouseY < 0 || mouseX > endSlotsX || mouseY > endSlotsY){
-				if(slotSelection[lastHovered] != 2){
-					slotSelection[lastHovered] = 0;
-				}
-				lastHovered = slotCount;
-				return;
-			}
+			
 
 			int hoveredSlot = (mouseX / 40) + (slotNumWidth * (mouseY / 40));
 			
@@ -420,6 +444,8 @@ public class UI {
 		//Make sure to copy most of this stuff to new uis
 		private int topleftX;
 		private int topleftY;
+		private int originalMouseX;
+		private int originalMouseY;
 		final private int largerWidth = 1320;
 		final private int largerHeight = 500;
 		final private int width = 424;
@@ -448,16 +474,21 @@ public class UI {
 			return false;
 		}
 
+		public void movingWindowCheck(int mouseX, int mouseY, boolean leftClicking){
+			if(leftClicking){
+				topleftX += gp.mouseH.mouseX - originalMouseX;
+				topleftY += gp.mouseH.mouseY - originalMouseY;
+				originalMouseX = gp.mouseH.mouseX;
+				originalMouseY = gp.mouseH.mouseY;
+			}else{
+				originalMouseX = gp.mouseH.mouseX;
+				originalMouseY = gp.mouseH.mouseY;
+			}
+		}
+
 		public void hoveredSlotCheck(int mouseX, int mouseY, boolean leftClicking, boolean rightClicking){
 			mouseX = mouseX - topleftX - startSlotsX;
 			mouseY = mouseY - topleftY - startSlotsY;
-			if (mouseX < 0 || mouseY < 0 || mouseX > endSlotsX || mouseY > endSlotsY){
-				if(slotSelection[lastHovered] != 2){
-					slotSelection[lastHovered] = 0;
-				}
-				lastHovered = slotCount;
-				return;
-			}
 
 			int hoveredSlot = (mouseX / 40) + (slotNumWidth * (mouseY / 40));
 			

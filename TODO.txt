@@ -3,13 +3,13 @@ TODO:
 
 
 
+Add a ui for each building type
 
-make a tileentity arraylist in chunkgrid that saves every placed tileentity
-call every instance on this list every tick to update()
+fix placing from hotbar
 
 Bake shadows into images
 
-Maybe make in a separate thread, but that seems weird.
+Maybe doWork() in a separate thread, but that seems weird.
 
 Add player mask for different colors
 
