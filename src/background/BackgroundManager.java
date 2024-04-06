@@ -1,6 +1,5 @@
 package src.background;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -9,7 +8,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import src.Chunk.Chunk;
-import src.entity.entity;
 import src.item.ItemProperties;
 import src.main.GamePanel;
 import src.tileEntity.EntityImage;
@@ -177,7 +175,6 @@ public class BackgroundManager {
 		worldRow = topRow;
 		chunkCol = 0;
 		chunkRow = 0;
-		// System.out.println(drawNum);
 		
 
 		for (worldRow = topRow; worldRow < endWorldRow; worldRow++){
@@ -207,7 +204,7 @@ public class BackgroundManager {
 							// g2.drawImage(EntityImage.entityImages.get("assembling-machine-1-shadow").imageArr[0][0], screenX + 13 , screenY + 13, GamePanel.tileSize * EntityImage.entityImages.get("assembling-machine-1-shadow").tileWidth - 2, GamePanel.tileSize * EntityImage.entityImages.get("assembling-machine-1-shadow").tileHeight - 26, null);
 							// g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + 24, GamePanel.tileSize * entityImage.tileHeight + 36, null);
 
-							g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), null);
+							g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX) + entityImage.stretchX, GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY) + entityImage.stretchY, null);
 							// g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), Color.GREEN, gp);
 							
 						}
@@ -241,7 +238,7 @@ public class BackgroundManager {
 						int screenX = (gp.mouseH.mouseTileX * GamePanel.tileSize) + (gp.mouseH.mouseCol * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldX + gp.player.screenX;
 						int screenY = (gp.mouseH.mouseTileY * GamePanel.tileSize) + (gp.mouseH.mouseRow * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldY + gp.player.screenY;
 
-						g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), null);
+						g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX) + entityImage.stretchX, GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY) + entityImage.stretchY, null);
 					}
 				}
 			}else if(gp.ui.SIUI.selectedSlot != gp.ui.SIUI.slotCount){
@@ -251,7 +248,7 @@ public class BackgroundManager {
 						int screenX = (gp.mouseH.mouseTileX * GamePanel.tileSize) + (gp.mouseH.mouseCol * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldX + gp.player.screenX;
 						int screenY = (gp.mouseH.mouseTileY * GamePanel.tileSize) + (gp.mouseH.mouseRow * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldY + gp.player.screenY;
 
-						g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), null);
+						g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX) + entityImage.stretchX, GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY) + entityImage.stretchY, null);
 					}
 				}
 			}

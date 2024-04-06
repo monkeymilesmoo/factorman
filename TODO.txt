@@ -2,7 +2,6 @@ TODO:
 
 
 
-make placing ghost green or red ghost depending on placability
 
 
 make a tileentity arraylist in chunkgrid that saves every placed tileentity
@@ -17,6 +16,8 @@ Add player mask for different colors
 Actual terrain generation with noise and such
 
 Probably make rendering more efficient somehow. It currently is a little too slow I think.
+
+make placing ghost green or red ghost depending on placability
 
 Selectable working x button
 

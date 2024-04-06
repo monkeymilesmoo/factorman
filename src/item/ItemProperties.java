@@ -27,6 +27,8 @@ public class ItemProperties {
 		
 		itemPropertyMap.put("iron-ore", new ItemProperties(50, "ore"));
 		itemPropertyMap.put("assembling-machine-1", new ItemProperties(50, "building"));
+		itemPropertyMap.put("stone-furnace", new ItemProperties(50, "building"));
+		itemPropertyMap.put("steel-chest", new ItemProperties(50, "building"));
 
 
 

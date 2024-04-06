@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy;
 
 import javax.imageio.ImageIO;
 

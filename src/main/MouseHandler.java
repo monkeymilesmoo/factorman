@@ -18,7 +18,6 @@ public class MouseHandler extends MouseAdapter{
 	public int mouseCol, mouseRow;
 	public int mouseTileX, mouseTileY;
 	public boolean notOverGUI;
-	private int oldMouseX, oldMouseY;
 
 	BufferedImage selectionYellow;
 

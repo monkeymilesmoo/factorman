@@ -6,17 +6,20 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import src.entity.entity;
+
 public class EntityImage {
 	
 	public BufferedImage image, icon; 
 	public BufferedImage[][] imageArr;
 	public int tileHeight, tileWidth;
 	public int shiftX, shiftY;
+	public int stretchX, stretchY;
 
 
 	public transient static HashMap<String, EntityImage> entityImages = new HashMap<String, EntityImage>();
 
-	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileWidth, int tileHeight, int shiftX, int shiftY, String hasIcon){
+	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileWidth, int tileHeight, int shiftX, int shiftY, int stretchX, int stretchY, String hasIcon){
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + filePath + ".png")));
 			if(hasIcon != null){
@@ -32,6 +35,8 @@ public class EntityImage {
 
 		this.shiftX = shiftX;
 		this.shiftY = shiftY;
+		this.stretchX = stretchX;
+		this.stretchY = stretchY;
 		this.tileHeight = tileHeight;
 		this.tileWidth = tileWidth;
 
@@ -67,11 +72,12 @@ public class EntityImage {
 			
 			
 			// entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1));
-			entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3, 3, 12, 18, "assembling-machine-1"));
-			entityImages.put("assembling-machine-1-shadow", new EntityImage("building/assembling-machine-1/assembling-machine-1-shadow", 32, 1, 3, 3, 4, 13, null));
-			entityImages.put("steel-chest", new EntityImage("building/steel-chest/steel-chest", 1, 1, 1, 1, 0, 10, "steel-chest"));
-			entityImages.put("steel-chest-shadow", new EntityImage("building/steel-chest/steel-chest-shadow", 1, 1, 1, 1, 0, 10, null));
-			entityImages.put("iron-ore", new EntityImage("Ore/iron-ore", 8, 8, 1, 1, 0, 0, "iron-ore"));
+			entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3, 3, 12, 18, 0, 0, "assembling-machine-1"));
+			entityImages.put("assembling-machine-1-shadow", new EntityImage("building/assembling-machine-1/assembling-machine-1-shadow", 32, 1, 3, 3, 4, 13, 0, 0, null));
+			entityImages.put("steel-chest", new EntityImage("building/steel-chest/steel-chest", 1, 1, 1, 1, 0, 10, 0, 0, "steel-chest"));
+			entityImages.put("steel-chest-shadow", new EntityImage("building/steel-chest/steel-chest-shadow", 1, 1, 1, 1, 0, 10, 0, 0, null));
+			entityImages.put("iron-ore", new EntityImage("Ore/iron-ore", 8, 8, 1, 1, 0, 0, 0, 0, "iron-ore"));
+			entityImages.put("stone-furnace", new EntityImage("building/stone-furnace/stone-furnace", 1, 1, 2, 3, -5, 0, 55, -5, "stone-furnace"));
 
 			// entityImages[0] = ImageIO.read(getClass().getResourceAsStream("/res/tileEntity/assembling-machine-1/assembling-machine-1.png"));
 			// entityImages[1] = ImageIO.read(getClass().getResourceAsStream("/res/tileEntity/steel-chest/steel-chest.png"));

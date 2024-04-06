@@ -10,8 +10,10 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import src.main.GamePanel;
+import src.tileEntity.TileEntity;
 
 public class ChunkGrid implements Serializable{
 	public static final int gridSize = 100;
@@ -26,9 +28,13 @@ public class ChunkGrid implements Serializable{
 
 	public Chunk[][] generatedChunks;
 
+	public ArrayList<byte[]> chunksWithTE = new ArrayList<byte[]>();
+	//One int, first 4 bytes correspond to x, second 4 bytes are y
+
 
 	//REMOVE GAMEPANEL LATER MAYBE
 	public ChunkGrid(GamePanel gp, boolean loading) {
+
 
 
 		chunks = new Chunk[gridSize][gridSize];
@@ -164,8 +170,6 @@ public class ChunkGrid implements Serializable{
 				}
 			}
 			System.out.println("Map successfully loaded from: " + filename);
-			// double afterLoadTime = System.nanoTime();
-			// System.out.println("Done in: " + (afterLoadTime-beforeLoadTime) + "nanoseconds");
 
 			objectIn.close();
 		} catch (IOException e){
@@ -175,5 +179,47 @@ public class ChunkGrid implements Serializable{
 		}
 		return grid;
 	}
+
+	public static byte[] createCoordinateBytes(int x, int y) {
+        byte[] bytes = new byte[8]; // 4 bytes for x, 4 bytes for y
+        writeIntToBytes(x, bytes, 0); // Write x to the first 4 bytes
+        writeIntToBytes(y, bytes, 4); // Write y to the next 4 bytes
+        return bytes;
+    }
+
+    // Method to read an integer from a byte array starting from the specified index
+    public static int readIntFromBytes(byte[] bytes, int startIndex) {
+        return ((bytes[startIndex] & 0xFF) << 24) |
+                ((bytes[startIndex + 1] & 0xFF) << 16) |
+                ((bytes[startIndex + 2] & 0xFF) << 8) |
+                (bytes[startIndex + 3] & 0xFF);
+    }
+
+    // Method to write an integer to a byte array starting from the specified index
+    public static void writeIntToBytes(int value, byte[] bytes, int startIndex) {
+        bytes[startIndex] = (byte) (value >> 24);
+        bytes[startIndex + 1] = (byte) (value >> 16);
+        bytes[startIndex + 2] = (byte) (value >> 8);
+        bytes[startIndex + 3] = (byte) value;
+    }
+
+
+
+	public void update(){
+		for (byte[] coordinate : chunksWithTE){
+			int x = readIntFromBytes(coordinate, 0);
+			int y = readIntFromBytes(coordinate, 4);
+
+			Chunk selectedChunk =	chunks[x][y];
+
+			for (TileEntity TEinChunk : selectedChunk.tileEntityList){
+				TEinChunk.doWork();
+			}
+		}
+	}
+
+
+
+
 }
 

@@ -10,14 +10,14 @@ import src.item.Item;
 public class TileEntity implements Serializable{
 	//ALL BUILDING AND NON BUILDING VARIABLES MUST BE DECLARED HERE
 	public short textureID;
-	public byte tileWidth, tileHeight;
+	public int tileWidth, tileHeight;
 	public int x, y;
 	public byte miningDurability = 25;
 	public String tileEntityID;
 	public int chunkX;
 	public int chunkY;
 
-	public TileEntity(int x, int y, int chunkX, int chunkY, byte tileWidth, byte tileHeight, String tileEntityID){
+	public TileEntity(int x, int y, int chunkX, int chunkY, int tileWidth, int tileHeight, String tileEntityID){
 
 		this.chunkX = chunkX;
 		this.chunkY = chunkY;
@@ -29,6 +29,10 @@ public class TileEntity implements Serializable{
 		
 
 
+	}
+
+	public void doWork(){
+		System.out.println(x + y);
 	}
 
 	//IM not sure what the best way to remove it is other than this
