@@ -32,7 +32,9 @@ public class TileEntity implements Serializable{
 	}
 
 	public void doWork(){
-		System.out.println(x + y);
+		//TODO I guess trees would remove pollution here?
+		//Thats waaaay far ahead tho
+
 	}
 
 	//IM not sure what the best way to remove it is other than this

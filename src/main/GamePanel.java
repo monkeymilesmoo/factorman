@@ -102,9 +102,6 @@ public class GamePanel extends JPanel implements Runnable{
 		ItemProperties.InitializeItemProperties();
 
 
-		//TODO DEBUG
-		// player.inventory.addItemToInventory(new Item("iron-ore", 4000));
-
 
 
 

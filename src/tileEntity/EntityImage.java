@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import src.entity.entity;
 
 public class EntityImage {
 	
