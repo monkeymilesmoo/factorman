@@ -98,8 +98,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public void startGameThread() {
 
-		EntityImage.loadEntityImages();
 		ItemProperties.InitializeItemProperties();
+		EntityImage.loadEntityImages();
 
 
 

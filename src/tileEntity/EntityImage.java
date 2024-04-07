@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import src.item.ItemProperties;
+
 
 public class EntityImage {
 	
@@ -18,13 +20,26 @@ public class EntityImage {
 
 	public transient static HashMap<String, EntityImage> entityImages = new HashMap<String, EntityImage>();
 
-	public EntityImage(String filePath, int frameWidth, int frameHeight, int tileWidth, int tileHeight, int shiftX, int shiftY, int stretchX, int stretchY, String hasIcon){
+	public EntityImage(String fileName, int frameWidth, int frameHeight, int shadowWidth, int shadowHeight, int shadowOffsetRight, int shadowOffsetDown, int tileWidth, int tileHeight, int shiftX, int shiftY, int stretchX, int stretchY){
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + filePath + ".png")));
-			if(hasIcon != null){
-				icon = ImageIO.read(getClass().getResourceAsStream(("/res/icons/" + hasIcon + ".png")));
-				icon = icon.getSubimage(0, 0, 64, 64);
-			}
+			
+			String itemType = ItemProperties.itemPropertyMap.get(fileName).itemType; 
+
+			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + fileName + ".png")));
+			
+			
+
+			icon = ImageIO.read(getClass().getResourceAsStream(("/res/icons/" + fileName + ".png")));
+			icon = icon.getSubimage(0, 0, 64, 64);
+
+
+			//TODO shouldn't have a different name for icon I THINK
+			// if(hasIcon != null){
+			// 	icon = ImageIO.read(getClass().getResourceAsStream(("/res/icons/" + hasIcon + ".png")));
+			// 	icon = icon.getSubimage(0, 0, 64, 64);
+			// }
+
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -70,16 +85,17 @@ public class EntityImage {
 		try{
 			
 			
-			// entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1));
-			entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3, 3, 12, 18, 0, 0, "assembling-machine-1"));
-			entityImages.put("assembling-machine-1-shadow", new EntityImage("building/assembling-machine-1/assembling-machine-1-shadow", 32, 1, 3, 3, 4, 13, 0, 0, null));
-			entityImages.put("steel-chest", new EntityImage("building/steel-chest/steel-chest", 1, 1, 1, 1, 0, 10, 0, 0, "steel-chest"));
-			entityImages.put("steel-chest-shadow", new EntityImage("building/steel-chest/steel-chest-shadow", 1, 1, 1, 1, 0, 10, 0, 0, null));
-			entityImages.put("iron-ore", new EntityImage("Ore/iron-ore", 8, 8, 1, 1, 0, 0, 0, 0, "iron-ore"));
-			entityImages.put("stone-furnace", new EntityImage("building/stone-furnace/stone-furnace", 1, 1, 2, 3, -10, -30, 55, 20, "stone-furnace"));
+			entityImages.put("assembling-machine-1", new EntityImage("assembling-machine-1", 32, 1, 0, 0, 0, 0, 3, 3, 12, 18, 0, 0));
 
-			// entityImages[0] = ImageIO.read(getClass().getResourceAsStream("/res/tileEntity/assembling-machine-1/assembling-machine-1.png"));
-			// entityImages[1] = ImageIO.read(getClass().getResourceAsStream("/res/tileEntity/steel-chest/steel-chest.png"));
+			
+			
+			// entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3, 3, 12, 18, 0, 0, "assembling-machine-1"));
+			// entityImages.put("assembling-machine-1-shadow", new EntityImage("building/assembling-machine-1/assembling-machine-1-shadow", 32, 1, 3, 3, 4, 13, 0, 0, null));
+			// entityImages.put("steel-chest", new EntityImage("building/steel-chest/steel-chest", 1, 1, 1, 1, 0, 10, 0, 0, "steel-chest"));
+			// entityImages.put("steel-chest-shadow", new EntityImage("building/steel-chest/steel-chest-shadow", 1, 1, 1, 1, 0, 10, 0, 0, null));
+			// entityImages.put("iron-ore", new EntityImage("Ore/iron-ore", 8, 8, 1, 1, 0, 0, 0, 0, "iron-ore"));
+			// entityImages.put("stone-furnace", new EntityImage("building/stone-furnace/stone-furnace", 1, 1, 2, 3, -10, -30, 55, 20, "stone-furnace"));
+
 			
 
 
