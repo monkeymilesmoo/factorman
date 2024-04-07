@@ -60,6 +60,7 @@ public class Player extends entity{
 		getPlayerImages();
 		setDefaultValues();
 		
+		
 	}
 
 
@@ -154,16 +155,16 @@ public class Player extends entity{
 
 	
 		// mining = keyH.testable ? true : false;
-		if(keyH.testable){
+		// if(keyH.testable){
 			//DEBUG
 			// inventory.addItemToInventory(new Item("stone-furnace", 30));
-			inventory.addItemToInventory(new Item("assembling-machine-1", 30));
+			// inventory.addItemToInventory(new Item("assembling-machine-1", 30));
 			// inventory.addItemToInventory(new Item("steel-chest", 30));
 			// inventory.addItemToInventory(new Item("iron-ore", 124));
 			// hotbar[0] = inventory.invItemsQuantity.get("assembling-machine-1");
 			// gp.ui.hotbar.setSlot(0, "assembling-machine-1");
-			keyH.testable = false;
-		}
+			// keyH.testable = false;
+		// }
 		moving = (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) ? true : false;
 
 

@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
 	//FPS
 	int FPS = 60;
 
-	KeyHandler keyH = new KeyHandler();
+	public KeyHandler keyH = new KeyHandler();
 	public MouseHandler mouseH = new MouseHandler(this);
 	ResizeListener resizeL = new ResizeListener();
 	Thread gameThread;
@@ -104,6 +104,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 
+		player.inventory.addItemToInventory(new Item("assembling-machine-1", 30));
 
 		gameThread = new Thread(this);
 		gameThread.start();
