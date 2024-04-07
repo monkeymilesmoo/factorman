@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 
-	boolean loading = false;
+	boolean loading = true;
 
 
 
@@ -104,8 +104,9 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 
-		player.inventory.addItemToInventory(new Item("assembling-machine-1", 30));
+		player.inventory.addItemToInventory(new Item("assembling-machine-1", 1000));
 		player.inventory.addItemToInventory(new Item("steel-chest", 30));
+		player.inventory.addItemToInventory(new Item("stone-furnace", 30));
 
 		gameThread = new Thread(this);
 		gameThread.start();

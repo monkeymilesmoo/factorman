@@ -7,7 +7,7 @@ Add a ui for each building type
 
 fix placing from hotbar
 
-Bake shadows into images
+Add mine bar above hotbar
 
 Maybe doWork() in a separate thread, but that seems weird.
 

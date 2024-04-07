@@ -299,6 +299,9 @@ public class UI {
 			screenX = worldX - gp.player.worldX + gp.player.screenX;
 			screenY = worldY - gp.player.worldY + gp.player.screenY;
 
+			g2.setFont(titilliumBold.deriveFont(18.0F));
+			g2.setColor(Color.white);
+			
 			g2.drawString(text, screenX, screenY);
 			worldY--;
 			if(originalY - worldY > 25){

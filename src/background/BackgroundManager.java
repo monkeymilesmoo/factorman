@@ -204,8 +204,11 @@ public class BackgroundManager {
 							// g2.drawImage(EntityImage.entityImages.get("assembling-machine-1-shadow").imageArr[0][0], screenX + 13 , screenY + 13, GamePanel.tileSize * EntityImage.entityImages.get("assembling-machine-1-shadow").tileWidth - 2, GamePanel.tileSize * EntityImage.entityImages.get("assembling-machine-1-shadow").tileHeight - 26, null);
 							// g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + 24, GamePanel.tileSize * entityImage.tileHeight + 36, null);
 
-							
-							g2.drawImage(gp.keyH.testable ? entityImage.imageArr[0][0] : entityImage.shadowArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX) + entityImage.shadowOffsetRight, GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY) + entityImage.shadowOffsetDown, null);
+							if(tileEntity.tileEntityID == "iron-ore"){
+								g2.drawImage(entityImage.shadowArr[terrainSeed.nextInt(8)][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX) + entityImage.shadowOffsetRight, GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY) + entityImage.shadowOffsetDown, null);
+							}else{
+								g2.drawImage(entityImage.shadowArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX) + entityImage.shadowOffsetRight, GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY) + entityImage.shadowOffsetDown, null);
+							}
 							// g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), Color.GREEN, gp);
 							
 						}
