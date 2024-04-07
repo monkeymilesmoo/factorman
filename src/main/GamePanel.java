@@ -105,6 +105,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 		player.inventory.addItemToInventory(new Item("assembling-machine-1", 30));
+		player.inventory.addItemToInventory(new Item("steel-chest", 30));
 
 		gameThread = new Thread(this);
 		gameThread.start();

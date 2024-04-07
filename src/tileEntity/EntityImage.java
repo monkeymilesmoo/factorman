@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import src.entity.entity;
 import src.item.ItemProperties;
 
 
@@ -24,7 +25,7 @@ public class EntityImage {
 
 	public transient static HashMap<String, EntityImage> entityImages = new HashMap<String, EntityImage>();
 
-	public EntityImage(String fileName, String shadowFileName, int frameWidth, int frameHeight, int shadowWidth, int shadowHeight, int shadowOffsetRight, int shadowOffsetDown, int tileWidth, int tileHeight, int shiftX, int shiftY){
+	public EntityImage(String fileName, String shadowFileName, int frameWidth, int frameHeight, int shadowOffsetRight, int shadowOffsetDown, int tileWidth, int tileHeight, int shiftX, int shiftY){
 		
 		try {
 			
@@ -120,16 +121,16 @@ public class EntityImage {
 		
 		for(int i = 0; i < frameWidth; i++){
 			for(int j = 0; j < frameHeight; j++){
-				int width = imageArr[i][j].getWidth();
-				int height =imageArr[i][j].getHeight();
+
+				int width = shadowArr[i][j].getWidth();
+				int height =shadowArr[i][j].getHeight();
 				
 				BufferedImage newImage = new BufferedImage(width + shadowOffsetRight + shiftX,  height + shadowOffsetDown + shiftY, BufferedImage.TYPE_INT_ARGB);
 				
-				newImage.createGraphics().drawImage(imageArr[i][j],  0, 0, null);
-				newImage.createGraphics().drawImage(shadowArr[i][j], shadowOffsetRight + shiftX, shadowOffsetDown + shiftY, null);
+				newImage.createGraphics().drawImage(shadowArr[i][j], shiftX, shiftY, width + shadowOffsetRight, height + shadowOffsetDown, null);
+				newImage.createGraphics().drawImage(imageArr[i][j],  0, 0, width + shiftX, height + shiftY, null);
 				
 				arr[i][j] = newImage;
-				System.out.println(width);
 				
 			}
 		}
@@ -147,8 +148,9 @@ public class EntityImage {
 			
 			
 			//LEAVE SHADOW BLANK IF IT IS INCLUDED IN IMAGE ALREADY
-			entityImages.put("assembling-machine-1", new EntityImage("assembling-machine-1", "assembling-machine-1-shadow", 32, 1, 0, 0, 15, 0, 3, 3, 12, 18));
-
+			entityImages.put("assembling-machine-1", new EntityImage("assembling-machine-1", "assembling-machine-1-shadow", 32, 1, 15, -15, 3, 3, 12, 18));
+			entityImages.put("steel-chest", new EntityImage("steel-chest", "steel-chest-shadow", 1, 1, 50, 0, 1, 1, 0, 10));
+			entityImages.put("stone-furnace", new EntityImage("stone-furnace", "", 1, 1, 0, 0, 0, 0, 0, 0));
 			
 			
 			// entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3, 3, 12, 18, 0, 0, "assembling-machine-1"));
