@@ -1,11 +1,12 @@
 package src.main;
 
+import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
 
-	public boolean upPressed, downPressed, rightPressed, leftPressed, Lpressed, Epressed, testable;
+	public boolean upPressed, downPressed, rightPressed, leftPressed, Lpressed, Epressed, Rpressed, testable;
 
 
 	@Override
@@ -40,6 +41,9 @@ public class KeyHandler implements KeyListener{
 			case(KeyEvent.VK_E):
 				Epressed = true;
 				break;
+			case(KeyEvent.VK_R):
+				Rpressed = true;
+				break;
 			case(KeyEvent.VK_SPACE):
 				testable = true;
 				break;
@@ -69,6 +73,9 @@ public class KeyHandler implements KeyListener{
 				break;
 			case(KeyEvent.VK_E):
 				Epressed = false;
+				break;
+			case(KeyEvent.VK_R):
+				Rpressed =false;
 				break;
 			case(KeyEvent.VK_SPACE):
 				testable = false;

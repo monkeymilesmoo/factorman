@@ -220,8 +220,8 @@ public class storageInventory {
 					amountRemoving -= invContents[i].quantity;
 					invContents[i] = null;
 					endIndex--;
-					gp.ui.SIUI.slotSelection[gp.ui.SIUI.selectedSlot] = 0;
-					gp.ui.SIUI.selectedSlot = gp.ui.SIUI.slotCount;
+					gp.ui.SIUI.inv.slotSelection[gp.ui.SIUI.inv.selectedSlot] = 0;
+					gp.ui.SIUI.inv.selectedSlot = gp.ui.SIUI.inv.slotCount;
 					
 				}else{
 					invContents[i].quantity -= amountRemoving;

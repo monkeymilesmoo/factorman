@@ -29,10 +29,12 @@ public class UI {
 	static BufferedImage inHandIcon;
 	String selectedUI;
 	ArrayList<disappearingText> disappearingTextList = new ArrayList<disappearingText>();
+	public boolean openVisibility = false;
+	public String openUI = "";
 
 
 	public hotbarUI hotbar = new hotbarUI();
-	public inventoryUI SIUI = new inventoryUI();
+	public playerInventoryUI SIUI = new playerInventoryUI();
 	public buildingUI BUI = new buildingUI();
 	
 
@@ -112,14 +114,20 @@ public class UI {
 
 		//Add for each new window
 		hotbar.draw();
-		if(SIUI.visible){
-			SIUI.draw();
+
+		if(openVisibility){
+			if(openUI == "playerInv"){
+				SIUI.draw();
+			}
+			if(openUI == "buildingUI"){
+				BUI.draw();
+			}
 		}
 
-		if(SIUI.selectedSlot != SIUI.slotCount){
-			if(gp.player.inventory.invContents[SIUI.selectedSlot] != null){
-				g2.drawImage(EntityImage.entityImages.get(gp.player.inventory.invContents[SIUI.selectedSlot].itemID).icon, gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 10, 30, 30, null);
-				UI.drawNumber(gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 40, gp.player.inventory.invContents[SIUI.selectedSlot].quantity, g2);
+		if(SIUI.inv.selectedSlot != SIUI.inv.slotCount){
+			if(gp.player.inventory.invContents[SIUI.inv.selectedSlot] != null){
+				g2.drawImage(EntityImage.entityImages.get(gp.player.inventory.invContents[SIUI.inv.selectedSlot].itemID).icon, gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 10, 30, 30, null);
+				UI.drawNumber(gp.mouseH.mouseX + 10, gp.mouseH.mouseY + 40, gp.player.inventory.invContents[SIUI.inv.selectedSlot].quantity, g2);
 			}
 			
 		}else if(hotbar.selectedSlot != hotbar.slotCount){
@@ -164,18 +172,40 @@ public class UI {
 		}
 		if (selectedUI == "playerInv"){
 			//Check slots first
-			if (mouseX - SIUI.topleftX - SIUI.startSlotsX > 0 && mouseY - SIUI.topleftY - SIUI.startSlotsY > 0 && mouseX - SIUI.topleftX - SIUI.startSlotsX < SIUI.endSlotsX && mouseY - SIUI.topleftY - SIUI.startSlotsY < SIUI.endSlotsY){
+			if (mouseX - SIUI.topleftX - SIUI.inv.startSlotsX > 0 && mouseY - SIUI.topleftY - SIUI.inv.startSlotsY > 0 && mouseX - SIUI.topleftX - SIUI.inv.startSlotsX < SIUI.endSlotsX && mouseY - SIUI.topleftY - SIUI.inv.startSlotsY < SIUI.endSlotsY){
 				SIUI.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
 				return;
 			}else{
-				if(SIUI.slotSelection[SIUI.lastHovered] != 2){
-					SIUI.slotSelection[SIUI.lastHovered] = 0;
+				if(SIUI.inv.slotSelection[SIUI.inv.lastHovered] != 2){
+					SIUI.inv.slotSelection[SIUI.inv.lastHovered] = 0;
 				}
-				SIUI.lastHovered = SIUI.slotCount;
+				SIUI.inv.lastHovered = SIUI.inv.slotCount;
 			}
 
 			if(mouseX - SIUI.topleftX > 0 && mouseX < SIUI.topleftX + SIUI.largerWidth && mouseY > 0 && mouseY < SIUI.topleftY + 50){
 				SIUI.movingWindowCheck(mouseX, mouseY, leftClicking);
+				return;
+			}
+
+
+			return;
+			
+		}
+
+		if (selectedUI == "buildingUI"){
+			//Check slots first
+			if (mouseX - BUI.topleftX - BUI.inv.startSlotsX > 0 && mouseY - BUI.topleftY - BUI.inv.startSlotsY > 0 && mouseX - BUI.topleftX - BUI.inv.startSlotsX < BUI.endSlotsX && mouseY - BUI.topleftY - BUI.inv.startSlotsY < BUI.endSlotsY){
+				BUI.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
+				return;
+			}else{
+				if(BUI.inv.slotSelection[BUI.inv.lastHovered] != 2){
+					BUI.inv.slotSelection[BUI.inv.lastHovered] = 0;
+				}
+				BUI.inv.lastHovered = BUI.inv.slotCount;
+			}
+
+			if(mouseX - BUI.topleftX > 0 && mouseX < BUI.topleftX + BUI.largerWidth && mouseY > 0 && mouseY < BUI.topleftY + 50){
+				BUI.movingWindowCheck(mouseX, mouseY, leftClicking);
 				return;
 			}
 
@@ -195,10 +225,18 @@ public class UI {
 			selectedUI = "hotbar";
 			return false;
 		}
-		if(SIUI.visible){
-			if(SIUI.checkMouseWindow(mouseX, mouseY)){
-				selectedUI = "playerInv";
-				return false;
+		if(openVisibility){
+			if(openUI == "playerInv"){
+				if(SIUI.checkMouseWindow(mouseX, mouseY)){
+					selectedUI = "playerInv";
+					return false;
+				}
+			}
+			if(openUI == "buildingUI"){
+				if(BUI.checkMouseWindow(mouseX, mouseY)){
+					selectedUI = "buildingUI";
+					return false;
+				}
 			}
 		}
 
@@ -267,6 +305,7 @@ public class UI {
 		//Add for each new window
 		hotbar.resizeWindow();
 		SIUI.resizeWindow();
+		BUI.resizeWindow();
 
 
 	}
@@ -312,12 +351,127 @@ public class UI {
 
 	}
 
+	public class assemblerUI{
+		final private int width = 424;
+		final private int height = 448;
+		final public int slotCount = 90;
+		public final int[] slotSelection =  new int[slotCount + 1];
+		private int lastHovered = slotCount;
+		public int selectedSlot = slotCount;
+		final private int slotNumWidth = 10;
+		final private int startSlotsX = 26;
+		final private int startSlotsY = 78;
+		private int topleftX, topleftY;
+		private String buildingType;
+
+		assemblerUI(int topleftX, int topLeftY, String buildingType){
+			this.topleftX = topleftX;
+			this.topleftY = topLeftY;
+			this.buildingType = buildingType;
+		}
+		
+		public void resizeWindow(int topleftX, int topLeftY){
+			this.topleftX = topleftX;
+			this.topleftY = topLeftY;
+		}
+
+		public void draw(Graphics2D g2, int j){
+
+			g2.setColor(middleLayerBody);
+			g2.fillRect(topleftX + 11 + ((width + 13) * j), topleftY + 41, width, height);
+
+
+			for(int i = 0; i < gp.player.inventory.invSize; i++){
+				g2.drawImage(behindItem[slotSelection[i]], startSlotsX + ((width + 13) * j) +topleftX + (40 * (i % 10)), topleftY + startSlotsY + (40* (i/10)), 40, 40, null);
+
+			}
+
+			
+			g2.setFont(titilliumBold.deriveFont(18.0F));
+			g2.setColor(Color.white);
+			UI.drawWindowTitle(topleftX+ ((width + 13) * j), topleftY, buildingType, g2);
+
+
+			for (int i = 0; i < gp.player.inventory.invSize; i++){
+				Item slotItem = gp.player.inventory.invContents[i]; 
+				if(slotItem == null){
+					break;
+				} 
+				if(selectedSlot == i){
+					g2.drawImage(inHandIcon, 26 + topleftX + ((width + 13) * j) + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);;
+					continue;
+				}
+				g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
+				UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, slotItem.quantity, g2);
+				
+
+			}
+
+		}
+
+	}
+
 	public class buildingUI{
+		//BUI
+		private int topleftX;
+		private int topleftY;
+		private int originalMouseX;
+		private int originalMouseY;
+		final private int largerWidth = 880;
+		final private int largerHeight = 500;
+		final private int endSlotsX = 398;
+		final private int endSlotsY = 358;
+		//TODO for now, just testing with assembler
+		public String buildingType = "Assembler";
+
+		public inventory inv = SIUI.inv;
+		assemblerUI assUI = new assemblerUI(topleftX, topleftY, buildingType);
+
+		public void resizeWindow(){
+			this.topleftX = gp.screenWidth/ 3 - 150;
+			this.topleftY = gp.screenHeight / 4;
+			inv.resizeWindow(topleftX, topleftY);
+			assUI.resizeWindow(topleftX, topleftY);
+		} 
+
+		public void draw(){
+
+
+			UI.drawOuterEdge(topleftX, topleftY, largerWidth, largerHeight, g2, true);
+
+			inv.draw(g2, 0);
+			assUI.draw(g2, 1);
+		}
+
+		public void hoveredSlotCheck(int mouseX, int mouseY, boolean leftClicking, boolean rightClicking){
+			inv.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
+		}
+
+		public boolean checkMouseWindow(int mouseX, int mouseY){
+			if(mouseX > topleftX && mouseX < topleftX + largerWidth && mouseY > topleftY && mouseY < topleftY + largerHeight){
+				return true;
+			}
+			return false;
+		}
+
+		public void movingWindowCheck(int mouseX, int mouseY, boolean leftClicking){
+			if(leftClicking){
+				topleftX += gp.mouseH.mouseX - originalMouseX;
+				topleftY += gp.mouseH.mouseY - originalMouseY;
+				originalMouseX = gp.mouseH.mouseX;
+				originalMouseY = gp.mouseH.mouseY;
+				inv.resizeWindow(topleftX, topleftY);
+				assUI.resizeWindow(topleftX, topleftY);
+			}else{
+				originalMouseX = gp.mouseH.mouseX;
+				originalMouseY = gp.mouseH.mouseY;
+			}
+		}
 		//TODO implement
 	}
 
 
-
+	
 	public class hotbarUI{
 	
 
@@ -365,8 +519,8 @@ public class UI {
 			}else if(leftClicking){
 				if(hoveredSlot != slotCount){
 					if(gp.player.hotbar[hoveredSlot] == null){
-						if(SIUI.selectedSlot != SIUI.slotCount){
-							setSlot(hoveredSlot, gp.player.inventory.invContents[SIUI.selectedSlot].itemID);	
+						if(SIUI.inv.selectedSlot != SIUI.inv.slotCount){
+							setSlot(hoveredSlot, gp.player.inventory.invContents[SIUI.inv.selectedSlot].itemID);	
 						}else if(selectedSlot != slotCount){
 							setSlot(hoveredSlot, gp.player.hotbar[selectedSlot].itemID);	
 						}
@@ -385,8 +539,8 @@ public class UI {
 					 }
 					slotSelection[hoveredSlot] = 2;
 					slotSelection[selectedSlot] = 0;
-					SIUI.slotSelection[SIUI.selectedSlot] = 0;
-					SIUI.selectedSlot = SIUI.slotCount;
+					SIUI.inv.slotSelection[SIUI.inv.selectedSlot] = 0;
+					SIUI.inv.selectedSlot = SIUI.inv.slotCount;
 					lastHovered = slotCount;
 					selectedSlot = hoveredSlot;
 				}
@@ -444,53 +598,31 @@ public class UI {
 
 	}
 
-	public class inventoryUI{
-
-
-		//Make sure to copy most of this stuff to new uis
-		private int topleftX;
-		private int topleftY;
-		private int originalMouseX;
-		private int originalMouseY;
-		final private int largerWidth = 1320;
-		final private int largerHeight = 500;
+	public class inventory{
 		final private int width = 424;
 		final private int height = 448;
-		final private int startSlotsX = 26;
-		final private int startSlotsY = 78;
-		final private int endSlotsX = 398;
-		final private int endSlotsY = 358;
-		final private int slotNumWidth = 10;
 		final public int slotCount = 90;
 		public final int[] slotSelection =  new int[slotCount + 1];
 		private int lastHovered = slotCount;
 		public int selectedSlot = slotCount;
-		public boolean visible = false;
+		final private int slotNumWidth = 10;
+		final private int startSlotsX = 26;
+		final private int startSlotsY = 78;
+		private int topleftX, topleftY;
 
-
-		public void resizeWindow(){
-			this.topleftX = gp.screenWidth/ 5 - 150;
-			this.topleftY = gp.screenHeight / 4;
-		} 
-
-		public boolean checkMouseWindow(int mouseX, int mouseY){
-			if(mouseX > topleftX && mouseX < topleftX + largerWidth && mouseY > topleftY && mouseY < topleftY + largerHeight){
-				return true;
-			}
-			return false;
+		inventory(int topleftX, int topLeftY){
+			this.topleftX = topleftX;
+			this.topleftY = topLeftY;
 		}
-
-		public void movingWindowCheck(int mouseX, int mouseY, boolean leftClicking){
-			if(leftClicking){
-				topleftX += gp.mouseH.mouseX - originalMouseX;
-				topleftY += gp.mouseH.mouseY - originalMouseY;
-				originalMouseX = gp.mouseH.mouseX;
-				originalMouseY = gp.mouseH.mouseY;
-			}else{
-				originalMouseX = gp.mouseH.mouseX;
-				originalMouseY = gp.mouseH.mouseY;
-			}
+		
+		public void resizeWindow(int topleftX, int topLeftY){
+			this.topleftX = topleftX;
+			this.topleftY = topLeftY;
 		}
+		
+
+
+
 
 		public void hoveredSlotCheck(int mouseX, int mouseY, boolean leftClicking, boolean rightClicking){
 			mouseX = mouseX - topleftX - startSlotsX;
@@ -526,7 +658,101 @@ public class UI {
 					lastHovered = hoveredSlot;
 				}
 			}
+
+			
+
+
+
 		}
+		
+		public void draw(Graphics2D g2, int j){
+
+			g2.setColor(middleLayerBody);
+			g2.fillRect(topleftX + 11 + ((width + 13) * j), topleftY + 41, width, height);
+
+
+			for(int i = 0; i < gp.player.inventory.invSize; i++){
+				g2.drawImage(behindItem[slotSelection[i]], startSlotsX + topleftX + (40 * (i % 10)), topleftY + startSlotsY + (40* (i/10)), 40, 40, null);
+
+			}
+
+			
+			g2.setFont(titilliumBold.deriveFont(18.0F));
+			g2.setColor(Color.white);
+			UI.drawWindowTitle(topleftX, topleftY, "Character", g2);
+
+
+			for (int i = 0; i < gp.player.inventory.invSize; i++){
+				Item slotItem = gp.player.inventory.invContents[i]; 
+				if(slotItem == null){
+					break;
+				} 
+				
+				if(selectedSlot == i){
+					System.out.println(selectedSlot);
+					g2.drawImage(inHandIcon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);;
+					continue;
+				}
+				g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
+				UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, slotItem.quantity, g2);
+				
+
+			}
+
+		}
+	}
+
+
+	public class playerInventoryUI{
+
+
+		//Make sure to copy most of this stuff to new uis
+		private int topleftX;
+		private int topleftY;
+		private int originalMouseX;
+		private int originalMouseY;
+		final private int largerWidth = 1320;
+		final private int largerHeight = 500;
+		final private int endSlotsX = 398;
+		final private int endSlotsY = 358;
+		public inventory inv;
+
+
+		playerInventoryUI(){
+			inv = new inventory(topleftX, topleftY);
+		}
+
+		public void resizeWindow(){
+			this.topleftX = gp.screenWidth/ 5 - 150;
+			this.topleftY = gp.screenHeight / 4;
+			inv.resizeWindow(topleftX, topleftY);
+		} 
+
+		public boolean checkMouseWindow(int mouseX, int mouseY){
+			if(mouseX > topleftX && mouseX < topleftX + largerWidth && mouseY > topleftY && mouseY < topleftY + largerHeight){
+				return true;
+			}
+			return false;
+		}
+
+		public void hoveredSlotCheck(int mouseX, int mouseY, boolean leftClicking, boolean rightClicking){
+			inv.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
+		}
+
+		public void movingWindowCheck(int mouseX, int mouseY, boolean leftClicking){
+			if(leftClicking){
+				topleftX += gp.mouseH.mouseX - originalMouseX;
+				topleftY += gp.mouseH.mouseY - originalMouseY;
+				originalMouseX = gp.mouseH.mouseX;
+				originalMouseY = gp.mouseH.mouseY;
+				inv.resizeWindow(topleftX, topleftY);
+			}else{
+				originalMouseX = gp.mouseH.mouseX;
+				originalMouseY = gp.mouseH.mouseY;
+			}
+		}
+
+		
 
 
 		public void draw(){
@@ -536,39 +762,25 @@ public class UI {
 
 
 
-			//Draw inner rectangles
-			g2.setColor(middleLayerBody);
-			for (int i = 0; i < 3; i++){
-				g2.fillRect(topleftX + 11 + ((width + 13) * i), topleftY + 41, width, height);
-			}
+			inv.draw(g2, 0);
 
-			g2.setFont(titilliumBold.deriveFont(18.0F));
-			g2.setColor(Color.white);
-			UI.drawWindowTitle(topleftX, topleftY, "Character", g2);
+			//need to draw logistics stuff and crafting stuff
+			//make in their own classes
+
+
+			//TODO for each new window inside use this. i is the position in larger window 
+			// g2.setColor(middleLayerBody);
+			// g2.fillRect(topleftX + 11 + ((width + 13) * i), topleftY + 41, width, height);
+			
+
 
 			
 
-			for(int i = 0; i < gp.player.inventory.invSize; i++){
-				g2.drawImage(behindItem[slotSelection[i]], startSlotsX + topleftX + (40 * (i % 10)), topleftY + startSlotsY + (40* (i/10)), 40, 40, null);
-
-			}
+			
 
 
 
-			for (int i = 0; i < gp.player.inventory.invSize; i++){
-				Item slotItem = gp.player.inventory.invContents[i]; 
-				if(slotItem == null){
-					break;
-				} 
-				if(selectedSlot == i){
-					g2.drawImage(inHandIcon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);;
-					continue;
-				}
-				g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
-				UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, slotItem.quantity, g2);
-				
-
-			}
+			
 
 
 

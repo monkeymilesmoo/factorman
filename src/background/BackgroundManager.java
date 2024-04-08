@@ -245,10 +245,10 @@ public class BackgroundManager {
 						g2.drawImage(entityImage.imageArr[0][0], screenX - entityImage.shiftX, screenY - entityImage.shiftY, GamePanel.tileSize * entityImage.tileWidth + (2 * entityImage.shiftX), GamePanel.tileSize * entityImage.tileHeight + (2 * entityImage.shiftY), null);
 					}
 				}
-			}else if(gp.ui.SIUI.selectedSlot != gp.ui.SIUI.slotCount){
-				if(gp.player.inventory.invContents[gp.ui.SIUI.selectedSlot].quantity > 0){
-					if(ItemProperties.itemPropertyMap.get(gp.player.inventory.invContents[gp.ui.SIUI.selectedSlot].itemID).placeable){
-						entityImage = EntityImage.entityImages.get(gp.player.inventory.invContents[gp.ui.SIUI.selectedSlot].itemID);
+			}else if(gp.ui.SIUI.inv.selectedSlot != gp.ui.SIUI.inv.slotCount){
+				if(gp.player.inventory.invContents[gp.ui.SIUI.inv.selectedSlot].quantity > 0){
+					if(ItemProperties.itemPropertyMap.get(gp.player.inventory.invContents[gp.ui.SIUI.inv.selectedSlot].itemID).placeable){
+						entityImage = EntityImage.entityImages.get(gp.player.inventory.invContents[gp.ui.SIUI.inv.selectedSlot].itemID);
 						int screenX = (gp.mouseH.mouseTileX * GamePanel.tileSize) + (gp.mouseH.mouseCol * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldX + gp.player.screenX;
 						int screenY = (gp.mouseH.mouseTileY * GamePanel.tileSize) + (gp.mouseH.mouseRow * Chunk.chunkSize * GamePanel.tileSize) - gp.player.worldY + gp.player.screenY;
 

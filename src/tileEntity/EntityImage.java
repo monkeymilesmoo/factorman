@@ -151,7 +151,7 @@ public class EntityImage {
 			
 			
 			//LEAVE SHADOW BLANK IF IT IS INCLUDED IN IMAGE ALREADY
-			entityImages.put("assembling-machine-1", new EntityImage("assembling-machine-1", "assembling-machine-1-shadow", 32, 1, 15, -15, 3, 3, 12, 18));
+			entityImages.put("assembling-machine-1", new EntityImage("assembling-machine-1", "assembling-machine-1-shadow", 32, 1, 0, -15, 3, 3, 12, 18));
 			entityImages.put("steel-chest", new EntityImage("steel-chest", "steel-chest-shadow", 1, 1, 50, 0, 1, 1, 0, 10));
 			entityImages.put("stone-furnace", new EntityImage("stone-furnace", "", 1, 1, 30, 0, 2, 3, 0, 0));
 			entityImages.put("iron-ore", new EntityImage("iron-ore", "", 8, 8, 0, 0, 1, 1, 0, 0));

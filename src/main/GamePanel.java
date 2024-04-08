@@ -158,18 +158,33 @@ public class GamePanel extends JPanel implements Runnable{
 
 				if (keyH.Epressed){
 					keyH.Epressed = false;
-					ui.SIUI.visible = !ui.SIUI.visible;
+					if(ui.openVisibility == false){
+						ui.openUI = "playerInv";
+						ui.SIUI.resizeWindow();
+					}
+					ui.openVisibility = !ui.openVisibility;
+					
+				}
+
+				if (keyH.Rpressed){
+					keyH.Rpressed = false;
+					if(ui.openVisibility == false){
+						ui.openUI = "buildingUI";
+						ui.BUI.resizeWindow();
+					}
+					ui.openVisibility = !ui.openVisibility;
+					
 				}
 
 				//TODO This should probably go somewhere else eventually
 				if(mouseH.notOverGUI){
 					if(mouseH.leftMouseClicked){
-						if(ui.SIUI.selectedSlot != ui.SIUI.slotCount){
-							if(player.inventory.invContents[ui.SIUI.selectedSlot] != null){
-								if(ItemProperties.itemPropertyMap.get(player.inventory.invContents[ui.SIUI.selectedSlot].itemID).placeable){
-									chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, EntityImage.entityImages.get(player.inventory.invContents[ui.SIUI.selectedSlot].itemID).tileWidth , EntityImage.entityImages.get(player.inventory.invContents[ui.SIUI.selectedSlot].itemID).tileHeight, player.inventory.invContents[ui.SIUI.selectedSlot].itemID, this);
+						if(ui.SIUI.inv.selectedSlot != ui.SIUI.inv.slotCount){
+							if(player.inventory.invContents[ui.SIUI.inv.selectedSlot] != null){
+								if(ItemProperties.itemPropertyMap.get(player.inventory.invContents[ui.SIUI.inv.selectedSlot].itemID).placeable){
+									chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, EntityImage.entityImages.get(player.inventory.invContents[ui.SIUI.inv.selectedSlot].itemID).tileWidth , EntityImage.entityImages.get(player.inventory.invContents[ui.SIUI.inv.selectedSlot].itemID).tileHeight, player.inventory.invContents[ui.SIUI.inv.selectedSlot].itemID, this);
 									if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
-										player.inventory.removeItemFromInventory(new Item(player.inventory.invContents[ui.SIUI.selectedSlot].itemID, 1));
+										player.inventory.removeItemFromInventory(new Item(player.inventory.invContents[ui.SIUI.inv.selectedSlot].itemID, 1));
 										Chunk.onTextCooldown = true;
 										// mouseH.leftMouseClicked = false;
 									}
@@ -179,7 +194,7 @@ public class GamePanel extends JPanel implements Runnable{
 							if(player.hotbar[ui.hotbar.selectedSlot] != null){
 								if(ItemProperties.itemPropertyMap.get(player.hotbar[ui.hotbar.selectedSlot].itemID).placeable){
 									if(player.hotbar[ui.hotbar.selectedSlot].quantity > 0){
-										chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, EntityImage.entityImages.get(player.inventory.invContents[ui.SIUI.selectedSlot].itemID).tileWidth, EntityImage.entityImages.get(player.inventory.invContents[ui.SIUI.selectedSlot].itemID).tileHeight, player.hotbar[ui.hotbar.selectedSlot].itemID, this);
+										chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].setTileEntity(mouseH.mouseTileX, mouseH.mouseTileY, EntityImage.entityImages.get(player.inventory.invContents[ui.SIUI.inv.selectedSlot].itemID).tileWidth, EntityImage.entityImages.get(player.inventory.invContents[ui.SIUI.inv.selectedSlot].itemID).tileHeight, player.hotbar[ui.hotbar.selectedSlot].itemID, this);
 										if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].canDo){
 											player.inventory.removeItemFromInventory(new Item(player.hotbar[ui.hotbar.selectedSlot].itemID, 1));
 											Chunk.onTextCooldown = true;
