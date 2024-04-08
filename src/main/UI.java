@@ -33,6 +33,7 @@ public class UI {
 
 	public hotbarUI hotbar = new hotbarUI();
 	public inventoryUI SIUI = new inventoryUI();
+	public buildingUI BUI = new buildingUI();
 	
 
 	public UI (GamePanel gp){
@@ -311,7 +312,9 @@ public class UI {
 
 	}
 
-
+	public class buildingUI{
+		//TODO implement
+	}
 
 
 
