@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import src.main.GamePanel;
 import src.tileEntity.Building;
 import src.tileEntity.EntityImage;
+import src.tileEntity.Ore;
 import src.tileEntity.TileEntity;
 
 public class Chunk implements Serializable{
@@ -30,6 +31,10 @@ public class Chunk implements Serializable{
 		tiles = new byte[chunkSize][chunkSize];
 		tileEntities = new TileEntity[chunkSize][chunkSize];
 		// setTileEntity(17, 18, test);
+
+
+
+		
 	}
 
 	public void setTile(int x, int y, byte tileID) {

@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import src.Chunk.Chunk;
+import src.item.ItemProperties;
 import src.tileEntity.TileEntity;
 
 
@@ -48,10 +49,13 @@ public class MouseHandler extends MouseAdapter{
 			
 		}else{
 			if(hoveringTE){
-				gp.ui.openUI = "buildingUI";
-				gp.ui.openVisibility = true;
-				gp.ui.BUI.buildingType = hovered.tileEntityID;
-				gp.ui.BUI.resizeWindow();
+				if(ItemProperties.itemPropertyMap.get(hovered.tileEntityID).placeable){ //If it cant be placed, there shouldn't be a ui.
+					//TODO Maybe change later for things like belts which dont have a ui
+					gp.ui.openUI = "buildingUI";
+					gp.ui.openVisibility = true;
+					gp.ui.BUI.buildingType = hovered.tileEntityID;
+					gp.ui.BUI.resizeWindow();
+				}
 			}
 		}
 	}

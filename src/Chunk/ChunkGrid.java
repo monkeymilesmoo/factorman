@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import src.main.GamePanel;
+import src.tileEntity.Ore;
 import src.tileEntity.TileEntity;
 
 public class ChunkGrid implements Serializable{
@@ -97,6 +98,8 @@ public class ChunkGrid implements Serializable{
 		for(int x = 0; x < gridSize; x++){
 			for (int y = 0; y < gridSize; y++){
 				chunks[x][y] = new Chunk(x, y, this);
+				
+
 			}
 		}
 	}
@@ -114,6 +117,17 @@ public class ChunkGrid implements Serializable{
 				chunks[chunkX][chunkY].setTile(x, y, (byte) 0);
 			}
 		}
+		
+		//TODO DEBUG makes ore in bottom right of chunk
+		Ore DEMOORE = new Ore(30, 30, chunkX, chunkY, 1, 1, "iron-ore");
+		getChunk(chunkX + (Math.floorDiv(30, Chunk.chunkSize)), chunkY + (Math.floorDiv(30, Chunk.chunkSize))).tileEntities[30 % Chunk.chunkSize][30 % Chunk.chunkSize] = DEMOORE;
+		chunks[chunkX][chunkY].tileEntityList.add(DEMOORE);
+
+
+
+
+		
+		//TODO DEBUG
 	}
 
 	public Chunk getChunk(int chunkX, int chunkY) {
