@@ -9,6 +9,10 @@ fix placing from hotbar
 
 Add mine bar above hotbar
 
+make inventory save
+
+make recipes save
+
 Maybe doWork() in a separate thread, but that seems weird.
 
 Add player mask for different colors

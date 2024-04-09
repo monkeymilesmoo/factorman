@@ -144,6 +144,7 @@ public class ChunkGrid implements Serializable{
 			System.out.println("Map saved successfully to: " + filename);
 			
 			objectOut.close();
+			fileOut.close();
 
 		} catch (IOException e){
 			System.err.println("Error saving chunkGrid to file: " + e.getMessage());
