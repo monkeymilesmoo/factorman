@@ -18,6 +18,8 @@ public class MouseHandler extends MouseAdapter{
 	public int mouseCol, mouseRow;
 	public int mouseTileX, mouseTileY;
 	public boolean notOverGUI;
+	TileEntity hovered;
+	public boolean hoveringTE;
 
 	BufferedImage selectionYellow;
 
@@ -44,6 +46,13 @@ public class MouseHandler extends MouseAdapter{
 		if(notOverGUI == false){
 			gp.ui.hoveredSlotCheck(mouseX, mouseY, leftMouseClicked, rightMouseClicked);
 			
+		}else{
+			if(hoveringTE){
+				gp.ui.openUI = "buildingUI";
+				gp.ui.openVisibility = true;
+				gp.ui.BUI.buildingType = hovered.tileEntityID;
+				gp.ui.BUI.resizeWindow();
+			}
 		}
 	}
 
@@ -115,9 +124,16 @@ public class MouseHandler extends MouseAdapter{
 		
 		Chunk hoveredChunk = gp.chunkGrid.getChunk(mouseCol, mouseRow);
 		if(hoveredChunk != null){
-			TileEntity hovered = hoveredChunk.getTileEntity(mouseTileX, mouseTileY);
+			hovered = hoveredChunk.getTileEntity(mouseTileX, mouseTileY);
 
-			if (hovered != null){
+			if(hovered == null){
+				hoveringTE = false;
+			}
+			else{
+				hoveringTE = true;
+			}
+
+			if (hoveringTE){
 
 				int hoveredWorldX = (hovered.chunkX * Chunk.chunkSize * GamePanel.tileSize) + (hovered.x * GamePanel.tileSize) - gp.player.worldX + gp.player.screenX;
 				int hoveredWorldY = (hovered.chunkY * Chunk.chunkSize * GamePanel.tileSize) + (hovered.y * GamePanel.tileSize) - gp.player.worldY + gp.player.screenY;

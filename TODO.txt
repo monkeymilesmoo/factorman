@@ -1,7 +1,10 @@
 TODO:
 
 
+Add crafting ui for player
+Then add for assembler recipe choosing
 
+Make crafting class or something to handle crafting in inventory
 
 Add a ui for each building type
 
@@ -15,7 +18,11 @@ make recipes save
 
 Maybe doWork() in a separate thread, but that seems weird.
 
+Bake player shadow into one image on open
+
 Add player mask for different colors
+
+fix placement ghost size to be the same as normal buildings
 
 Actual terrain generation with noise and such
 

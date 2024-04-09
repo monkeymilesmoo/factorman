@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import src.item.Item;
 import src.tileEntity.EntityImage;
+import src.tileEntity.TileEntity;
 
 public class UI {
 	
@@ -31,6 +32,7 @@ public class UI {
 	ArrayList<disappearingText> disappearingTextList = new ArrayList<disappearingText>();
 	public boolean openVisibility = false;
 	public String openUI = "";
+	public TileEntity openTE;
 
 
 	public hotbarUI hotbar = new hotbarUI();
@@ -362,7 +364,7 @@ public class UI {
 		final private int startSlotsX = 26;
 		final private int startSlotsY = 78;
 		private int topleftX, topleftY;
-		private String buildingType;
+		public String buildingType;
 
 		assemblerUI(int topleftX, int topLeftY, String buildingType){
 			this.topleftX = topleftX;
@@ -381,31 +383,38 @@ public class UI {
 			g2.fillRect(topleftX + 11 + ((width + 13) * j), topleftY + 41, width, height);
 
 
-			for(int i = 0; i < gp.player.inventory.invSize; i++){
-				g2.drawImage(behindItem[slotSelection[i]], startSlotsX + ((width + 13) * j) +topleftX + (40 * (i % 10)), topleftY + startSlotsY + (40* (i/10)), 40, 40, null);
+			// for(int i = 0; i < gp.player.inventory.invSize; i++){
+			// 	g2.drawImage(behindItem[slotSelection[i]], startSlotsX + ((width + 13) * j) +topleftX + (40 * (i % 10)), topleftY + startSlotsY + (40* (i/10)), 40, 40, null);
 
-			}
+			// }
 
 			
 			g2.setFont(titilliumBold.deriveFont(18.0F));
 			g2.setColor(Color.white);
-			UI.drawWindowTitle(topleftX+ ((width + 13) * j), topleftY, buildingType, g2);
+			UI.drawWindowTitle(topleftX+ ((width + 13) * j), topleftY, EntityImage.entityImages.get(buildingType).visibleName, g2);
 
 
-			for (int i = 0; i < gp.player.inventory.invSize; i++){
-				Item slotItem = gp.player.inventory.invContents[i]; 
-				if(slotItem == null){
-					break;
-				} 
-				if(selectedSlot == i){
-					g2.drawImage(inHandIcon, 26 + topleftX + ((width + 13) * j) + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);;
-					continue;
-				}
-				g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + ((width + 13) * j) + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
-				UI.drawNumber(31  + topleftX + ((width + 13) * j) + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, slotItem.quantity, g2);
+
+
+			UI.drawOuterEdge(26 + topleftX + ((width + 13) * j), topleftY + 78, 400, 150, g2, false);
+
+			
+
+
+			// for (int i = 0; i < gp.player.inventory.invSize; i++){
+			// 	Item slotItem = gp.player.inventory.invContents[i]; 
+			// 	if(slotItem == null){
+			// 		break;
+			// 	} 
+			// 	if(selectedSlot == i){
+			// 		g2.drawImage(inHandIcon, 26 + topleftX + ((width + 13) * j) + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);;
+			// 		continue;
+			// 	}
+			// 	g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + ((width + 13) * j) + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
+			// 	UI.drawNumber(31  + topleftX + ((width + 13) * j) + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, slotItem.quantity, g2);
 				
 
-			}
+			// }
 
 		}
 
@@ -422,12 +431,13 @@ public class UI {
 		final private int endSlotsX = 398;
 		final private int endSlotsY = 358;
 		//TODO for now, just testing with assembler
-		public String buildingType = "Assembler";
+		public String buildingType;
 
 		public inventory inv = SIUI.inv;
 		assemblerUI assUI = new assemblerUI(topleftX, topleftY, buildingType);
 
 		public void resizeWindow(){
+			assUI.buildingType = buildingType;
 			this.topleftX = gp.screenWidth/ 3 - 150;
 			this.topleftY = gp.screenHeight / 4;
 			inv.resizeWindow(topleftX, topleftY);
@@ -435,6 +445,7 @@ public class UI {
 		} 
 
 		public void draw(){
+
 
 
 			UI.drawOuterEdge(topleftX, topleftY, largerWidth, largerHeight, g2, true);
@@ -689,7 +700,6 @@ public class UI {
 				} 
 				
 				if(selectedSlot == i){
-					System.out.println(selectedSlot);
 					g2.drawImage(inHandIcon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);;
 					continue;
 				}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import src.main.GamePanel;
 import src.tileEntity.Building;
+import src.tileEntity.EntityImage;
 import src.tileEntity.TileEntity;
 
 public class Chunk implements Serializable{
@@ -90,7 +91,7 @@ public class Chunk implements Serializable{
 		}
 		else{
 			if(!onTextCooldown){
-				gp.ui.addNewDisspearingText((thisChunkX * Chunk.chunkSize * GamePanel.tileSize) + (x * GamePanel.tileSize), (thisChunkY * Chunk.chunkSize * GamePanel.tileSize) + (y * GamePanel.tileSize), "Can't place that there");
+				gp.ui.addNewDisspearingText((thisChunkX * Chunk.chunkSize * GamePanel.tileSize) + (x * GamePanel.tileSize), (thisChunkY * Chunk.chunkSize * GamePanel.tileSize) + (y * GamePanel.tileSize), "Can't place " + EntityImage.entityImages.get(tileEntityID).visibleName +  " there");
 				onTextCooldown = true;
 			}
 		}

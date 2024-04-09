@@ -31,7 +31,7 @@ public class Ore extends TileEntity{
 			remainingOre -= 1;
 			miningDurability = 25;
 			player.inventory.addItemToInventory(new Item(this.tileEntityID, 1));
-			player.gp.ui.addNewDisspearingText((x * GamePanel.tileSize) + (chunkX * Chunk.chunkSize * GamePanel.tileSize), (y * GamePanel.tileSize) + (chunkY * Chunk.chunkSize * GamePanel.tileSize), "+1 " + tileEntityID.replace("-", " "));
+			player.gp.ui.addNewDisspearingText((x * GamePanel.tileSize) + (chunkX * Chunk.chunkSize * GamePanel.tileSize), (y * GamePanel.tileSize) + (chunkY * Chunk.chunkSize * GamePanel.tileSize), "+1 " + EntityImage.entityImages.get(tileEntityID).visibleName);
 		}
 		if (remainingOre <= 0){
 			chunkGrid.chunks[chunkX][chunkY].removeTileEntity(x, y, chunkX, chunkY, tileWidth, tileHeight, this);

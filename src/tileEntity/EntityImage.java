@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import src.item.ItemProperties;
+import src.main.CodeUtilities;
 
 
 public class EntityImage {
@@ -17,6 +18,7 @@ public class EntityImage {
 	public int shiftX, shiftY;
 	private int frameWidth, frameHeight;
 	public int shadowOffsetRight, shadowOffsetDown;
+	public String visibleName;
 
 
 	public transient static HashMap<String, EntityImage> entityImages = new HashMap<String, EntityImage>();
@@ -34,6 +36,8 @@ public class EntityImage {
 			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + fileName + ".png")));
 			shadowImage = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + shadowFileName + ".png")));
 
+			visibleName = fileName.replace("-", " ");
+			visibleName = CodeUtilities.CapitalizeFirstLetters(visibleName);
 			
 
 			icon = ImageIO.read(getClass().getResourceAsStream(("/res/icons/" + fileName + ".png")));

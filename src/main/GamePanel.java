@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 
-	boolean loading = true;
+	boolean loading = false;
 
 
 
@@ -166,15 +166,6 @@ public class GamePanel extends JPanel implements Runnable{
 					
 				}
 
-				if (keyH.Rpressed){
-					keyH.Rpressed = false;
-					if(ui.openVisibility == false){
-						ui.openUI = "buildingUI";
-						ui.BUI.resizeWindow();
-					}
-					ui.openVisibility = !ui.openVisibility;
-					
-				}
 
 				//TODO This should probably go somewhere else eventually
 				if(mouseH.notOverGUI){
@@ -210,19 +201,7 @@ public class GamePanel extends JPanel implements Runnable{
 						if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY) != null){
 							chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).beingMined(chunkGrid, player);
 							player.mining = true;
-							if(mouseH.mouseX > player.screenX){
-								if(mouseH.mouseY > player.screenY){
-									player.direction = 3;
-								}else{
-									player.direction = 1;
-								}
-							}else{
-								if(mouseH.mouseY > player.screenY){
-									player.direction = 5;
-								}else{
-									player.direction = 7;
-								}
-							}
+							player.turnToMining(mouseH);
 
 
 

@@ -13,6 +13,7 @@ import src.Chunk.ChunkGrid;
 import src.item.Item;
 import src.item.storageInventory;
 import src.main.GamePanel;
+import src.main.MouseHandler;
 
 public class Player extends entity{
 
@@ -140,7 +141,21 @@ public class Player extends entity{
 
 
 
-
+	public void turnToMining(MouseHandler mouseH){
+		if(mouseH.mouseX > screenX){
+			if(mouseH.mouseY > screenY){
+				direction = 3;
+			}else{
+				direction = 1;
+			}
+		}else{
+			if(mouseH.mouseY > screenY){
+				direction = 5;
+			}else{
+				direction = 7;
+			}
+		}
+	}
 
 
 
