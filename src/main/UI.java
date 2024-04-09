@@ -401,8 +401,8 @@ public class UI {
 					g2.drawImage(inHandIcon, 26 + topleftX + ((width + 13) * j) + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);;
 					continue;
 				}
-				g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
-				UI.drawNumber(31  + topleftX + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, slotItem.quantity, g2);
+				g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + ((width + 13) * j) + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
+				UI.drawNumber(31  + topleftX + ((width + 13) * j) + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, slotItem.quantity, g2);
 				
 
 			}
