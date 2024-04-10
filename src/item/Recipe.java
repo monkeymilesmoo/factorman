@@ -2,7 +2,7 @@ package src.item;
 
 import java.util.ArrayList;
 
-public abstract class Recipes {
+public abstract class Recipe {
 
 	public static class Ingredient{
 
@@ -38,7 +38,7 @@ public abstract class Recipes {
 
 
 
-	public static class ironPlate extends Recipes{
+	public static class ironPlate extends Recipe{
 		static{
 			enabled = true;
 			ingredients.add(new Ingredient("iron-ore", 1));
@@ -48,7 +48,7 @@ public abstract class Recipes {
 		}
 	}
 
-	public static class ironGear extends Recipes{
+	public static class ironGear extends Recipe{
 		static{
 			enabled = true;
 			ingredients.add(new Ingredient("iron-plate", 2));

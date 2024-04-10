@@ -12,6 +12,7 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 
 import src.item.Item;
+import src.item.Recipe;
 import src.tileEntity.EntityImage;
 import src.tileEntity.TileEntity;
 
@@ -362,16 +363,29 @@ public class UI {
 		public int y;
 		public int width;
 		public int height;
+		public Color color;
 
-		public progressBar(){
+		public progressBar(int x, int y, int width, int height, Color color){
 			this.x = x;
 			this.y = y;
 			this.width = width;
 			this.height = height;
+			this.color = color;
 		}
 		
-		public void draw(){
+		public void resizeWindow(int x, int y){
+			this.x = x;
+			this.y = y;
+		}
+		
+		public void draw(int progress){
 
+
+			drawOuterEdge(x, y, width, height, g2, false);
+
+
+			g2.setColor(color);
+			g2.fillRect(x, y, (progress * width)/100, height);
 		}
 	}
 
@@ -387,20 +401,30 @@ public class UI {
 		final private int startSlotsY = 78;
 		private int topleftX, topleftY;
 		public String buildingType;
+		public progressBar pBar;
+		private int windowNum;
+		private int inputSlotCount;
+		private Recipe recipe;
+		//TODO IMPLEMENT RECIPE PICKER
 
 		assemblerUI(int topleftX, int topLeftY, String buildingType){
 			this.topleftX = topleftX;
 			this.topleftY = topLeftY;
 			this.buildingType = buildingType;
+			pBar = new progressBar(76 + topleftX + windowNum, topleftY + 258, 260, 25, Color.green);
+			// (26 + topleftX + windowNum + 50, 170 + topleftY + 78, 400, 150, g2, false);
 		}
 		
-		public void resizeWindow(int topleftX, int topLeftY){
+		public void resizeWindow(int topleftX, int topLeftY, int winNum){
 			this.topleftX = topleftX;
 			this.topleftY = topLeftY;
+			windowNum = ((width + 13) * winNum);
+			pBar.resizeWindow(76 + topleftX + windowNum, topleftY + 258);
 		}
 
-		public void draw(Graphics2D g2, int j){
-			int windowNum = ((width + 13) * j);
+		//163 + topleft of window is first input slot
+
+		public void draw(Graphics2D g2){
 
 			g2.setColor(middleLayerBody);
 			g2.fillRect(topleftX + 11 + windowNum, topleftY + 41, width, height);
@@ -430,7 +454,8 @@ public class UI {
 			// g2.drawImage(EntityImage.entityImages.get(buildingType), 26 + topleftX + windowNum, topleftY + 78, );
 
 
-
+			//Progress bar
+			pBar.draw(5);
 
 		}
 
@@ -460,8 +485,8 @@ public class UI {
 		public void resizeWindow(){
 			this.topleftX = gp.screenWidth/ 3 - 150;
 			this.topleftY = gp.screenHeight / 4;
-			inv.resizeWindow(topleftX, topleftY);
-			assUI.resizeWindow(topleftX, topleftY);
+			inv.resizeWindow(topleftX, topleftY, 0);
+			assUI.resizeWindow(topleftX, topleftY, 1);
 		} 
 
 		public void draw(){
@@ -470,8 +495,8 @@ public class UI {
 
 			UI.drawOuterEdge(topleftX, topleftY, largerWidth, largerHeight, g2, true);
 
-			inv.draw(g2, 0);
-			assUI.draw(g2, 1);
+			inv.draw(g2);
+			assUI.draw(g2);
 		}
 
 		public void hoveredSlotCheck(int mouseX, int mouseY, boolean leftClicking, boolean rightClicking){
@@ -491,8 +516,8 @@ public class UI {
 				topleftY += gp.mouseH.mouseY - originalMouseY;
 				originalMouseX = gp.mouseH.mouseX;
 				originalMouseY = gp.mouseH.mouseY;
-				inv.resizeWindow(topleftX, topleftY);
-				assUI.resizeWindow(topleftX, topleftY);
+				inv.resizeWindow(topleftX, topleftY, 0);
+				assUI.resizeWindow(topleftX, topleftY, 1);
 			}else{
 				originalMouseX = gp.mouseH.mouseX;
 				originalMouseY = gp.mouseH.mouseY;
@@ -640,15 +665,17 @@ public class UI {
 		final private int startSlotsX = 26;
 		final private int startSlotsY = 78;
 		private int topleftX, topleftY;
+		private int windowNum;
 
 		inventory(int topleftX, int topLeftY){
 			this.topleftX = topleftX;
 			this.topleftY = topLeftY;
 		}
 		
-		public void resizeWindow(int topleftX, int topLeftY){
+		public void resizeWindow(int topleftX, int topLeftY, int winNum){
 			this.topleftX = topleftX;
 			this.topleftY = topLeftY;
+			windowNum = ((width + 13) * winNum);
 		}
 		
 
@@ -696,8 +723,7 @@ public class UI {
 
 		}
 		
-		public void draw(Graphics2D g2, int j){
-			int windowNum = ((width + 13) * j);
+		public void draw(Graphics2D g2){
 
 			g2.setColor(middleLayerBody);
 			g2.fillRect(topleftX + 11 + windowNum, topleftY + 41, width, height);
@@ -756,7 +782,7 @@ public class UI {
 		public void resizeWindow(){
 			this.topleftX = gp.screenWidth/ 5 - 150;
 			this.topleftY = gp.screenHeight / 4;
-			inv.resizeWindow(topleftX, topleftY);
+			inv.resizeWindow(topleftX, topleftY, 0);
 		} 
 
 		public boolean checkMouseWindow(int mouseX, int mouseY){
@@ -776,7 +802,7 @@ public class UI {
 				topleftY += gp.mouseH.mouseY - originalMouseY;
 				originalMouseX = gp.mouseH.mouseX;
 				originalMouseY = gp.mouseH.mouseY;
-				inv.resizeWindow(topleftX, topleftY);
+				inv.resizeWindow(topleftX, topleftY, 0);
 			}else{
 				originalMouseX = gp.mouseH.mouseX;
 				originalMouseY = gp.mouseH.mouseY;
@@ -793,7 +819,7 @@ public class UI {
 
 
 
-			inv.draw(g2, 0);
+			inv.draw(g2);
 
 			//need to draw logistics stuff and crafting stuff
 			//make in their own classes

@@ -127,7 +127,6 @@ public class ChunkGrid implements Serializable{
 
 
 		
-		//TODO DEBUG
 	}
 
 	public Chunk getChunk(int chunkX, int chunkY) {
