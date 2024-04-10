@@ -360,12 +360,14 @@ public class UI {
 	public class progressBar{
 		public int x;
 		public int y;
-		public int 
+		public int width;
+		public int height;
 
 		public progressBar(){
 			this.x = x;
 			this.y = y;
-			this.
+			this.width = width;
+			this.height = height;
 		}
 		
 		public void draw(){
@@ -448,10 +450,14 @@ public class UI {
 		public String buildingType;
 
 		public inventory inv = SIUI.inv;
-		assemblerUI assUI = new assemblerUI(topleftX, topleftY, buildingType);
+		public assemblerUI assUI;
+
+		public void newWindow(){
+			assUI = new assemblerUI(topleftX, topleftY, buildingType);
+			resizeWindow();
+		}
 
 		public void resizeWindow(){
-			assUI.buildingType = buildingType;
 			this.topleftX = gp.screenWidth/ 3 - 150;
 			this.topleftY = gp.screenHeight / 4;
 			inv.resizeWindow(topleftX, topleftY);

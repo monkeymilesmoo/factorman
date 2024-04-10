@@ -54,7 +54,7 @@ public class MouseHandler extends MouseAdapter{
 					gp.ui.openUI = "buildingUI";
 					gp.ui.openVisibility = true;
 					gp.ui.BUI.buildingType = hovered.tileEntityID;
-					gp.ui.BUI.resizeWindow();
+					gp.ui.BUI.newWindow();
 				}
 			}
 		}
