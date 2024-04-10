@@ -13,6 +13,8 @@ Add a ui for each building type
 
 fix placing from hotbar
 
+somehow make little bit on end of belt
+
 Add mine bar above hotbar
 
 make inventory save

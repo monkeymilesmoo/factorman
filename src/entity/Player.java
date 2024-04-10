@@ -2,6 +2,7 @@ package src.entity;
 
 import src.main.KeyHandler;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import src.item.Item;
 import src.item.storageInventory;
 import src.main.GamePanel;
 import src.main.MouseHandler;
+import src.main.UI.progressBar;
 
 public class Player extends entity{
 
@@ -33,6 +35,8 @@ public class Player extends entity{
 
 	public storageInventory inventory;
 	public Item[] hotbar;
+
+	public progressBar pBar;
 
 	public Player(GamePanel gp, KeyHandler keyH){
 		
@@ -64,6 +68,8 @@ public class Player extends entity{
 		
 	}
 
+	
+
 
 	public void setDefaultValues() {
 
@@ -82,6 +88,8 @@ public class Player extends entity{
 		selectedShadowImage = idleShadowImage;
 		moving = false;
 		totalFramesInAnimation = 22;
+		
+		pBar = gp.ui.new progressBar(screenX - 300, gp.screenHeight - 100, 732, 25, Color.yellow);
 
 	}
 

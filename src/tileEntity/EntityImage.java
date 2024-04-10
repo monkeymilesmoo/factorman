@@ -19,22 +19,25 @@ public class EntityImage {
 	private int frameWidth, frameHeight;
 	public int shadowOffsetRight, shadowOffsetDown;
 	public String visibleName;
+	public String shadowFileName;
 
 
 	public transient static HashMap<String, EntityImage> entityImages = new HashMap<String, EntityImage>();
 
-	public EntityImage(String fileName, String shadowFileName, int frameWidth, int frameHeight, int shadowOffsetRight, int shadowOffsetDown, int tileWidth, int tileHeight, int shiftX, int shiftY){
+	public EntityImage(String fileName, boolean includesDashShadow, int frameWidth, int frameHeight, int shadowOffsetRight, int shadowOffsetDown, int tileWidth, int tileHeight, int shiftX, int shiftY){
 		
 		try {
-			
 			String itemType = ItemProperties.itemPropertyMap.get(fileName).itemType; 
 
-			if(shadowFileName == ""){
-				shadowFileName = fileName;
+			if(includesDashShadow){
+				shadowFileName = fileName + "-shadow";
+				shadowImage = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + shadowFileName + ".png")));
+
+			}else{
+				shadowImage = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + fileName + ".png")));
 			}
 
 			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + fileName + ".png")));
-			shadowImage = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + shadowFileName + ".png")));
 
 			visibleName = fileName.replace("-", " ");
 			visibleName = CodeUtilities.CapitalizeFirstLetters(visibleName);
@@ -62,7 +65,7 @@ public class EntityImage {
 		this.shadowOffsetRight = shadowOffsetRight;
 		this.shadowOffsetDown =shadowOffsetDown;
 
-		if(fileName == shadowFileName){
+		if(!includesDashShadow){
 			shiftX += shadowOffsetRight;
 			shiftY += shadowOffsetDown;
 			shadowArr = imageArr;
@@ -154,20 +157,60 @@ public class EntityImage {
 		try{
 			
 			
-			//LEAVE SHADOW BLANK IF IT IS INCLUDED IN IMAGE ALREADY
-			entityImages.put("assembling-machine-1", new EntityImage("assembling-machine-1", "assembling-machine-1-shadow", 32, 1, 0, 0, 3, 3, 12, 18));
-			entityImages.put("steel-chest", new EntityImage("steel-chest", "steel-chest-shadow", 1, 1, 50, 0, 1, 1, 0, 10));
-			entityImages.put("stone-furnace", new EntityImage("stone-furnace", "", 1, 1, 45, 0, 2, 3, 0, 0));
-			entityImages.put("iron-ore", new EntityImage("iron-ore", "", 8, 8, 0, 0, 1, 1, 0, 0));
-			
-			
-			// entityImages.put("assembling-machine-1", new EntityImage("building/assembling-machine-1/assembling-machine-1", 32, 1, 3, 3, 12, 18, 0, 0, "assembling-machine-1"));
-			// entityImages.put("assembling-machine-1-shadow", new EntityImage("building/assembling-machine-1/assembling-machine-1-shadow", 32, 1, 3, 3, 4, 13, 0, 0, null));
-			// entityImages.put("steel-chest", new EntityImage("building/steel-chest/steel-chest", 1, 1, 1, 1, 0, 10, 0, 0, "steel-chest"));
-			// entityImages.put("steel-chest-shadow", new EntityImage("building/steel-chest/steel-chest-shadow", 1, 1, 1, 1, 0, 10, 0, 0, null));
-			// entityImages.put("iron-ore", new EntityImage("Ore/iron-ore", 8, 8, 1, 1, 0, 0, 0, 0, "iron-ore"));
-			// entityImages.put("stone-furnace", new EntityImage("building/stone-furnace/stone-furnace", 1, 1, 2, 3, -10, -30, 55, 20, "stone-furnace"));
+			putImage("assembling-machine-1", true, 32, 1, 0, 0, 3, 3, 12, 18);
+			putImage("steel-chest", true, 1, 1, 50, 0, 1, 1, 0, 10);
+			putImage("stone-furnace", false, 1, 1, 45, 0, 2, 3, 0, 0);
+			putImage("iron-ore", false, 8, 8, 0, 0, 1, 1, 0, 0);
 
+			
+
+
+
+			//TODO for now, just the icons are being used, but eventually fill these out for each building
+			putImage("wooden-chest", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
+			putImage("", true, 0, 0, 0, 0, 0, 0, 0, 0);
 			
 
 
@@ -182,4 +225,9 @@ public class EntityImage {
 		}
 
 	}
+
+	public static void putImage(String fileName, boolean includesDashShadow, int frameWidth, int frameHeight, int shadowOffsetRight, int shadowOffsetDown, int tileWidth, int tileHeight, int shiftX, int shiftY){
+		entityImages.put(fileName, new EntityImage(fileName, includesDashShadow, frameWidth, frameHeight, shadowOffsetRight, shadowOffsetDown, tileWidth, tileHeight, shiftX, shiftY));
+	}
+
 }

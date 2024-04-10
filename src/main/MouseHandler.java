@@ -48,7 +48,7 @@ public class MouseHandler extends MouseAdapter{
 			gp.ui.hoveredSlotCheck(mouseX, mouseY, leftMouseClicked, rightMouseClicked);
 			
 		}else{
-			if(hoveringTE){
+			if(hoveringTE && leftMouseClicked){
 				if(ItemProperties.itemPropertyMap.get(hovered.tileEntityID).placeable){ //If it cant be placed, there shouldn't be a ui.
 					//TODO Maybe change later for things like belts which dont have a ui
 					gp.ui.openUI = "buildingUI";

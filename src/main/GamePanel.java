@@ -55,13 +55,13 @@ public class GamePanel extends JPanel implements Runnable{
 	public MouseHandler mouseH = new MouseHandler(this);
 	ResizeListener resizeL = new ResizeListener();
 	Thread gameThread;
+	public UI ui = new UI(this); 
 	public Player player = new Player(this, keyH);
 
 	public ChunkGrid chunkGrid;
 
 	public BackgroundManager backgroundM = new BackgroundManager(this);
 
-	public UI ui = new UI(this); 
 
 
 	public GamePanel() {

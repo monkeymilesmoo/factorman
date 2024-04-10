@@ -370,7 +370,7 @@ public class UI {
 			this.y = y;
 			this.width = width;
 			this.height = height;
-			this.color = color;
+			this.color = color; //red for fuel, green for production
 		}
 		
 		public void resizeWindow(int x, int y){
@@ -378,7 +378,7 @@ public class UI {
 			this.y = y;
 		}
 		
-		public void draw(int progress){
+		public void draw(Graphics2D g2, int progress){
 
 
 			drawOuterEdge(x, y, width, height, g2, false);
@@ -455,7 +455,7 @@ public class UI {
 
 
 			//Progress bar
-			pBar.draw(5);
+			pBar.draw(g2, 5);
 
 		}
 
@@ -475,7 +475,7 @@ public class UI {
 		public String buildingType;
 
 		public inventory inv = SIUI.inv;
-		public assemblerUI assUI;
+		public assemblerUI assUI = new assemblerUI(topleftX, topleftY, buildingType);
 
 		public void newWindow(){
 			assUI = new assemblerUI(topleftX, topleftY, buildingType);
@@ -548,6 +548,7 @@ public class UI {
 		public void resizeWindow(){
 			this.topleftY = gp.screenHeight - 100;
 			this.topleftX = gp.player.screenX - 300;
+			gp.player.pBar.resizeWindow(topleftX, topleftY - 30);
 		} 
 
 		public void setSlot(int slot, String itemID){
