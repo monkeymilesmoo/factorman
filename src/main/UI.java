@@ -353,6 +353,26 @@ public class UI {
 
 	}
 
+	public class recipeMenu{
+		//TODO IMPLEMENT
+	}
+
+	public class progressBar{
+		public int x;
+		public int y;
+		public int 
+
+		public progressBar(){
+			this.x = x;
+			this.y = y;
+			this.
+		}
+		
+		public void draw(){
+
+		}
+	}
+
 	public class assemblerUI{
 		final private int width = 424;
 		final private int height = 448;
@@ -378,9 +398,10 @@ public class UI {
 		}
 
 		public void draw(Graphics2D g2, int j){
+			int windowNum = ((width + 13) * j);
 
 			g2.setColor(middleLayerBody);
-			g2.fillRect(topleftX + 11 + ((width + 13) * j), topleftY + 41, width, height);
+			g2.fillRect(topleftX + 11 + windowNum, topleftY + 41, width, height);
 
 
 			// for(int i = 0; i < gp.player.inventory.invSize; i++){
@@ -391,30 +412,23 @@ public class UI {
 			
 			g2.setFont(titilliumBold.deriveFont(18.0F));
 			g2.setColor(Color.white);
-			UI.drawWindowTitle(topleftX+ ((width + 13) * j), topleftY, EntityImage.entityImages.get(buildingType).visibleName, g2);
+			UI.drawWindowTitle(topleftX + windowNum, topleftY, EntityImage.entityImages.get(buildingType).visibleName, g2);
 
 
 
 
-			UI.drawOuterEdge(26 + topleftX + ((width + 13) * j), topleftY + 78, 400, 150, g2, false);
+			//inner image of building
+			UI.drawOuterEdge(26 + topleftX + windowNum, topleftY + 78, 400, 150, g2, false);
+			EntityImage entityImage = EntityImage.entityImages.get(buildingType);
+			int width = 32 * entityImage.tileWidth + (2 * entityImage.shiftX) + entityImage.shadowOffsetRight;
+			int height = 32 * entityImage.tileHeight + (2 * entityImage.shiftY) + entityImage.shadowOffsetDown;
+			//TODO make it animate this:
+			g2.drawImage(entityImage.shadowArr[0][0], 236 + topleftX + windowNum - entityImage.shiftX - width/2, topleftY + 173 - entityImage.shiftY - height/2, width, height, null);
+							
+			// g2.drawImage(EntityImage.entityImages.get(buildingType), 26 + topleftX + windowNum, topleftY + 78, );
 
-			
 
 
-			// for (int i = 0; i < gp.player.inventory.invSize; i++){
-			// 	Item slotItem = gp.player.inventory.invContents[i]; 
-			// 	if(slotItem == null){
-			// 		break;
-			// 	} 
-			// 	if(selectedSlot == i){
-			// 		g2.drawImage(inHandIcon, 26 + topleftX + ((width + 13) * j) + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);;
-			// 		continue;
-			// 	}
-			// 	g2.drawImage(EntityImage.entityImages.get(slotItem.itemID).icon, 26 + topleftX + ((width + 13) * j) + (40 * (i % 10)) + 5, topleftY + 78 + (40 * (i / 10)) + 5, 30, 30, null);
-			// 	UI.drawNumber(31  + topleftX + ((width + 13) * j) + (40 * (i % 10)), topleftY + 78 + 30 + (40 * (i / 10)) + 5, slotItem.quantity, g2);
-				
-
-			// }
 
 		}
 
@@ -677,9 +691,10 @@ public class UI {
 		}
 		
 		public void draw(Graphics2D g2, int j){
+			int windowNum = ((width + 13) * j);
 
 			g2.setColor(middleLayerBody);
-			g2.fillRect(topleftX + 11 + ((width + 13) * j), topleftY + 41, width, height);
+			g2.fillRect(topleftX + 11 + windowNum, topleftY + 41, width, height);
 
 
 			for(int i = 0; i < gp.player.inventory.invSize; i++){
