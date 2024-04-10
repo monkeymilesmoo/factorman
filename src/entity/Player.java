@@ -37,6 +37,7 @@ public class Player extends entity{
 	public Item[] hotbar;
 
 	public progressBar pBar;
+	public int pBarProgress;
 
 	public Player(GamePanel gp, KeyHandler keyH){
 		
@@ -285,7 +286,9 @@ public class Player extends entity{
 	public void draw(Graphics2D g2) {
 
 
-
+		if(mining){
+			pBar.draw(g2, pBarProgress);
+		}
 
 		// BufferedImage playerImage = selectedEntityImage.getSubimage((animationFrame * entityTextureWidth), (direction * entityTextureHeight), entityTextureWidth, entityTextureHeight);
 		BufferedImage shadowImage = selectedShadowImage.getSubimage((animationFrame * shadowTextureWidth), (direction * shadowTextureHeight), shadowTextureWidth, shadowTextureHeight);

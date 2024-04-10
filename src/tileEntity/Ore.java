@@ -15,8 +15,8 @@ public class Ore extends TileEntity{
 	// public byte miningDurability = 25;
 	public int remainingOre = 1000;
 	
-	public Ore(int x, int y, int chunkX, int chunkY, int tileWidth, int tileHeight, String tileEntityID){
-		super(x, y, chunkX, chunkY, tileWidth, tileHeight, tileEntityID);
+	public Ore(int x, int y, int chunkX, int chunkY, int tileWidth, int tileHeight, String tileEntityID, byte maxMiningDurability){
+		super(x, y, chunkX, chunkY, tileWidth, tileHeight, tileEntityID, maxMiningDurability);
 
 		
 	}
@@ -24,12 +24,12 @@ public class Ore extends TileEntity{
 	
 	@Override public void beingMined(ChunkGrid chunkGrid, Player player){
 
-		miningDurability -= 1;
+		miningDurability += 1;
 
 
-		if (miningDurability <= 0){
+		if (miningDurability >= maxMiningDurability){
 			remainingOre -= 1;
-			miningDurability = 25;
+			miningDurability = 0;
 			player.inventory.addItemToInventory(new Item(this.tileEntityID, 1));
 			player.gp.ui.addNewDisspearingText((x * GamePanel.tileSize) + (chunkX * Chunk.chunkSize * GamePanel.tileSize), (y * GamePanel.tileSize) + (chunkY * Chunk.chunkSize * GamePanel.tileSize), "+1 " + EntityImage.entityImages.get(tileEntityID).visibleName);
 		}

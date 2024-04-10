@@ -381,6 +381,9 @@ public class UI {
 		public void draw(Graphics2D g2, int progress){
 
 
+			if(progress > 100){
+				progress = 100;
+			}
 			drawOuterEdge(x, y, width, height, g2, false);
 
 
@@ -455,7 +458,7 @@ public class UI {
 
 
 			//Progress bar
-			pBar.draw(g2, 5);
+			pBar.draw(g2, 50);
 
 		}
 

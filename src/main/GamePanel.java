@@ -7,6 +7,7 @@ import src.entity.Player;
 import src.item.Item;
 import src.item.ItemProperties;
 import src.tileEntity.EntityImage;
+import src.tileEntity.TileEntity;
 import src.Chunk.Chunk;
 import src.Chunk.ChunkGrid;
 
@@ -201,9 +202,12 @@ public class GamePanel extends JPanel implements Runnable{
 						}
 					}
 					if(mouseH.rightMouseClicked){
-						if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY) != null){
-							chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY).beingMined(chunkGrid, player);
+						TileEntity minedTE = chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY);
+						if(minedTE != null){
+							minedTE.beingMined(chunkGrid, player);
 							player.mining = true;
+							System.out.println(minedTE.miningDurability);
+							player.pBarProgress = (((int) minedTE.miningDurability) * 100) / ((int) minedTE.maxMiningDurability);
 							player.turnToMining(mouseH);
 
 
@@ -297,13 +301,6 @@ public class GamePanel extends JPanel implements Runnable{
 
 		g2.setColor(Color.white);
 		g2.drawString("draw time: " + timePassed/1000000, 10, screenHeight - 30);
-		if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow] != null){
-			if(chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY) != null){
-				g2.drawString("" + (chunkGrid.chunks[mouseH.mouseCol][mouseH.mouseRow].getTileEntity(mouseH.mouseTileX, mouseH.mouseTileY)).miningDurability, 100, 100);
-				
-				
-			}
-		}
 
 		//DEBUG
 		long drawEnd = 0;

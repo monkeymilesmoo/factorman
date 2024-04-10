@@ -119,7 +119,7 @@ public class ChunkGrid implements Serializable{
 		}
 		
 		//TODO DEBUG makes ore in bottom right of chunk
-		Ore DEMOORE = new Ore(30, 30, chunkX, chunkY, 1, 1, "iron-ore");
+		Ore DEMOORE = new Ore(30, 30, chunkX, chunkY, 1, 1, "iron-ore", (byte) 25);
 		getChunk(chunkX + (Math.floorDiv(30, Chunk.chunkSize)), chunkY + (Math.floorDiv(30, Chunk.chunkSize))).tileEntities[30 % Chunk.chunkSize][30 % Chunk.chunkSize] = DEMOORE;
 		chunks[chunkX][chunkY].tileEntityList.add(DEMOORE);
 

@@ -13,9 +13,9 @@ public class Building extends TileEntity{
 	boolean ableToWork = false;
 
 
-	public Building(int x, int y, int chunkX, int chunkY, int tileWidth, int tileHeight, String tileEntityID){
+	public Building(int x, int y, int chunkX, int chunkY, int tileWidth, int tileHeight, String tileEntityID, byte maxMiningDurability){
 
-		super(x, y, chunkX, chunkY, tileWidth, tileHeight, tileEntityID);
+		super(x, y, chunkX, chunkY, tileWidth, tileHeight, tileEntityID, maxMiningDurability);
 
 	}
 

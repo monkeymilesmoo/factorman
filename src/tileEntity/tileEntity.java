@@ -12,12 +12,13 @@ public class TileEntity implements Serializable{
 	public short textureID;
 	public int tileWidth, tileHeight;
 	public int x, y;
-	public byte miningDurability = 25;
+	public byte maxMiningDurability; //I guess some things can have more or less maybe?
+	public byte miningDurability;
 	public String tileEntityID;
 	public int chunkX;
 	public int chunkY;
 
-	public TileEntity(int x, int y, int chunkX, int chunkY, int tileWidth, int tileHeight, String tileEntityID){
+	public TileEntity(int x, int y, int chunkX, int chunkY, int tileWidth, int tileHeight, String tileEntityID, byte maxMiningDurability){
 
 		this.chunkX = chunkX;
 		this.chunkY = chunkY;
@@ -26,7 +27,7 @@ public class TileEntity implements Serializable{
 		this.x = x;
 		this.y = y;
 		this.tileEntityID = tileEntityID;
-		
+		this.maxMiningDurability = maxMiningDurability;
 
 
 	}
@@ -40,9 +41,9 @@ public class TileEntity implements Serializable{
 	//IM not sure what the best way to remove it is other than this
 	public void beingMined(ChunkGrid chunkGrid, Player player){
 
-		miningDurability -= 1;
+		miningDurability += 1;
 
-		if (miningDurability <= 0){
+		if (miningDurability >= maxMiningDurability){
 			player.inventory.addItemToInventory(new Item(this.tileEntityID, 1));
 			chunkGrid.chunks[chunkX][chunkY].removeTileEntity(x, y, chunkX, chunkY, tileWidth, tileHeight, this);
 			player.mining = false;

@@ -66,7 +66,8 @@ public class Chunk implements Serializable{
 		if(canDo){
 			
 
-			Building insertingTE = new Building( x, y, thisChunkX, thisChunkY, tileWidth, tileHeight, tileEntityID);
+			Building insertingTE = new Building( x, y, thisChunkX, thisChunkY, tileWidth, tileHeight, tileEntityID, (byte) 5);
+
 			
 			
 			
