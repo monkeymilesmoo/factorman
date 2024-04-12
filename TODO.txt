@@ -9,6 +9,8 @@ Then add for assembler recipe choosing
 
 add all pages in recipe chooser ui
 
+fix alignment for ALL entityimages X_X
+
 Make crafting class or something to handle crafting in inventory
 
 Add a ui for each building type
