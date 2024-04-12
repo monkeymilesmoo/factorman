@@ -7,6 +7,8 @@ Add item-groups
 Add crafting ui for player
 Then add for assembler recipe choosing
 
+add all pages in recipe chooser ui
+
 Make crafting class or something to handle crafting in inventory
 
 Add a ui for each building type
@@ -30,6 +32,8 @@ fix placement ghost size to be the same as normal buildings
 Actual terrain generation with noise and such
 
 Probably make rendering more efficient somehow. It currently is a little too slow I think.
+
+fix stacksizes in itemproperties
 
 make placing ghost green or red ghost depending on placability
 

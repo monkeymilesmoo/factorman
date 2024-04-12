@@ -363,14 +363,15 @@ public class UI {
 		public int y;
 		public int width;
 		public int height;
-		public Color color;
+		public Color color, bgColor;
 
-		public progressBar(int x, int y, int width, int height, Color color){
+		public progressBar(int x, int y, int width, int height, Color color, Color bgColor){
 			this.x = x;
 			this.y = y;
 			this.width = width;
 			this.height = height;
 			this.color = color; //red for fuel, green for production
+			this.bgColor = bgColor;
 		}
 		
 		public void resizeWindow(int x, int y){
@@ -384,7 +385,12 @@ public class UI {
 			if(progress > 100){
 				progress = 100;
 			}
-			drawOuterEdge(x, y, width, height, g2, false);
+			if(bgColor != null){
+			g2.setColor(bgColor);
+			g2.fillRect(x, y, width, height);
+			}else{
+				drawOuterEdge(x, y, width, height, g2, false);
+			}
 
 
 			g2.setColor(color);
@@ -414,7 +420,7 @@ public class UI {
 			this.topleftX = topleftX;
 			this.topleftY = topLeftY;
 			this.buildingType = buildingType;
-			pBar = new progressBar(76 + topleftX + windowNum, topleftY + 258, 260, 25, Color.green);
+			pBar = new progressBar(76 + topleftX + windowNum, topleftY + 258, 260, 25, Color.green, null);
 			// (26 + topleftX + windowNum + 50, 170 + topleftY + 78, 400, 150, g2, false);
 		}
 		

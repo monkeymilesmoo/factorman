@@ -90,7 +90,7 @@ public class Player extends entity{
 		moving = false;
 		totalFramesInAnimation = 22;
 		
-		pBar = gp.ui.new progressBar(screenX - 300, gp.screenHeight - 100, 732, 25, Color.yellow);
+		pBar = gp.ui.new progressBar(screenX - 300, gp.screenHeight - 100, 732, 25, Color.yellow, Color.black);
 
 	}
 
