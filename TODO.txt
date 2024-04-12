@@ -11,6 +11,25 @@ add all pages in recipe chooser ui
 
 fix alignment for ALL entityimages X_X
 
+
+ENTITYIMAGES PROBLEMS:
+
+Somehow fix splitters images. they have different images for updownleftright so maybe run them through the spritesheet manipulator
+Also inserter pieces should go into spritesheets
+also pipe spritesheet. not sure if im gonna have the fluid in the pipe or not
+also pipe covers are a thing
+rail images are a nightmare im not touching those for a while
+trainstop images are a mess
+also trains. basically all train images will be put off for now
+all the train wagons also need fixing
+vehicles need implementing too
+not even gonna try spidertron rn
+roboport needs to be animated
+circuit connectors and such
+
+
+Maybe serialize entityimages/properties when everything is entered at the end
+
 Make crafting class or something to handle crafting in inventory
 
 Add a ui for each building type

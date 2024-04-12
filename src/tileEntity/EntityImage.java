@@ -26,9 +26,9 @@ public class EntityImage {
 
 	public EntityImage(String fileName, boolean includesDashShadow, int frameWidth, int frameHeight, int shadowOffsetRight, int shadowOffsetDown, int tileWidth, int tileHeight, int shiftX, int shiftY){
 		
-		try {
-			String itemType = ItemProperties.itemPropertyMap.get(fileName).itemType; 
+		String itemType = ItemProperties.itemPropertyMap.get(fileName).itemType; 
 
+		try{
 			if(includesDashShadow){
 				shadowFileName = fileName + "-shadow";
 				shadowImage = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + shadowFileName + ".png")));
@@ -36,24 +36,36 @@ public class EntityImage {
 			}else{
 				shadowImage = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + fileName + ".png")));
 			}
-
+			
 			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + fileName + ".png")));
 
-			visibleName = fileName.replace("-", " ");
-			visibleName = CodeUtilities.CapitalizeFirstLetters(visibleName);
-			
+			if(image == null || shadowImage == null){
+				System.out.println("missing image for " + fileName);
+				return;
+			}
+			imageArr = makeImageArray(frameWidth, frameHeight, image, false);
+			shadowArr = makeImageArray(frameWidth, frameHeight, shadowImage, true);
 
-			icon = ImageIO.read(getClass().getResourceAsStream(("/res/icons/" + fileName + ".png")));
-			icon = icon.getSubimage(0, 0, 64, 64);
-
-
-		} catch (IOException e) {
-			e.printStackTrace();
+		}catch(Exception e){
+			System.out.println("missing image for " + fileName);
 		}
 
 
-		imageArr = makeImageArray(frameWidth, frameHeight, image, false);
-		shadowArr = makeImageArray(frameWidth, frameHeight, shadowImage, true);
+		visibleName = fileName.replace("-", " ");
+		visibleName = CodeUtilities.CapitalizeFirstLetters(visibleName);
+		
+
+		try {
+			icon = ImageIO.read(getClass().getResourceAsStream(("/res/icons/" + fileName + ".png")));
+		} catch (IOException e) {
+			System.out.println("missing icon for " + fileName);
+			
+		}
+		icon = icon.getSubimage(0, 0, 64, 64);
+
+
+		
+
 
 
 		this.shiftX = shiftX;
@@ -65,13 +77,15 @@ public class EntityImage {
 		this.shadowOffsetRight = shadowOffsetRight;
 		this.shadowOffsetDown =shadowOffsetDown;
 
-		if(!includesDashShadow){
-			shiftX += shadowOffsetRight;
-			shiftY += shadowOffsetDown;
-			shadowArr = imageArr;
+		if(shadowArr != null && imageArr != null){
+			if(!includesDashShadow){
+				shiftX += shadowOffsetRight;
+				shiftY += shadowOffsetDown;
+				shadowArr = imageArr;
 
-		}else{
-			shadowArr = bakeInShadows();
+			}else{
+				shadowArr = bakeInShadows();
+			}
 		}
 	}
 
@@ -166,6 +180,7 @@ public class EntityImage {
 
 
 			//TODO for now, just the icons are being used, but eventually fill these out for each building
+			//TODO for now each dashshadow is false, change back if needed
 
 			//Containers
 			putImage("wooden-chest", true, 1, 1, 0, 0, 0, 0, 0, 0);
@@ -174,81 +189,79 @@ public class EntityImage {
 			putImage("storage-tank", true, 1, 1, 0, 0, 0, 0, 0, 0);
 
 			//Belts
-			putImage("transport-belt", true, 1, 1, 0, 0, 0, 0, 0, 0); 
-			putImage("fast-transport-belt", true, 1, 1, 0, 0, 0, 0, 0, 0); 
-			putImage("express-transport-belt", true, 1, 1, 0, 0, 0, 0, 0, 0); 
+			//TODO NEED TO ADD EXTRA IMAGES FOR FRONT AND BACK STRUCTURES
+			putImage("transport-belt", false, 1, 1, 0, 0, 0, 0, 0, 0); 
+			putImage("fast-transport-belt", false, 1, 1, 0, 0, 0, 0, 0, 0); 
+			putImage("express-transport-belt", false, 1, 1, 0, 0, 0, 0, 0, 0); 
 			//Underground belts
-			putImage("underground-belt", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("fast-underground-belt", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("express-underground-belt", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			//TODO NEED TO ADD EXTRA IMAGES FOR FRONT AND BACK STRUCTURES
+			putImage("underground-belt", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("fast-underground-belt", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("express-underground-belt", false, 1, 1, 0, 0, 0, 0, 0, 0);
 			//Splitters
-			putImage("splitter", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("fast-splitter", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("express-splitter", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			//TODO Somehow do splitters???? they have different images for updownleftright so maybe run them through the spritesheet manipulator
+			putImage("splitter", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("fast-splitter", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("express-splitter", false, 1, 1, 0, 0, 0, 0, 0, 0);
 
 			//Inserters
-			putImage("burner-inserter", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("inserter", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("long-handed-inserter", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("fast-inserter", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("filter-inserter", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("stack-inserter", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("stack-filter-inserter", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			//TODO each part of an inserter should be put into a spritesheet
+			putImage("burner-inserter", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("inserter", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("long-handed-inserter", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("fast-inserter", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("filter-inserter", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("stack-inserter", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("stack-filter-inserter", false, 1, 1, 0, 0, 0, 0, 0, 0);
 
 			//Power poles
-			putImage("small-electric-pole", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("medium-electric-pole", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("big-electric-pole", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("substation", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("small-electric-pole", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("medium-electric-pole", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("big-electric-pole", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("substation", false, 1, 1, 0, 0, 0, 0, 0, 0);
 			//Pipes
-			putImage("pipe", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("pipe-to-ground", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("pump", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("pipe", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("pipe-to-ground", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("pump", false, 1, 1, 0, 0, 0, 0, 0, 0);
 
 			//Train items
-			putImage("rail", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("train-stop", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("rail-signal", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("rail-chain-signal", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("locomotive", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("cargo-wagon", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("fluid-wagon", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("artillery-wagon", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("rail", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			//TODO i skipped rails for now
+			putImage("train-stop", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("rail-signal", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("rail-chain-signal", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("locomotive", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("cargo-wagon", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("fluid-wagon", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("artillery-wagon", false, 1, 1, 0, 0, 0, 0, 0, 0);
 			
 			//Transport
-			putImage("car", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("tank", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("spidertron", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("spidertron-remote", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("car", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("tank", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("spidertron", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("spidertron-remote", false, 1, 1, 0, 0, 0, 0, 0, 0);
 
 			//Logistics
-			putImage("logistic-robot", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("construction-robot", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("logistic-chest-active-provider", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("logistic-chest-passive-provider", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("logistic-chest-storage", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("logistic-chest-buffer", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("logistic-chest-requester", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("robotport", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("logistic-robot", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("construction-robot", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("logistic-chest-active-provider", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("logistic-chest-passive-provider", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("logistic-chest-storage", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("logistic-chest-buffer", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("logistic-chest-requester", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("roboport", false, 1, 1, 0, 0, 0, 0, 0, 0);
 
 			//Circuit network
-			putImage("small-lamp", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("red-wire", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("green-wire", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("arithmetic-combinator", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("decider-combinator", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("constant-combinator", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("power-switch", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("programmable-speaker", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("small-lamp", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("red-wire", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("green-wire", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("arithmetic-combinator", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("decider-combinator", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("constant-combinator", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("power-switch", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("programmable-speaker", false, 1, 1, 0, 0, 0, 0, 0, 0);
 
-			//Terrain
-			putImage("stone-brick", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("concrete", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("hazard-concrete", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("refined-concrete", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("refined-hazard-concrete", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("landfill", true, 1, 1, 0, 0, 0, 0, 0, 0);
-			putImage("cliff-explosives", true, 1, 1, 0, 0, 0, 0, 0, 0);
+			//Terrain isn't part of entityimages
 
 
 

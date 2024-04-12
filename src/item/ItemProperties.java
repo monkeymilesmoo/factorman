@@ -84,7 +84,7 @@ public class ItemProperties {
 		putProperty("pump", 50, "pipe", 0, 0);
 
 		//Train items
-		putProperty("rail", 50, "train-transport", 0, 0);
+		putProperty("rail", 50, "train-transport", 0, 0); 
 		putProperty("train-stop", 50, "train-transport", 0, 0);
 		putProperty("rail-signal", 50, "train-transport", 0, 0);
 		putProperty("rail-chain-signal", 50, "train-transport", 0, 0);
@@ -107,7 +107,7 @@ public class ItemProperties {
 		putProperty("logistic-chest-storage", 50, "logistics", 0, 0);
 		putProperty("logistic-chest-buffer", 50, "logistics", 0, 0);
 		putProperty("logistic-chest-requester", 50, "logistics", 0, 0);
-		putProperty("robotport", 50, "logistics", 0, 0);
+		putProperty("roboport", 50, "logistics", 0, 0);
 
 		//Circuit network
 		putProperty("small-lamp", 50, "circuit-network", 0, 0);
