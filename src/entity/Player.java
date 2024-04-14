@@ -5,14 +5,11 @@ import src.main.KeyHandler;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import src.Chunk.Chunk;
 import src.Chunk.ChunkGrid;
 import src.item.Item;
 import src.item.storageInventory;
+import src.main.CodeUtilities;
 import src.main.GamePanel;
 import src.main.MouseHandler;
 import src.main.UI.progressBar;
@@ -96,23 +93,18 @@ public class Player extends entity{
 
 	public void getPlayerImages() {
 
-		try {
-			//Player images
-			idleImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_idle.png"));
-			runningImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_running.png"));
-			miningImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_mining_tool-1.png"));
+		//Player images
+		idleImage = CodeUtilities.loadImage("entity/player/hr-level1_idle.png");
+		runningImage = CodeUtilities.loadImage("entity/player/hr-level1_running.png");
+		miningImage = CodeUtilities.loadImage("entity/player/hr-level1_mining_tool-1.png");
 
-			//Shadow images
-			idleShadowImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_idle_shadow.png"));
-			runningShadowImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_running_shadow.png"));
-			miningShadowImage = ImageIO.read(getClass().getResourceAsStream("/res/entity/player/hr-level1_mining_tool_shadow.png"));
+		//Shadow images
+		idleShadowImage = CodeUtilities.loadImage("entity/player/hr-level1_idle_shadow.png");
+		runningShadowImage = CodeUtilities.loadImage("entity/player/hr-level1_running_shadow.png");
+		miningShadowImage = CodeUtilities.loadImage("entity/player/hr-level1_mining_tool_shadow.png");
 
-			playerImagesToArrays();
+		playerImagesToArrays();
 
-			
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
 
 	}
 

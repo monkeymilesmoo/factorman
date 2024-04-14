@@ -2,13 +2,11 @@ package src.background;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 import src.Chunk.Chunk;
 import src.item.ItemProperties;
+import src.main.CodeUtilities;
 import src.main.GamePanel;
 import src.tileEntity.EntityImage;
 import src.tileEntity.TileEntity;
@@ -38,42 +36,38 @@ public class BackgroundManager {
 
 	public void getBackgroundImage() {
 
-		try{
 			
-			terrain[0] = new Background();
-			terrain[0].image = ImageIO.read(getClass().getResourceAsStream("/res/background/terrain/dirt-1.png"));
-			terrain[0].width = 64;
-			terrain[0].howMany = 8;
+		terrain[0] = new Background();
+		terrain[0].image = CodeUtilities.loadImage("background\\terrain\\dirt-1.png");
+		terrain[0].width = 64;
+		terrain[0].howMany = 8;
+		
+		terrain[1] = new Background();
+		terrain[1].image = CodeUtilities.loadImage("background\\terrain\\sand-1.png");
+		terrain[1].width = 128;
+		terrain[1].howMany = 8;
+		
+		terrain[2] = new Background();
+		terrain[2].image = CodeUtilities.loadImage("background\\terrain\\grass-1.png");
+		terrain[2].width = 128;
+		terrain[2].howMany = 16;
+
+
+		int renderingTerrain = 0;
+		int gettingSub = 0;
+
+		while (renderingTerrain < terrain.length){
 			
-			terrain[1] = new Background();
-			terrain[1].image = ImageIO.read(getClass().getResourceAsStream("/res/background/terrain/sand-1.png"));
-			terrain[1].width = 128;
-			terrain[1].howMany = 8;
-			
-			terrain[2] = new Background();
-			terrain[2].image = ImageIO.read(getClass().getResourceAsStream("/res/background/terrain/grass-1.png"));
-			terrain[2].width = 128;
-			terrain[2].howMany = 16;
+			terrain[renderingTerrain].drawingImage = new BufferedImage[terrain[renderingTerrain].howMany];
 
-
-			int renderingTerrain = 0;
-			int gettingSub = 0;
-
-			while (renderingTerrain < terrain.length){
-				
-				terrain[renderingTerrain].drawingImage = new BufferedImage[terrain[renderingTerrain].howMany];
-
-				while (gettingSub < terrain[renderingTerrain].howMany){
-					terrain[renderingTerrain].drawingImage[gettingSub] = new BufferedImage(GamePanel.tileSize, GamePanel.tileSize, BufferedImage.TYPE_INT_RGB);
-					terrain[renderingTerrain].drawingImage[gettingSub].createGraphics().drawImage(terrain[renderingTerrain].image.getSubimage(terrain[renderingTerrain].width * terrainSeed.nextInt(8), 160, terrain[renderingTerrain].width,  terrain[renderingTerrain].width), 0, 0, GamePanel.tileSize, GamePanel.tileSize, null);
-					gettingSub++;
-				}
-				renderingTerrain++;
-				gettingSub = 0;
+			while (gettingSub < terrain[renderingTerrain].howMany){
+				terrain[renderingTerrain].drawingImage[gettingSub] = new BufferedImage(GamePanel.tileSize, GamePanel.tileSize, BufferedImage.TYPE_INT_RGB);
+				terrain[renderingTerrain].drawingImage[gettingSub].createGraphics().drawImage(terrain[renderingTerrain].image.getSubimage(terrain[renderingTerrain].width * terrainSeed.nextInt(8), 160, terrain[renderingTerrain].width,  terrain[renderingTerrain].width), 0, 0, GamePanel.tileSize, GamePanel.tileSize, null);
+				gettingSub++;
 			}
-		}catch(IOException e){
-			e.printStackTrace();
-		}	
+			renderingTerrain++;
+			gettingSub = 0;
+		}
 	}
 
 

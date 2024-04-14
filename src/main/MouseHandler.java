@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
 import src.Chunk.Chunk;
 import src.item.ItemProperties;
@@ -29,7 +28,7 @@ public class MouseHandler extends MouseAdapter{
 	public MouseHandler(GamePanel gp){
 		this.gp = gp;
 		try{
-			selectionYellow = ImageIO.read(getClass().getResourceAsStream("/res/core/cursor-boxes-32x32.png")).getSubimage(0, 0, 64, 64);
+			selectionYellow = CodeUtilities.loadImage("core/cursor-boxes-32x32.png").getSubimage(0, 0, 64, 64);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -1,10 +1,8 @@
 package src.tileEntity;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.HashMap;
 
-import javax.imageio.ImageIO;
 
 import src.item.ItemProperties;
 import src.main.CodeUtilities;
@@ -28,39 +26,34 @@ public class EntityImage {
 		
 		String itemType = ItemProperties.itemPropertyMap.get(fileName).itemType; 
 
-		try{
-			if(includesDashShadow){
-				shadowFileName = fileName + "-shadow";
-				shadowImage = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + shadowFileName + ".png")));
+		if(includesDashShadow){
+			shadowFileName = fileName + "-shadow";
+			shadowImage = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + shadowFileName + ".png");
 
-			}else{
-				shadowImage = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + fileName + ".png")));
-			}
-			
-			image = ImageIO.read(getClass().getResourceAsStream(("/res/tileEntity/" + itemType + "/" + fileName + "/" + fileName + ".png")));
-
-			if(image == null || shadowImage == null){
-				System.out.println("missing image for " + fileName);
-				return;
-			}
-			imageArr = makeImageArray(frameWidth, frameHeight, image, false);
-			shadowArr = makeImageArray(frameWidth, frameHeight, shadowImage, true);
-
-		}catch(Exception e){
-			System.out.println("missing image for " + fileName);
+		}else{
+			shadowImage = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + fileName + ".png");
 		}
+		
+		
+
+		image = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + fileName + ".png");
+
+		if(image == null || shadowImage == null){
+			System.out.println("missing image for " + fileName);
+			return;
+		}
+
+		imageArr = makeImageArray(frameWidth, frameHeight, image, false);
+		shadowArr = makeImageArray(frameWidth, frameHeight, shadowImage, true);
+
 
 
 		visibleName = fileName.replace("-", " ");
 		visibleName = CodeUtilities.CapitalizeFirstLetters(visibleName);
 		
 
-		try {
-			icon = ImageIO.read(getClass().getResourceAsStream(("/res/icons/" + fileName + ".png")));
-		} catch (IOException e) {
-			System.out.println("missing icon for " + fileName);
-			
-		}
+		icon = CodeUtilities.loadImage("icons\\" + fileName + ".png");
+		
 		icon = icon.getSubimage(0, 0, 64, 64);
 
 

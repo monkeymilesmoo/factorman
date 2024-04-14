@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.imageio.ImageIO;
 
 import src.item.Item;
 import src.item.Recipe;
@@ -48,7 +47,7 @@ public class UI {
 			titilliumRegular = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("fonts/TitilliumWeb-Regular.ttf"));
 			titilliumBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("fonts/TitilliumWeb-Bold.ttf"));
 
-			guiElements = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/gui-new.png"));
+			guiElements = CodeUtilities.loadImage("core/gui/gui-new.png");
 
 			middleLayerBody = new Color(guiElements.getRGB(77, 9));
 			middleLayerEdge = new Color(guiElements.getRGB(77, 1));
@@ -65,8 +64,8 @@ public class UI {
 			hotbarButton[1] = guiElements.getSubimage(84, 739, 76, 76);
 			hotbarButton[2] = guiElements.getSubimage(165, 739, 76, 76);
 
-			closeWhite = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-white.png"));
-			closeBlack = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/close-black.png"));
+			closeWhite = CodeUtilities.loadImage("core/gui/close-white.png");
+			closeBlack = CodeUtilities.loadImage("core/gui/close-black.png");
 			
 			
 
@@ -79,7 +78,7 @@ public class UI {
 				outerLayer[8][i] = new Color(guiElements.getRGB(9, i));
 			}
 
-			inHandIcon = ImageIO.read(getClass().getResourceAsStream("/res/core/gui/slot-item-in-hand-black.png"));
+			inHandIcon = CodeUtilities.loadImage("core/gui/slot-item-in-hand-black.png");
 			
 
 
