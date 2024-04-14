@@ -39,7 +39,6 @@ public class EntityImage {
 		image = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + fileName + ".png");
 
 		if(image == null || shadowImage == null){
-			System.out.println("missing image for " + fileName);
 			return;
 		}
 

@@ -43,6 +43,7 @@ public class CodeUtilities {
 			return image;
 
 		}catch(Exception e){
+			System.out.println("missing image for " + filePath);
 			// e.printStackTrace();
 			return null;
 		}
