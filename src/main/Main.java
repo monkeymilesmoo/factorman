@@ -11,6 +11,7 @@ public class Main {
 		
 		System.setProperty("sun.java2d.opengl", "true");
 
+		//test
 		JFrame window = new JFrame();
 		GamePanel gp = new GamePanel();
 
