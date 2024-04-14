@@ -26,17 +26,22 @@ public class EntityImage {
 		
 		String itemType = ItemProperties.itemPropertyMap.get(fileName).itemType; 
 
+
+		icon = CodeUtilities.loadImage("icons\\" + fileName);
+		
+		icon = icon.getSubimage(0, 0, 64, 64);
+
 		if(includesDashShadow){
 			shadowFileName = fileName + "-shadow";
-			shadowImage = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + shadowFileName + ".png");
+			shadowImage = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + shadowFileName);
 
 		}else{
-			shadowImage = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + fileName + ".png");
+			shadowImage = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + fileName);
 		}
 		
 		
 
-		image = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + fileName + ".png");
+		image = CodeUtilities.loadImage("tileEntity\\" + itemType + "\\" + fileName + "\\" + fileName);
 
 		if(image == null || shadowImage == null){
 			return;
@@ -51,9 +56,6 @@ public class EntityImage {
 		visibleName = CodeUtilities.CapitalizeFirstLetters(visibleName);
 		
 
-		icon = CodeUtilities.loadImage("icons\\" + fileName + ".png");
-		
-		icon = icon.getSubimage(0, 0, 64, 64);
 
 
 		
@@ -253,8 +255,17 @@ public class EntityImage {
 			putImage("power-switch", false, 1, 1, 0, 0, 0, 0, 0, 0);
 			putImage("programmable-speaker", false, 1, 1, 0, 0, 0, 0, 0, 0);
 
-			//Terrain isn't part of entityimages
+			//Terrain isn't part of entityimages, just load their icons. Throws an error for now
+			//TODO fix this error ig
+			putImage("stone-brick", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("concrete", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("hazard-concrete", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("refined-concrete", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("refined-hazard-concrete", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("landfill", false, 1, 1, 0, 0, 0, 0, 0, 0);
+			putImage("cliff-explosives", false, 1, 1, 0, 0, 0, 0, 0, 0);
 
+			
 
 
 

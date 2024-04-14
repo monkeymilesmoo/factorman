@@ -94,14 +94,14 @@ public class Player extends entity{
 	public void getPlayerImages() {
 
 		//Player images
-		idleImage = CodeUtilities.loadImage("entity/player/hr-level1_idle.png");
-		runningImage = CodeUtilities.loadImage("entity/player/hr-level1_running.png");
-		miningImage = CodeUtilities.loadImage("entity/player/hr-level1_mining_tool-1.png");
+		idleImage = CodeUtilities.loadImage("entity/player/hr-level1_idle");
+		runningImage = CodeUtilities.loadImage("entity/player/hr-level1_running");
+		miningImage = CodeUtilities.loadImage("entity/player/hr-level1_mining_tool-1");
 
 		//Shadow images
-		idleShadowImage = CodeUtilities.loadImage("entity/player/hr-level1_idle_shadow.png");
-		runningShadowImage = CodeUtilities.loadImage("entity/player/hr-level1_running_shadow.png");
-		miningShadowImage = CodeUtilities.loadImage("entity/player/hr-level1_mining_tool_shadow.png");
+		idleShadowImage = CodeUtilities.loadImage("entity/player/hr-level1_idle_shadow");
+		runningShadowImage = CodeUtilities.loadImage("entity/player/hr-level1_running_shadow");
+		miningShadowImage = CodeUtilities.loadImage("entity/player/hr-level1_mining_tool_shadow");
 
 		playerImagesToArrays();
 

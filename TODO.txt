@@ -2,9 +2,8 @@ TODO:
 
 
 
-Add item-groups
+Add crafting using selectedRecipe string in rMenu
 
-Add crafting ui for player
 Then add for assembler recipe choosing
 
 add all pages in recipe chooser ui

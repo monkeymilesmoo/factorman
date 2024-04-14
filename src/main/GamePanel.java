@@ -99,9 +99,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public void startGameThread() {
 
-		ItemProperties.InitializeItemProperties();
 		double beforeEI = System.nanoTime();
-		EntityImage.loadEntityImages();
 		double afterEI = System.nanoTime();
 		System.out.println((afterEI - beforeEI) / 1000000 + " miliseconds to load entityimages.");
 

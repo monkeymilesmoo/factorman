@@ -4,6 +4,9 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import src.item.ItemProperties;
+import src.tileEntity.EntityImage;
+
 
 public class Main {
 
@@ -11,6 +14,9 @@ public class Main {
 		
 		System.setProperty("sun.java2d.opengl", "true");
 
+		
+		ItemProperties.InitializeItemProperties();
+		EntityImage.loadEntityImages();
 		JFrame window = new JFrame();
 		GamePanel gp = new GamePanel();
 

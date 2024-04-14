@@ -31,6 +31,7 @@ public class CodeUtilities {
 		
 		String imageFolderPath = "C:\\Users\\monke\\Documents\\repos\\factormanImages\\";
 
+		filePath = filePath + ".png";
 
 
 

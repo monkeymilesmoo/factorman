@@ -28,7 +28,7 @@ public class MouseHandler extends MouseAdapter{
 	public MouseHandler(GamePanel gp){
 		this.gp = gp;
 		try{
-			selectionYellow = CodeUtilities.loadImage("core/cursor-boxes-32x32.png").getSubimage(0, 0, 64, 64);
+			selectionYellow = CodeUtilities.loadImage("core/cursor-boxes-32x32").getSubimage(0, 0, 64, 64);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

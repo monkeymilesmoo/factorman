@@ -38,17 +38,17 @@ public class BackgroundManager {
 
 			
 		terrain[0] = new Background();
-		terrain[0].image = CodeUtilities.loadImage("background\\terrain\\dirt-1.png");
+		terrain[0].image = CodeUtilities.loadImage("background\\terrain\\dirt-1");
 		terrain[0].width = 64;
 		terrain[0].howMany = 8;
 		
 		terrain[1] = new Background();
-		terrain[1].image = CodeUtilities.loadImage("background\\terrain\\sand-1.png");
+		terrain[1].image = CodeUtilities.loadImage("background\\terrain\\sand-1");
 		terrain[1].width = 128;
 		terrain[1].howMany = 8;
 		
 		terrain[2] = new Background();
-		terrain[2].image = CodeUtilities.loadImage("background\\terrain\\grass-1.png");
+		terrain[2].image = CodeUtilities.loadImage("background\\terrain\\grass-1");
 		terrain[2].width = 128;
 		terrain[2].howMany = 16;
 

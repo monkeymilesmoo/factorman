@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
 import src.item.Item;
+import src.item.ItemGroups;
 import src.item.Recipe;
 import src.tileEntity.EntityImage;
 import src.tileEntity.TileEntity;
@@ -22,12 +22,14 @@ public class UI {
 	Font titilliumRegular;
 	GamePanel gp;
 	BufferedImage guiElements;
-	static Color middleLayerBody, middleLayerEdge;
+	// static Color middleLayerBody, middleLayerEdge;
 	BufferedImage[] behindItem, hotbarButton;
 	HashMap <String, BufferedImage> icons = new HashMap<String, BufferedImage>();;
-	static Color[][] outerLayer;
+	static Color[][] outerLayer, middleLayer;
 	static BufferedImage closeWhite, closeBlack;
 	static BufferedImage inHandIcon;
+	static BufferedImage[] bigButtons;
+	static Color[] bigButtonColor;
 	String selectedUI;
 	ArrayList<disappearingText> disappearingTextList = new ArrayList<disappearingText>();
 	public boolean openVisibility = false;
@@ -47,10 +49,10 @@ public class UI {
 			titilliumRegular = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("fonts/TitilliumWeb-Regular.ttf"));
 			titilliumBold = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("fonts/TitilliumWeb-Bold.ttf"));
 
-			guiElements = CodeUtilities.loadImage("core/gui/gui-new.png");
+			guiElements = CodeUtilities.loadImage("core/gui/gui-new");
 
-			middleLayerBody = new Color(guiElements.getRGB(77, 9));
-			middleLayerEdge = new Color(guiElements.getRGB(77, 1));
+			// middleLayerBody = new Color(guiElements.getRGB(77, 9));
+			// middleLayerEdge = new Color(guiElements.getRGB(77, 1));
 
 
 
@@ -64,8 +66,8 @@ public class UI {
 			hotbarButton[1] = guiElements.getSubimage(84, 739, 76, 76);
 			hotbarButton[2] = guiElements.getSubimage(165, 739, 76, 76);
 
-			closeWhite = CodeUtilities.loadImage("core/gui/close-white.png");
-			closeBlack = CodeUtilities.loadImage("core/gui/close-black.png");
+			closeWhite = CodeUtilities.loadImage("core/gui/close-white");
+			closeBlack = CodeUtilities.loadImage("core/gui/close-black");
 			
 			
 
@@ -78,7 +80,30 @@ public class UI {
 				outerLayer[8][i] = new Color(guiElements.getRGB(9, i));
 			}
 
-			inHandIcon = CodeUtilities.loadImage("core/gui/slot-item-in-hand-black.png");
+			//Middle layer edge for outermost windows
+			middleLayer = new Color[17][17];
+
+			for (int i = 0; i < 17; i++){
+				middleLayer[i][8] = new Color(guiElements.getRGB(i + 69, 9));
+				middleLayer[8][i] = new Color(guiElements.getRGB(77, i));
+			}
+
+			//Load recipeMenu header buttons
+			bigButtons = new BufferedImage[4];
+
+			bigButtons[0] = CodeUtilities.loadImage("item-group/logistics").getSubimage(0, 0, 128, 128);
+			bigButtons[1] = CodeUtilities.loadImage("item-group/production").getSubimage(0, 0, 128, 128);
+			bigButtons[2] = CodeUtilities.loadImage("item-group/intermediate-products").getSubimage(0, 0, 128, 128);
+			bigButtons[3] = CodeUtilities.loadImage("item-group/military").getSubimage(0, 0, 128, 128);
+			
+			bigButtonColor = new Color[3];
+
+			bigButtonColor[0] = new Color(guiElements.getRGB(9, 26));
+			bigButtonColor[1] = new Color(guiElements.getRGB(84, 9));
+			bigButtonColor[2] = new Color(guiElements.getRGB(77, 9));
+
+
+			inHandIcon = CodeUtilities.loadImage("core/gui/slot-item-in-hand-black");
 			
 
 
@@ -175,13 +200,25 @@ public class UI {
 		if (selectedUI == "playerInv"){
 			//Check slots first
 			if (mouseX - SIUI.topleftX - SIUI.inv.startSlotsX > 0 && mouseY - SIUI.topleftY - SIUI.inv.startSlotsY > 0 && mouseX - SIUI.topleftX - SIUI.inv.startSlotsX < SIUI.endSlotsX && mouseY - SIUI.topleftY - SIUI.inv.startSlotsY < SIUI.endSlotsY){
-				SIUI.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
-				return;
+				SIUI.inv.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
 			}else{
 				if(SIUI.inv.slotSelection[SIUI.inv.lastHovered] != 2){
 					SIUI.inv.slotSelection[SIUI.inv.lastHovered] = 0;
 				}
 				SIUI.inv.lastHovered = SIUI.inv.slotCount;
+			}
+
+			if (mouseX - SIUI.topleftX - SIUI.rMenu.windowNum - SIUI.rMenu.startSlotsX > 0 && mouseY - SIUI.topleftY - SIUI.rMenu.startSlotsY > 0 && mouseX - SIUI.topleftX - SIUI.rMenu.windowNum - SIUI.rMenu.startSlotsX < SIUI.endSlotsX && mouseY - SIUI.topleftY - SIUI.rMenu.startSlotsY < SIUI.endSlotsY){
+				SIUI.rMenu.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
+				return;
+			}else{
+				if(SIUI.rMenu.slotSelection[SIUI.rMenu.lastHovered] != 2){
+					SIUI.rMenu.slotSelection[SIUI.rMenu.lastHovered] = 0;
+				}
+				
+				// System.out.println(mouseY);
+				// System.out.println(mouseY - SIUI.topleftY - SIUI.rMenu.startSlotsY);
+				SIUI.rMenu.lastHovered = SIUI.rMenu.slotCount;
 			}
 
 			if(mouseX - SIUI.topleftX > 0 && mouseX < SIUI.topleftX + SIUI.largerWidth && mouseY > 0 && mouseY < SIUI.topleftY + 50){
@@ -251,7 +288,40 @@ public class UI {
 	}
 
 
-	public static void drawOuterEdge(int x, int y, int width, int height, Graphics2D g2, boolean drawingCloseButton){
+	public static void drawMiddleLayer(int x, int y, int width, int height, Graphics2D g2){
+
+		for(int i = 0; i< 4; i++){
+			g2.setColor(middleLayer[8][(2 * i)]);
+			g2.fillRect(x - 4 + i, y - 4 + i, width + 8 - (2 * i), 1);
+		}
+		
+		//Left edge
+		for(int i = 0; i< 4; i++){
+			g2.setColor(middleLayer[(2 * i)][8]);
+			g2.fillRect(x - 4 + i, y - 4 + i, 1, height + 8 - (2 * i));
+		}
+		
+		// //Right edge
+		for(int i = 0; i< 4; i++){
+			g2.setColor(middleLayer[15 - (2 * i)][8]);
+			g2.fillRect(x + width + i, y - i, 1, height + (2 * i));
+		}
+		
+		//Bottom edge
+		for(int i = 0; i< 4; i++){
+			g2.setColor(middleLayer[8][(2 * -i) + 15]);
+			g2.fillRect(x - i, y + height + i, width + (2 * i) + 1, 1);
+		}
+
+		g2.setColor(middleLayer[8][8]);
+		g2.fillRect(x, y, width, height);
+
+
+		// g2.setColor(middleLayerBody);
+		// g2.fillRect(x, y, width, height);
+	}
+
+	public static void drawOuterLayer(int x, int y, int width, int height, Graphics2D g2, boolean drawingCloseButton){
 
 
 		//draw edges around main body
@@ -286,7 +356,7 @@ public class UI {
 
 		//Draw close x top right
 		if (drawingCloseButton){
-			UI.drawOuterEdge(x + width - 36, y + 7, 24, 24, g2, false);
+			UI.drawOuterLayer(x + width - 36, y + 7, 24, 24, g2, false);
 			g2.drawImage(closeWhite, x + width - 34, y + 10, 20, 20, null);
 		}
 
@@ -354,7 +424,143 @@ public class UI {
 	}
 
 	public class recipeMenu{
+		final private int width = 424;
+		final private int height = 448;
+		final public int slotCount = 90;
+		public int[][] slotSelection =  new int[9][10];
+		public final int[] buttonSelection =  new int[4];
+		private int lastHovered = slotCount;
+		public int selectedButton = 0;
+		final private int slotNumWidth = 10;
+		final private int startButtonsX = 26;
+		final private int startButtonsY = 78;
+		final private int startSlotsX = 26;
+		final private int startSlotsY = 78;
+		private int topleftX, topleftY;
+		private int windowNum;
+		private BufferedImage[][] recipeImageRows = new BufferedImage[9][];
+		private String[][] recipeArray;
+		public String selectedRecipe;
+
+
+
+
+		recipeMenu(int topleftX, int topLeftY){
+			this.topleftX = topleftX;
+			this.topleftY = topLeftY;
+			buttonSelection[0] = 2;
+			recipeArray = ItemGroups.Logistics.rows;
+			System.out.println(recipeArray[0][0]);
+			grabRecipeImages();
+		}
+
+		public void grabRecipeImages(){
+			for(int i = 0; i < 9; i++){
+				recipeImageRows[i] = new BufferedImage[10];
+				for(int j = 0; j < 10; j++){
+
+					if(j >= recipeArray[i].length){
+						break;
+					}
+					String recipeID = recipeArray[i][j];
+					// if(recipeID == null){
+					// 	break;
+					// }
+					//TODO check if unlocked recipe later
+
+
+					System.out.println(recipeID);
+					recipeImageRows[i][j] = EntityImage.entityImages.get(recipeID).icon;
+
+				}
+			}
+
+
+		}
+		
+		public void resizeWindow(int topleftX, int topLeftY, int winNum){
+			this.topleftX = topleftX;
+			this.topleftY = topLeftY;
+			windowNum = ((width + 13) * winNum);
+		}
 		//TODO IMPLEMENT
+
+		public void hoveredSlotCheck(int mouseX, int mouseY, boolean leftClicking, boolean rightClicking){
+			mouseX = mouseX - topleftX - startSlotsX - windowNum;
+			mouseY = mouseY - topleftY - startSlotsY;
+
+			int hoveredSlotX = (mouseX / 40) + (slotNumWidth * (mouseY / 40));
+			int hoveredSlotY = (slotNumWidth * (mouseY / 40));
+			
+			if(leftClicking){
+				// System.out.println("whaa");
+				slotSelection[hoveredSlotX][hoveredSlotY] = 2;
+				
+
+				//TODO implement crafting
+
+
+
+
+
+
+
+
+
+					if(gp.player.inventory.invContents[hoveredSlot] == null){
+						slotSelection[selectedSlot] = 0;
+						selectedSlot = slotCount;
+						lastHovered = slotCount;
+						return;
+					}
+					slotSelection[hoveredSlot] = 2;
+					slotSelection[selectedSlot] = 0;
+					hotbar.slotSelection[hotbar.selectedSlot] = 0;
+					hotbar.selectedSlot = hotbar.slotCount;
+					lastHovered = slotCount;
+					selectedSlot = hoveredSlot;
+				}
+			}else if(slotSelection[hoveredSlot] != 2 && hoveredSlot != lastHovered){
+				// System.out.println("hhh");
+				slotSelection[hoveredSlot] = 1;
+				if(lastHovered != hoveredSlot){
+					slotSelection[lastHovered] = 0;
+					lastHovered = hoveredSlot;
+				}
+			}
+
+			
+
+
+
+		}
+
+		public void draw(Graphics2D g2){
+			UI.drawMiddleLayer(topleftX + 11 + windowNum, topleftY + 41, width, height, g2);
+			
+			//TODO add selectability
+			int sectionWidth = width / 4;
+			for(int i = 0; i < 4; i++){
+				
+				g2.setColor(bigButtonColor[buttonSelection[i]]);
+				g2.fillRect(topleftX + 11 + windowNum + (i * sectionWidth), topleftY + 41, sectionWidth, 64);
+
+				
+				g2.drawImage(bigButtons[i], topleftX + 11 + windowNum + 30 + (i * sectionWidth), topleftY + 41 + 7, 49, 49, null);
+			}
+
+			for(int i = 0; i < 10; i++){
+				for(int j = 0; j < 9; j++){
+					if(recipeImageRows[j][i] != null){
+						g2.drawImage(hotbarButton[slotSelection[i][j]], topleftX  + windowNum + startButtonsX + (40 * i), topleftY + 41 + startButtonsY + (40 * j), 40, 40, null);
+						g2.drawImage(recipeImageRows[j][i], 5 + topleftX  + windowNum + startButtonsX + (40 * i), 5 + topleftY + 41 + startButtonsY + (40 * j), 30, 30, null);
+					
+						//TODO also draw the possible craftable amount
+					}
+				}
+			}
+
+		}
 	}
 
 	public class progressBar{
@@ -388,7 +594,7 @@ public class UI {
 			g2.setColor(bgColor);
 			g2.fillRect(x, y, width, height);
 			}else{
-				drawOuterEdge(x, y, width, height, g2, false);
+				drawOuterLayer(x, y, width, height, g2, false);
 			}
 
 
@@ -434,8 +640,10 @@ public class UI {
 
 		public void draw(Graphics2D g2){
 
-			g2.setColor(middleLayerBody);
-			g2.fillRect(topleftX + 11 + windowNum, topleftY + 41, width, height);
+			UI.drawMiddleLayer(topleftX + 11 + windowNum, topleftY + 41, width, height, g2);
+
+			// g2.setColor(middleLayerBody);
+			// g2.fillRect(topleftX + 11 + windowNum, topleftY + 41, width, height);
 
 
 			// for(int i = 0; i < gp.player.inventory.invSize; i++){
@@ -452,7 +660,7 @@ public class UI {
 
 
 			//inner image of building
-			UI.drawOuterEdge(26 + topleftX + windowNum, topleftY + 78, 400, 150, g2, false);
+			UI.drawOuterLayer(26 + topleftX + windowNum, topleftY + 78, 400, 150, g2, false);
 			EntityImage entityImage = EntityImage.entityImages.get(buildingType);
 			int width = 32 * entityImage.tileWidth + (2 * entityImage.shiftX) + entityImage.shadowOffsetRight;
 			int height = 32 * entityImage.tileHeight + (2 * entityImage.shiftY) + entityImage.shadowOffsetDown;
@@ -501,7 +709,7 @@ public class UI {
 
 
 
-			UI.drawOuterEdge(topleftX, topleftY, largerWidth, largerHeight, g2, true);
+			UI.drawOuterLayer(topleftX, topleftY, largerWidth, largerHeight, g2, true);
 
 			inv.draw(g2);
 			assUI.draw(g2);
@@ -623,7 +831,7 @@ public class UI {
 		public void draw(){
 			
 
-			UI.drawOuterEdge(topleftX, topleftY, width, height, g2, false);
+			UI.drawOuterLayer(topleftX, topleftY, width, height, g2, false);
 			
 			for(int i = 0; i< slotCount; i++){
 
@@ -734,8 +942,8 @@ public class UI {
 		
 		public void draw(Graphics2D g2){
 
-			g2.setColor(middleLayerBody);
-			g2.fillRect(topleftX + 11 + windowNum, topleftY + 41, width, height);
+
+			UI.drawMiddleLayer(topleftX + 11 + windowNum, topleftY + 41, width, height, g2);
 
 
 			for(int i = 0; i < gp.player.inventory.invSize; i++){
@@ -782,16 +990,19 @@ public class UI {
 		final private int endSlotsX = 398;
 		final private int endSlotsY = 358;
 		public inventory inv;
+		public recipeMenu rMenu;
 
 
 		playerInventoryUI(){
 			inv = new inventory(topleftX, topleftY);
+			rMenu = new recipeMenu(topleftX, topleftY);
 		}
 
 		public void resizeWindow(){
 			this.topleftX = gp.screenWidth/ 5 - 150;
 			this.topleftY = gp.screenHeight / 4;
 			inv.resizeWindow(topleftX, topleftY, 0);
+			rMenu.resizeWindow(topleftX, topleftY, 2);
 		} 
 
 		public boolean checkMouseWindow(int mouseX, int mouseY){
@@ -812,6 +1023,7 @@ public class UI {
 				originalMouseX = gp.mouseH.mouseX;
 				originalMouseY = gp.mouseH.mouseY;
 				inv.resizeWindow(topleftX, topleftY, 0);
+				rMenu.resizeWindow(topleftX, topleftY, 2);
 			}else{
 				originalMouseX = gp.mouseH.mouseX;
 				originalMouseY = gp.mouseH.mouseY;
@@ -824,11 +1036,12 @@ public class UI {
 		public void draw(){
 			
 			//Draw outer rectangle
-			UI.drawOuterEdge(topleftX, topleftY, largerWidth, largerHeight, g2, true);
+			UI.drawOuterLayer(topleftX, topleftY, largerWidth, largerHeight, g2, true);
 
 
 
 			inv.draw(g2);
+			rMenu.draw(g2);
 
 			//need to draw logistics stuff and crafting stuff
 			//make in their own classes
