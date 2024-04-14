@@ -212,13 +212,14 @@ public class UI {
 				SIUI.rMenu.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
 				return;
 			}else{
-				if(SIUI.rMenu.slotSelection[SIUI.rMenu.lastHovered] != 2){
-					SIUI.rMenu.slotSelection[SIUI.rMenu.lastHovered] = 0;
+				if(SIUI.rMenu.lastHoveredX != 11){
+					SIUI.rMenu.slotSelection[SIUI.rMenu.lastHoveredX][SIUI.rMenu.lastHoveredY] = 0;
 				}
 				
 				// System.out.println(mouseY);
 				// System.out.println(mouseY - SIUI.topleftY - SIUI.rMenu.startSlotsY);
-				SIUI.rMenu.lastHovered = SIUI.rMenu.slotCount;
+				SIUI.rMenu.lastHoveredX = 11;
+				SIUI.rMenu.lastHoveredY = 11;
 			}
 
 			if(mouseX - SIUI.topleftX > 0 && mouseX < SIUI.topleftX + SIUI.largerWidth && mouseY > 0 && mouseY < SIUI.topleftY + 50){
@@ -429,7 +430,8 @@ public class UI {
 		final public int slotCount = 90;
 		public int[][] slotSelection =  new int[9][10];
 		public final int[] buttonSelection =  new int[4];
-		private int lastHovered = slotCount;
+		private int lastHoveredX = 11;
+		private int lastHoveredY = 11;
 		public int selectedButton = 0;
 		final private int slotNumWidth = 10;
 		final private int startButtonsX = 26;
@@ -492,48 +494,44 @@ public class UI {
 			int hoveredSlotX = (mouseX / 40) + (slotNumWidth * (mouseY / 40));
 			int hoveredSlotY = (slotNumWidth * (mouseY / 40));
 			
+
+
 			if(leftClicking){
 				// System.out.println("whaa");
 				slotSelection[hoveredSlotX][hoveredSlotY] = 2;
 				
 
-				//TODO implement crafting
+				selectedRecipe = recipeArray[hoveredSlotX][hoveredSlotY];
+				//TODO implement crafting by checking this and then clearing selected recipe. maybe part of the do work method
 
 
 
 
 
 
+				if(lastHoveredX != 11 && lastHoveredY != 11){
 
-
-
-					if(gp.player.inventory.invContents[hoveredSlot] == null){
-						slotSelection[selectedSlot] = 0;
-						selectedSlot = slotCount;
-						lastHovered = slotCount;
-						return;
+					slotSelection[hoveredSlotX][hoveredSlotY] = 2;
+					slotSelection[lastHoveredX][lastHoveredY] = 0;
+					lastHoveredX = 11;
+					lastHoveredY = 11;
 					}
-					slotSelection[hoveredSlot] = 2;
-					slotSelection[selectedSlot] = 0;
-					hotbar.slotSelection[hotbar.selectedSlot] = 0;
-					hotbar.selectedSlot = hotbar.slotCount;
-					lastHovered = slotCount;
-					selectedSlot = hoveredSlot;
-				}
-			}else if(slotSelection[hoveredSlot] != 2 && hoveredSlot != lastHovered){
-				// System.out.println("hhh");
-				slotSelection[hoveredSlot] = 1;
-				if(lastHovered != hoveredSlot){
-					slotSelection[lastHovered] = 0;
-					lastHovered = hoveredSlot;
 				}
 			}
+			// else if(slotSelection[hoveredSlot] != 2 && hoveredSlot != lastHovered){
+			// 	// System.out.println("hhh");
+			// 	slotSelection[hoveredSlot] = 1;
+			// 	if(lastHovered != hoveredSlot){
+			// 		slotSelection[lastHovered] = 0;
+			// 		lastHovered = hoveredSlot;
+			// 	}
+			// }
 
 			
 
 
-
-		}
+			
+		
 
 		public void draw(Graphics2D g2){
 			UI.drawMiddleLayer(topleftX + 11 + windowNum, topleftY + 41, width, height, g2);
