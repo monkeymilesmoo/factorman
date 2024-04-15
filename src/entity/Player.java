@@ -160,6 +160,7 @@ public class Player extends entity{
 
 
 
+
 	public void update() {
 		
 		

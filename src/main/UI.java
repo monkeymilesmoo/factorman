@@ -199,7 +199,7 @@ public class UI {
 		}
 		if (selectedUI == "playerInv"){
 			//Check slots first
-			if (mouseX - SIUI.topleftX - SIUI.inv.startSlotsX > 0 && mouseY - SIUI.topleftY - SIUI.inv.startSlotsY > 0 && mouseX - SIUI.topleftX - SIUI.inv.startSlotsX < SIUI.endSlotsX && mouseY - SIUI.topleftY - SIUI.inv.startSlotsY < SIUI.endSlotsY){
+			if (mouseX - SIUI.topleftX - SIUI.inv.startSlotsX > 0 && mouseY - SIUI.topleftY - SIUI.inv.startSlotsY > 0 && mouseX - SIUI.topleftX - SIUI.inv.startSlotsX < SIUI.inv.endSlotsX && mouseY - SIUI.topleftY - SIUI.inv.startSlotsY < SIUI.inv.endSlotsY){
 				SIUI.inv.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
 			}else{
 				if(SIUI.inv.slotSelection[SIUI.inv.lastHovered] != 2){
@@ -208,7 +208,7 @@ public class UI {
 				SIUI.inv.lastHovered = SIUI.inv.slotCount;
 			}
 
-			if (mouseX - SIUI.topleftX - SIUI.rMenu.windowNum - SIUI.rMenu.startSlotsX > 0 && mouseY - SIUI.topleftY - SIUI.rMenu.startSlotsY > 0 && mouseX - SIUI.topleftX - SIUI.rMenu.windowNum - SIUI.rMenu.startSlotsX < SIUI.endSlotsX && mouseY - SIUI.topleftY - SIUI.rMenu.startSlotsY < SIUI.endSlotsY){
+			if (mouseX - SIUI.topleftX - SIUI.rMenu.windowNum - SIUI.rMenu.startSlotsX > 0 && mouseY - SIUI.topleftY - SIUI.rMenu.startSlotsY > 0 && mouseX - SIUI.topleftX - SIUI.rMenu.windowNum - SIUI.rMenu.startSlotsX < SIUI.rMenu.endSlotsX && mouseY - SIUI.topleftY - SIUI.rMenu.startSlotsY < SIUI.inv.endSlotsY){
 				SIUI.rMenu.hoveredSlotCheck(mouseX, mouseY, leftClicking, rightClicking);
 				return;
 			}else{
@@ -430,14 +430,16 @@ public class UI {
 		final public int slotCount = 90;
 		public int[][] slotSelection =  new int[9][10];
 		public final int[] buttonSelection =  new int[4];
-		private int lastHoveredX = 11;
-		private int lastHoveredY = 11;
+		public int lastHoveredX = 11;
+		public int lastHoveredY = 11;
 		public int selectedButton = 0;
 		final private int slotNumWidth = 10;
 		final private int startButtonsX = 26;
 		final private int startButtonsY = 78;
 		final private int startSlotsX = 26;
-		final private int startSlotsY = 78;
+		final private int startSlotsY = 118;
+		final private int endSlotsX = 350;
+		final private int endSlotsY = 358;
 		private int topleftX, topleftY;
 		private int windowNum;
 		private BufferedImage[][] recipeImageRows = new BufferedImage[9][];
@@ -451,9 +453,50 @@ public class UI {
 			this.topleftX = topleftX;
 			this.topleftY = topLeftY;
 			buttonSelection[0] = 2;
-			recipeArray = ItemGroups.Logistics.rows;
-			System.out.println(recipeArray[0][0]);
+			// System.out.println(recipeArray[5][0]);
+			recipeArray = loadRecipeArray(0);
 			grabRecipeImages();
+		}
+
+		public String[][] loadRecipeArray(int index){
+			String[][] tempArray = new String[9][10];
+			String[][] loadedRecipeArray;
+
+			switch(index){
+				case(0):
+					loadedRecipeArray = ItemGroups.Logistics.rows;
+					break;
+				case(1):
+					loadedRecipeArray = ItemGroups.Production.rows;
+					break;
+				case(2):
+					loadedRecipeArray = ItemGroups.IntermediateProducts.rows;
+					break;
+				case(3):
+					loadedRecipeArray = ItemGroups.Military.rows;
+					break;
+				default:
+					loadedRecipeArray = ItemGroups.Logistics.rows;
+					break;
+			
+
+
+
+
+			}
+			
+
+			for (int i = 0; i < 9; i++){
+				for (int j = 0; j < 10; j++){
+					if(j >= loadedRecipeArray[i].length){
+						break;
+					}
+					tempArray[i][j] = loadedRecipeArray[i][j];
+				}
+			}
+
+
+			return tempArray;
 		}
 
 		public void grabRecipeImages(){
@@ -461,20 +504,24 @@ public class UI {
 				recipeImageRows[i] = new BufferedImage[10];
 				for(int j = 0; j < 10; j++){
 
-					if(j >= recipeArray[i].length){
+					
+					
+					String recipeID = recipeArray[i][j];
+
+					if(recipeID == null){
 						break;
 					}
-					String recipeID = recipeArray[i][j];
 					// if(recipeID == null){
 					// 	break;
 					// }
 					//TODO check if unlocked recipe later
 
 
-					System.out.println(recipeID);
 					recipeImageRows[i][j] = EntityImage.entityImages.get(recipeID).icon;
 
 				}
+				
+				System.out.println(recipeImageRows[i][0]);
 			}
 
 
@@ -491,18 +538,32 @@ public class UI {
 			mouseX = mouseX - topleftX - startSlotsX - windowNum;
 			mouseY = mouseY - topleftY - startSlotsY;
 
-			int hoveredSlotX = (mouseX / 40) + (slotNumWidth * (mouseY / 40));
-			int hoveredSlotY = (slotNumWidth * (mouseY / 40));
+			int hoveredSlotX = (mouseX / 40);
+			int hoveredSlotY = ((mouseY / 40));
 			
-
+			g2.fillRect(mouseX, mouseY, 20, 20);
 
 			if(leftClicking){
 				// System.out.println("whaa");
 				slotSelection[hoveredSlotX][hoveredSlotY] = 2;
 				
 
+				
 				selectedRecipe = recipeArray[hoveredSlotX][hoveredSlotY];
+
+
+
+
+
+
+
+
+
 				//TODO implement crafting by checking this and then clearing selected recipe. maybe part of the do work method
+
+
+
+
 
 
 
@@ -512,25 +573,27 @@ public class UI {
 				if(lastHoveredX != 11 && lastHoveredY != 11){
 
 					slotSelection[hoveredSlotX][hoveredSlotY] = 2;
-					slotSelection[lastHoveredX][lastHoveredY] = 0;
-					lastHoveredX = 11;
-					lastHoveredY = 11;
-					}
+					lastHoveredX = hoveredSlotY;
+					lastHoveredY = hoveredSlotX;
+					
 				}
+			}else{
+				if(lastHoveredX != 11 && lastHoveredY != 11){
+					slotSelection[lastHoveredX][lastHoveredY] = 0;
+				}
+
+				slotSelection[hoveredSlotX][hoveredSlotY] = 1;
+
+				lastHoveredX = hoveredSlotX;
+				lastHoveredY = hoveredSlotY;
+
+				
 			}
-			// else if(slotSelection[hoveredSlot] != 2 && hoveredSlot != lastHovered){
-			// 	// System.out.println("hhh");
-			// 	slotSelection[hoveredSlot] = 1;
-			// 	if(lastHovered != hoveredSlot){
-			// 		slotSelection[lastHovered] = 0;
-			// 		lastHovered = hoveredSlot;
-			// 	}
-			// }
 
 			
 
 
-			
+		}
 		
 
 		public void draw(Graphics2D g2){
@@ -879,6 +942,8 @@ public class UI {
 		final private int slotNumWidth = 10;
 		final private int startSlotsX = 26;
 		final private int startSlotsY = 78;
+		final private int endSlotsX = 398;
+		final private int endSlotsY = 358;
 		private int topleftX, topleftY;
 		private int windowNum;
 
@@ -985,8 +1050,6 @@ public class UI {
 		private int originalMouseY;
 		final private int largerWidth = 1320;
 		final private int largerHeight = 500;
-		final private int endSlotsX = 398;
-		final private int endSlotsY = 358;
 		public inventory inv;
 		public recipeMenu rMenu;
 

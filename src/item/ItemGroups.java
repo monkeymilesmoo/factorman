@@ -93,4 +93,50 @@ public abstract class ItemGroups {
 
 	}
 
+	
+	public static class Production extends ItemGroups{
+		//TODO IMPLEMENT FOR NOW ITS COPIED
+		public static String[][] rows = {
+			{"wooden-chest", "iron-chest", "steel-chest", "storage-tank"},
+			{"transport-belt", "fast-transport-belt", "express-transport-belt", "underground-belt", "fast-underground-belt", "express-underground-belt", "splitter", "fast-splitter", "express-splitter"},
+			{"burner-inserter", "inserter", "long-handed-inserter", "fast-inserter", "filter-inserter", "stack-inserter", "stack-filter-inserter"},
+			{"small-electric-pole", "medium-electric-pole", "big-electric-pole", "substation", "pipe", "pipe-to-ground", "pump"},
+			{"rail", "train-stop", "rail-signal", "rail-chain-signal", "locomotive", "cargo-wagon", "fluid-wagon", "artillery-wagon"},
+			{"car", "tank", "spidertron", "spidertron-remote"},
+			{"logistic-robot", "construction-robot", "logistic-chest-active-provider", "logistic-chest-passive-provider", "logistic-chest-storage", "logistic-chest-buffer", "logistic-chest-requester", "roboport"},
+			{"small-lamp", "red-wire", "green-wire", "arithmetic-combinator", "decider-combinator", "constant-combinator", "power-switch", "programmable-speaker"},
+			{"stone-brick", "concrete", "hazard-concrete", "refined-concrete", "refined-hazard-concrete", "landfill", "cliff-explosives"}
+		};
+	}
+		
+	public static class IntermediateProducts extends ItemGroups{
+		//TODO IMPLEMENT FOR NOW ITS COPIED
+		public static String[][] rows = {
+			{"wooden-chest", "iron-chest", "steel-chest", "storage-tank"},
+			{"transport-belt", "fast-transport-belt", "express-transport-belt", "underground-belt", "fast-underground-belt", "express-underground-belt", "splitter", "fast-splitter", "express-splitter"},
+			{"burner-inserter", "inserter", "long-handed-inserter", "fast-inserter", "filter-inserter", "stack-inserter", "stack-filter-inserter"},
+			{"small-electric-pole", "medium-electric-pole", "big-electric-pole", "substation", "pipe", "pipe-to-ground", "pump"},
+			{"rail", "train-stop", "rail-signal", "rail-chain-signal", "locomotive", "cargo-wagon", "fluid-wagon", "artillery-wagon"},
+			{"car", "tank", "spidertron", "spidertron-remote"},
+			{"logistic-robot", "construction-robot", "logistic-chest-active-provider", "logistic-chest-passive-provider", "logistic-chest-storage", "logistic-chest-buffer", "logistic-chest-requester", "roboport"},
+			{"small-lamp", "red-wire", "green-wire", "arithmetic-combinator", "decider-combinator", "constant-combinator", "power-switch", "programmable-speaker"},
+			{"stone-brick", "concrete", "hazard-concrete", "refined-concrete", "refined-hazard-concrete", "landfill", "cliff-explosives"}
+		};
+	}
+		
+	public static class Military extends ItemGroups{
+		//TODO IMPLEMENT FOR NOW ITS COPIED
+		public static String[][] rows = {
+			{"wooden-chest", "iron-chest", "steel-chest", "storage-tank"},
+			{"transport-belt", "fast-transport-belt", "express-transport-belt", "underground-belt", "fast-underground-belt", "express-underground-belt", "splitter", "fast-splitter", "express-splitter"},
+			{"burner-inserter", "inserter", "long-handed-inserter", "fast-inserter", "filter-inserter", "stack-inserter", "stack-filter-inserter"},
+			{"small-electric-pole", "medium-electric-pole", "big-electric-pole", "substation", "pipe", "pipe-to-ground", "pump"},
+			{"rail", "train-stop", "rail-signal", "rail-chain-signal", "locomotive", "cargo-wagon", "fluid-wagon", "artillery-wagon"},
+			{"car", "tank", "spidertron", "spidertron-remote"},
+			{"logistic-robot", "construction-robot", "logistic-chest-active-provider", "logistic-chest-passive-provider", "logistic-chest-storage", "logistic-chest-buffer", "logistic-chest-requester", "roboport"},
+			{"small-lamp", "red-wire", "green-wire", "arithmetic-combinator", "decider-combinator", "constant-combinator", "power-switch", "programmable-speaker"},
+			{"stone-brick", "concrete", "hazard-concrete", "refined-concrete", "refined-hazard-concrete", "landfill", "cliff-explosives"}
+		};
+	}
+
 }
