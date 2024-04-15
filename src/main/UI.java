@@ -545,7 +545,6 @@ public class UI {
 
 			if(leftClicking){
 				// System.out.println("whaa");
-				slotSelection[hoveredSlotX][hoveredSlotY] = 2;
 				
 
 				
@@ -562,7 +561,7 @@ public class UI {
 				//TODO implement crafting by checking this and then clearing selected recipe. maybe part of the do work method
 
 
-
+				
 
 
 
@@ -571,10 +570,17 @@ public class UI {
 
 
 				if(lastHoveredX != 11 && lastHoveredY != 11){
+					if(slotSelection[lastHoveredX][lastHoveredY] != 2){
 
-					slotSelection[hoveredSlotX][hoveredSlotY] = 2;
-					lastHoveredX = hoveredSlotY;
-					lastHoveredY = hoveredSlotX;
+
+
+						slotSelection[hoveredSlotX][hoveredSlotY] = 2;
+
+
+						// slotSelection[lastHoveredX][lastHoveredY] = 0;
+						lastHoveredX = hoveredSlotX;
+						lastHoveredY = hoveredSlotY;
+					}
 					
 				}
 			}else{
